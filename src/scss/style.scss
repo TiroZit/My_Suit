@@ -16,12 +16,14 @@
 
 // Шрифт по умолчанию
 $fontFamily: "Manrope";
-$fontSize: rem(14); // где 14(px) - размер шрифта по умолчанию из макета
+$fontSize: rem(13); // где 14(px) - размер шрифта по умолчанию из макета
 
 // Основные цвета
 :root {
   --color-black: #000;
+  --color-black-eerie: #1C1C1E;
   --color-white: #fff;
+  --color-white-chinese: #E1E1E1;
 }
 
 // НАСТРОЙКИ
@@ -64,6 +66,7 @@ $responsiveType: 1;
 @import "@scss/base/null";
 
 body {
+  font-weight: 500;
   // Скролл заблокирован
   // .lock & {
   // 	overflow: hidden;
