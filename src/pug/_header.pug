@@ -3,7 +3,10 @@ header.header
     nav.header__menu.menu
       ul.menu__list 
         li.menu__item 
-          button.menu__link Каталог
+          button.menu__link.menu__button
+            |Каталог
+            svg.i-arrow-dropdown(style=`fill: currentColor;` aria-hidden)
+              use(xlink:href=`img/icons/icons.svg#svg-arrow-dropdown`)
           nav.menu__submenu.submenu
             ul.submenu__list
               li.submenu__item 
@@ -17,7 +20,7 @@ header.header
               li.submenu__item 
                 a.submenu__link(href="#") Костюмы из трикотажа 
               li.submenu__item 
-                a.submenu__link(href="#") Костюмы изо льна 
+                a.submenu__link(href="#") Костюмы из льна 
               li.submenu__item 
                 a.submenu__link(href="#") Костюмы из футера 
               li.submenu__item 

@@ -28,6 +28,7 @@
   // .menu__list
   &__list {
     display: flex;
+    align-items: center;
     @include adaptiveValue("gap", 40, 15);
   }
   // .menu__item
@@ -37,6 +38,15 @@
   &__link {
   }
   &__submenu{}
+  &__button{
+    display: flex;
+    align-items: center;
+    svg{
+      width: rem(8);
+      height: rem(5);
+      margin-left: rem(5);
+    }
+  }
 }
 .submenu{
   position: absolute;
@@ -45,21 +55,25 @@
   display: flex;
   width: 100%;
   padding-top: rem(28);
+  padding-right: rem(10);
   padding-bottom: rem(40);
+  padding-left: rem(10);
   border-bottom: 1px solid var(--color-white-chinese);
   &__list{
     display: flex;
+    flex: 0 1 890px;
     flex-direction: column;
     flex-wrap: wrap;
-    row-gap: rem(20);
+    row-gap: rem(10);
     column-gap: rem(70);
-    height: rem(120);
+    @include adaptiveValue("max-height", 150, 400);
   }
   &__item{
-    width: max-content;
+    
   }
   &__link{
-
+    display: block;
+    padding: rem(5) rem(0) rem(5) rem(0);
   }
   &__close{
     position: absolute;
@@ -97,7 +111,8 @@
 }
 .i-cart {
 }
-
+.i-arrow-dropdown{
+}
 // Burger
 
 /*
