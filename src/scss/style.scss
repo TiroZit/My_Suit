@@ -79,15 +79,10 @@ body {
 
 // Оболочка
 .wrapper {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
   min-height: 100%;
   overflow: hidden;
-
-  // Прижимаем footer
-  >main {
-    flex: 1 1 auto;
-  }
 
   // Фикс для слайдеров
   // > * {
