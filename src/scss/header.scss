@@ -1,4 +1,5 @@
 .header {
+
   // .header__container
   &__container {
     position: relative;
@@ -8,9 +9,10 @@
     padding-bottom: rem(22);
     border-bottom: 1px solid var(--color-white-chinese);
   }
+
   // .header__menu
-  &__menu {
-  }
+  &__menu {}
+
   // .header__logo
   &__logo {
     display: flex;
@@ -20,35 +22,41 @@
     padding-left: rem(10);
     // @include adaptiveValue("margin-left", 140, 0);
   }
+
   // .header__menu-icons
-  &__menu-icons {
-  }
+  &__menu-icons {}
 }
+
 .menu {
+
   // .menu__list
   &__list {
     display: flex;
     align-items: center;
     @include adaptiveValue("gap", 40, 15);
   }
+
   // .menu__item
-  &__item {
-  }
+  &__item {}
+
   // .menu__link
-  &__link {
-  }
-  &__submenu{}
-  &__button{
+  &__link {}
+
+  &__submenu {}
+
+  &__button {
     display: flex;
     align-items: center;
-    svg{
+
+    svg {
       width: rem(8);
       height: rem(5);
       margin-left: rem(5);
     }
   }
 }
-.submenu{
+
+.submenu {
   position: absolute;
   top: rem(100);
   left: 0;
@@ -59,7 +67,8 @@
   padding-bottom: rem(40);
   padding-left: rem(10);
   border-bottom: 1px solid var(--color-white-chinese);
-  &__list{
+
+  &__list {
     display: flex;
     flex: 0 1 890px;
     flex-direction: column;
@@ -68,51 +77,57 @@
     column-gap: rem(70);
     @include adaptiveValue("max-height", 150, 400);
   }
-  &__item{
-    
-  }
-  &__link{
+
+  &__item {}
+
+  &__link {
     display: block;
     padding: rem(5) rem(0) rem(5) rem(0);
   }
-  &__close{
+
+  &__close {
     position: absolute;
     top: 0;
     right: 0;
-    svg{
+
+    svg {
       width: rem(60);
       height: rem(60);
     }
   }
 }
-.logo {
-}
+
+.logo {}
+
 .menu-icons {
   display: flex;
   align-items: center;
   color: var(--color-black-eerie);
   @include adaptiveValue("margin-left", 40, 15);
   @include adaptiveValue("gap", 30, 15);
+
   // .menu-icons__item
   &__item {
     display: flex;
     align-items: center;
-    svg{
+
+    svg {
       width: rem(24);
       height: rem(24);
     }
   }
 }
-.i-search {
-}
-.i-heart {
-}
-.i-profile {
-}
-.i-cart {
-}
-.i-arrow-dropdown{
-}
+
+.i-search {}
+
+.i-heart {}
+
+.i-profile {}
+
+.i-cart {}
+
+.i-arrow-dropdown {}
+
 // Burger
 
 /*
