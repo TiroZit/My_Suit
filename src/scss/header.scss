@@ -16,10 +16,14 @@
   // .header__logo
   &__logo {
     display: flex;
-    flex: 1 1 rem(131);
-    justify-content: center;
-    padding-right: rem(10);
-    padding-left: rem(10);
+    flex: 1 0 auto;
+
+    @include media-breakpoint-up(tablet) {
+      justify-content: center;
+      padding-right: rem(10);
+      padding-left: rem(10);
+    }
+
     // @include adaptiveValue("margin-left", 140, 0);
   }
 
@@ -28,6 +32,9 @@
 }
 
 .menu {
+  @include media-breakpoint-down(tablet) {
+    display: none;
+  }
 
   // .menu__list
   &__list {
@@ -40,13 +47,30 @@
   &__item {}
 
   // .menu__link
-  &__link {}
+  &__link {
+    @include media-breakpoint-down(tablet) {
+      display: none;
+    }
+
+    @media (any-hover: hover) {
+      transition: color .3s;
+
+      &:hover {
+        color: var(--color-gray);
+      }
+    }
+
+  }
 
   &__submenu {}
 
   &__button {
     display: flex;
     align-items: center;
+
+    &.submenu-active {
+      color: var(--color-gray);
+    }
 
     svg {
       width: rem(8);
@@ -62,11 +86,20 @@
   left: 0;
   display: flex;
   width: 100%;
-  padding-top: rem(28);
+  opacity: 0;
+  visibility: hidden;
+  padding-top: rem(0);
   padding-right: rem(15);
   padding-bottom: rem(40);
   padding-left: rem(15);
+  transition: padding-top .5s, opacity .3s, visibility .3s;
   border-bottom: 1px solid var(--color-white-chinese);
+
+  &.submenu-open {
+    opacity: 1;
+    visibility: visible;
+    padding-top: rem(28);
+  }
 
   &__list {
     display: flex;
@@ -83,12 +116,28 @@
   &__link {
     display: block;
     padding: rem(5) rem(0) rem(5) rem(0);
+
+    @media (any-hover: hover) {
+      transition: color .3s;
+
+      &:hover {
+        color: var(--color-gray);
+      }
+    }
   }
 
   &__close {
     position: absolute;
     top: 0;
     right: 0;
+
+    @media (any-hover: hover) {
+      transition: color .3s;
+
+      &:hover {
+        color: var(--color-gray);
+      }
+    }
 
     svg {
       width: rem(60);
@@ -97,19 +146,40 @@
   }
 }
 
-.logo {}
+.logo {
+  &__link {
+    & img {
+      width: rem(131);
+      height: rem(44);
+      object-fit: contain;
+
+      @include media-breakpoint-down(tablet) {
+        width: rem(92);
+        height: rem(32);
+      }
+    }
+  }
+}
 
 .menu-icons {
   display: flex;
   align-items: center;
   color: var(--color-black-eerie);
-  @include adaptiveValue("margin-left", 40, 15);
-  @include adaptiveValue("gap", 30, 15);
+  @include adaptiveValue("margin-left", 40, 15, $maxWidthContainer, 767, 2);
+  @include adaptiveValue("gap", 30, 20);
 
   // .menu-icons__item
   &__item {
     display: flex;
     align-items: center;
+
+    @media (any-hover: hover) {
+      transition: color .3s;
+
+      &:hover {
+        color: var(--color-gray);
+      }
+    }
 
     svg {
       width: rem(24);

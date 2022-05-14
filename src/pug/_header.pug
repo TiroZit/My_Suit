@@ -3,11 +3,11 @@ header.header
     nav.header__menu.menu
       ul.menu__list 
         li.menu__item 
-          button.menu__link.menu__button
+          button.menu__link.menu__button(data-parent='1')
             |Каталог
             svg.i-arrow-dropdown(style='fill: currentColor;' aria-hidden)
               use(xlink:href='img/icons/icons.svg#svg-arrow-dropdown')
-          .menu__submenu.submenu
+          .menu__submenu.submenu(data-submenu='1')
             ul.submenu__list
               li.submenu__item 
                 a.submenu__link(href="#") Все
