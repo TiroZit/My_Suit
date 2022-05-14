@@ -33,7 +33,7 @@
   &__list {
     display: flex;
     align-items: center;
-    @include adaptiveValue("gap", 40, 15);
+    @include adaptiveValue("gap", 40, 15, $maxWidthContainer, 767, 2);
   }
 
   // .menu__item
@@ -58,14 +58,14 @@
 
 .submenu {
   position: absolute;
-  top: rem(100);
+  top: rem(95);
   left: 0;
   display: flex;
   width: 100%;
   padding-top: rem(28);
-  padding-right: rem(10);
+  padding-right: rem(15);
   padding-bottom: rem(40);
-  padding-left: rem(10);
+  padding-left: rem(15);
   border-bottom: 1px solid var(--color-white-chinese);
 
   &__list {
