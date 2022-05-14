@@ -137,7 +137,7 @@ import * as flsForms from './files/forms/forms.js'
 // Ленивая (отложенная) загрузка картинок
 // Документация плагина: https://github.com/verlok/vanilla-lazyload
 // Сниппет(HTML):
-// import './files/scroll/lazyload.js';
+import './files/scroll/lazyload.js'
 
 // Наблюдатель за объектами c атрибутом data-watch
 // Сниппет(HTML):
