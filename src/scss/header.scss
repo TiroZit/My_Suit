@@ -254,12 +254,12 @@
       }
 
       &::before {
-        transform: calc(50% - math.div($burger-line-height, 2));
+        top: calc(50% - math.div($burger-line-height, 2));
         transform: rotate(-45deg);
       }
 
       &::after {
-        transform: calc(50% - math.div($burger-line-height, 2));
+        top: calc(50% - math.div($burger-line-height, 2));
         transform: rotate(45deg);
       }
     }
