@@ -217,7 +217,8 @@
     &::before,
     &::after {
       content: "";
-      transition: transform 0.3s ease 0s, width .3s;
+      transition: transform 0.3s ease 0s,
+        width .3s;
       right: 0;
       position: absolute;
       height: $burger-line-height;
@@ -253,12 +254,12 @@
       }
 
       &::before {
-        top: calc(50% - math.div($burger-line-height, 2));
+        transform: calc(50% - math.div($burger-line-height, 2));
         transform: rotate(-45deg);
       }
 
       &::after {
-        bottom: calc(50% - math.div($burger-line-height, 2));
+        transform: calc(50% - math.div($burger-line-height, 2));
         transform: rotate(45deg);
       }
     }
