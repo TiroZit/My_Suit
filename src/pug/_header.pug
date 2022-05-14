@@ -1,9 +1,9 @@
 header.header
   .header__container
     nav.header__menu.menu
-      ul.menu__list 
+      ul.menu__list(data-spollers='767.98')
         li.menu__item 
-          button.menu__link.menu__button(data-parent='1')
+          button.menu__link.menu__button(data-parent='1' data-spoller data-spoller-close)
             |Каталог
             svg.i-arrow-dropdown(style='fill: currentColor;' aria-hidden)
               use(xlink:href='img/icons/icons.svg#svg-arrow-dropdown')
@@ -52,10 +52,14 @@ header.header
           a.menu__link(href="#") Доставка
         li.menu__item 
           a.menu__link(href="#") О бренде
+        li.menu__item.menu__item_contacts
+          a.menu__link(href="#") Контакты
+      .header__socials.socials 
+        include socials
     .header__logo.logo
       a.logo__link(href="home.html")
         +image('img/logo.svg', 'Логотип')
-    a.menu__link(href="#") Контакты
+    a.menu__link.menu__link_contacts(href="#") Контакты
     .header__menu-icons.menu-icons
       button.menu-icons__item
         svg.i-search(style='stroke: currentColor;' aria-label="Поиск")

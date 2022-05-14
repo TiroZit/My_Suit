@@ -1,0 +1,21 @@
+.socials {
+  &__items {
+    display: flex;
+    gap: rem(40);
+  }
+
+  &__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: rem(30);
+    height: rem(30);
+    background-color: var(--color-black);
+    border-radius: 50%;
+
+    svg {
+      width: rem(15);
+      height: rem(15);
+    }
+  }
+}

@@ -43,7 +43,7 @@ import focusVisible from 'focus-visible'
 Модуль работы со спойлерами
 Сниппет (HTML): spollers
 */
-// flsFunctions.spollers();
+flsFunctions.spollers()
 
 /*
 Модуль работы с табами
