@@ -182,8 +182,8 @@
     }
 
     svg {
-      width: rem(24);
-      height: rem(24);
+      width: rem(20);
+      height: rem(20);
     }
   }
 }
@@ -199,53 +199,68 @@
 .i-arrow-dropdown {}
 
 // Burger
+.burger {
+  $burger-width: rem(23);
+  $burger-height: rem(13);
+  $burger-line-height: rem(1);
 
-/*
-.icon-menu {
   display: none;
+
   @media (max-width: $mobile) {
     display: block;
     position: relative;
-    width: rem(30);
-    height: rem(18);
-    cursor: pointer;
+    width: $burger-width;
+    height: $burger-height;
     z-index: 5;
+
     span,
     &::before,
     &::after {
       content: "";
-      transition: all 0.3s ease 0s;
+      transition: transform 0.3s ease 0s, width .3s;
       right: 0;
       position: absolute;
-      width: 100%;
-      height: rem(2);
+      height: $burger-line-height;
       background-color: #000;
     }
+
+    span {
+      width: rem(19);
+    }
+
     &::before {
+      width: 100%;
       top: 0;
     }
+
     &::after {
+      width: rem(13);
       bottom: 0;
     }
+
     span {
-      top: calc(50% - rem(1));
+      top: calc(50% - math.div($burger-line-height, 2));
     }
+
     .menu-open & {
       span {
-        width: 0;
+        transform: scale(0);
       }
+
       &::before,
       &::after {
+        width: 100%;
       }
+
       &::before {
-        top: calc(50% - rem(1));
+        top: calc(50% - math.div($burger-line-height, 2));
         transform: rotate(-45deg);
       }
+
       &::after {
-        bottom: calc(50% - rem(1));
+        bottom: calc(50% - math.div($burger-line-height, 2));
         transform: rotate(45deg);
       }
     }
   }
 }
-*/

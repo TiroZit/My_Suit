@@ -12,14 +12,14 @@
 */
 
 // Включить/выключить FLS (Full Logging System) (в работе)
-window['FLS'] = false;
+window['FLS'] = false
 
 // Подключение стилей
-import '../scss/style.scss';
+import '../scss/style.scss'
 
 // ФУНКЦИОНАЛ
 
-import * as flsFunctions from "./files/functions.js";
+import * as flsFunctions from './files/functions.js'
 
 /* Проверка поддержки webp, добавление класса webp или no-webp для HTML */
 /* (i) необходимо для корректного отображения webp из css  */
@@ -29,7 +29,7 @@ import * as flsFunctions from "./files/functions.js";
 /* Добавление loaded для HTML после полной загрузки страницы */
 // flsFunctions.addLoadedClass();
 /* Модуль для работы с меню (Бургер) */
-// flsFunctions.menuInit();
+flsFunctions.menuInit()
 /* Учет плавающей панели на мобильных устройствах при 100vh */
 // flsFunctions.fullVHfix();
 
@@ -37,7 +37,7 @@ import * as flsFunctions from "./files/functions.js";
 Модуль focus-visible
 Документация: https://github.com/WICG/focus-visible
 */
-import focusVisible from "focus-visible";
+import focusVisible from 'focus-visible'
 
 /*
 Модуль работы со спойлерами
@@ -72,7 +72,7 @@ import focusVisible from "focus-visible";
 
 // РАБОТА С ФОРМАМИ
 
-import * as flsForms from "./files/forms/forms.js";
+import * as flsForms from './files/forms/forms.js'
 
 /* Работа с полями формы */
 // flsForms.formFieldsInit({ viewPass: false });
@@ -175,4 +175,4 @@ import * as flsForms from "./files/forms/forms.js";
 // Прочее
 
 /* Подключаем файлы со своим кодом */
-import "./files/script.js";
+import './files/script.js'
