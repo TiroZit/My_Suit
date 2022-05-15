@@ -1,7 +1,8 @@
 (function() {
   var __webpack_modules__ = {
+    644: function() {},
     537: function() {},
-    896: function(__unused_webpack___webpack_module__, __unused_webpack___webpack_exports__, __webpack_require__) {
+    700: function(__unused_webpack___webpack_module__, __unused_webpack___webpack_exports__, __webpack_require__) {
       "use strict";
       var injectStylesIntoStyleTag = __webpack_require__(379);
       var injectStylesIntoStyleTag_default = __webpack_require__.n(injectStylesIntoStyleTag);
@@ -268,9 +269,71 @@
         }
       }
       __webpack_require__(944);
+      var swiper_esm = __webpack_require__(930);
+      var swiper = __webpack_require__(644);
+      var swiper_default = __webpack_require__.n(swiper);
+      var swiper_options = {};
+      swiper_options.styleTagTransform = styleTagTransform_default();
+      swiper_options.setAttributes = setAttributesWithoutAttributes_default();
+      swiper_options.insert = insertBySelector_default().bind(null, "head");
+      swiper_options.domAPI = styleDomAPI_default();
+      swiper_options.insertStyleElement = insertStyleElement_default();
+      injectStylesIntoStyleTag_default()(swiper_default(), swiper_options);
+      swiper_default() && swiper_default().locals && swiper_default().locals;
+      function bildSliders() {
+        let sliders = document.querySelectorAll('[class*="__swiper"]:not(.swiper-wrapper)');
+        if (sliders) sliders.forEach((slider => {
+          slider.parentElement.classList.add("swiper");
+          slider.classList.add("swiper-wrapper");
+          for (const slide of slider.children) slide.classList.add("swiper-slide");
+        }));
+      }
+      function initSliders() {
+        bildSliders();
+        if (document.querySelector(".current-models__slider")) new swiper_esm.ZP(".current-models__slider", {
+          modules: [ swiper_esm.W_, swiper_esm.LW, swiper_esm.oM, swiper_esm.s5 ],
+          a11y: {
+            prevSlideMessage: "Предыдущий слайд",
+            nextSlideMessage: "Следующий слайд"
+          },
+          slidesPerView: 2,
+          spaceBetween: 10,
+          speed: 500,
+          loop: false,
+          preloadImages: false,
+          lazy: {
+            loadPrevNext: true
+          },
+          scrollbar: {
+            el: ".current-models__scrollbar",
+            draggable: true
+          },
+          navigation: {
+            nextEl: ".current-models__button-next",
+            prevEl: ".current-models__button-prev"
+          },
+          breakpoints: {
+            320: {
+              slidesPerView: 1,
+              spaceBetween: 10
+            },
+            992: {
+              slidesPerView: 2,
+              spaceBetween: 30
+            },
+            1200: {
+              slidesPerView: 3,
+              spaceBetween: 30
+            }
+          }
+        });
+      }
+      window.addEventListener("load", (function(e) {
+        initSliders();
+      }));
       var lazyload_min = __webpack_require__(585);
       new lazyload_min({
-        elements_selector: "[data-src],[data-srcset],[data-bg-multi],[bg-multi]",
+        elements_selector: ".lazy",
         class_loaded: "_lazy-loaded",
         use_native: false
       });
@@ -400,7 +463,7 @@
     __webpack_require__.nc = void 0;
   }();
   var __webpack_exports__ = __webpack_require__.O(void 0, [ 216 ], (function() {
-    return __webpack_require__(896);
+    return __webpack_require__(700);
   }));
   __webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 })();
