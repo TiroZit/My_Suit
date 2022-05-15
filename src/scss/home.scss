@@ -1,0 +1,16 @@
+.page {
+  &__welcome {
+    @include adaptiveValue("margin-top", 50, 30);
+
+    & .welcome__container {
+      @include adaptiveValue("padding-bottom", 60, 50);
+      border-bottom: 1px solid var(--color-white-chinese);
+    }
+
+    & .welcome__items {
+      @include adaptiveValue("margin-top", 70, 35);
+    }
+  }
+}
+
+@import 'welcome'
