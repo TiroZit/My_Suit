@@ -40,6 +40,12 @@ flsFunctions.menuInit()
 import focusVisible from 'focus-visible'
 
 /*
+Модуль inert
+Документация: https://github.com/WICG/inert
+*/
+// import inert from 'wicg-inert'
+
+/*
 Модуль работы со спойлерами
 Сниппет (HTML): spollers
 */

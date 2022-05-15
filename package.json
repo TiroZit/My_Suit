@@ -84,6 +84,7 @@
     "smooth-scroll": "latest",
     "swiper": "latest",
     "tippy.js": "latest",
-    "vanilla-lazyload": "latest"
+    "vanilla-lazyload": "latest",
+    "wicg-inert": "^3.1.1"
   }
 }

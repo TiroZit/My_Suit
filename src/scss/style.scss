@@ -90,7 +90,7 @@ body {
 
 // Ограничивающий контейнер
 .js-focus-visible :focus-visible {
-  // outline: rem(3) solid var(--colorDarkRaspberry);
+  outline: rem(3) solid var(--color-black-eerie);
   transition: outline 0.1s ease 0s;
 }
 
