@@ -132,6 +132,7 @@ body {
 }
 
 .js-focus-visible :focus-visible {
+  outline: 0.1875rem solid var(--color-black-eerie);
   transition: outline 0.1s ease 0s;
 }
 
@@ -149,7 +150,11 @@ body {
   box-sizing: content-box;
   max-width: 69.375rem;
   margin: 0 auto;
-  padding: 0 0.9375rem;
+}
+@media (max-width: 69.37375em) {
+  [class*=__container] {
+    padding: 0 0.9375rem;
+  }
 }
 
 [class*=-ibg] {
@@ -307,11 +312,10 @@ body {
     opacity: 0;
     visibility: hidden;
     padding-top: 0rem;
-    padding-right: 0.9375rem;
     padding-bottom: 2.5rem;
-    padding-left: 0.9375rem;
     transition: padding-top 0.5s, opacity 0.3s, visibility 0.3s;
     border-bottom: 1px solid var(--color-white-chinese);
+    background-color: var(--color-white);
   }
 }
 @media (min-width: 48em) {
@@ -510,4 +514,112 @@ body {
 .socials__item svg {
   width: 0.9375rem;
   height: 0.9375rem;
+}
+
+@supports (margin-top: clamp( 1.875rem , 1.387195122rem  +  2.4390243902vw , 3.125rem )) {
+  .page__welcome {
+    margin-top: clamp( 1.875rem , 1.387195122rem  +  2.4390243902vw , 3.125rem );
+  }
+}
+@supports not (margin-top: clamp( 1.875rem , 1.387195122rem  +  2.4390243902vw , 3.125rem )) {
+  .page__welcome {
+    margin-top: calc(1.875rem + 1.25 * (100vw - 20rem) / 51.25);
+  }
+}
+.page__welcome .welcome__container {
+  border-bottom: 1px solid var(--color-white-chinese);
+}
+@supports (padding-bottom: clamp( 3.125rem , 2.881097561rem  +  1.2195121951vw , 3.75rem )) {
+  .page__welcome .welcome__container {
+    padding-bottom: clamp( 3.125rem , 2.881097561rem  +  1.2195121951vw , 3.75rem );
+  }
+}
+@supports not (padding-bottom: clamp( 3.125rem , 2.881097561rem  +  1.2195121951vw , 3.75rem )) {
+  .page__welcome .welcome__container {
+    padding-bottom: calc(3.125rem + 0.625 * (100vw - 20rem) / 51.25);
+  }
+}
+@supports (margin-top: clamp( 2.1875rem , 1.3338414634rem  +  4.2682926829vw , 4.375rem )) {
+  .page__welcome .welcome__items {
+    margin-top: clamp( 2.1875rem , 1.3338414634rem  +  4.2682926829vw , 4.375rem );
+  }
+}
+@supports not (margin-top: clamp( 2.1875rem , 1.3338414634rem  +  4.2682926829vw , 4.375rem )) {
+  .page__welcome .welcome__items {
+    margin-top: calc(2.1875rem + 2.1875 * (100vw - 20rem) / 51.25);
+  }
+}
+
+.welcome__title {
+  max-width: 46.875rem;
+}
+@supports (font-size: clamp( 1.875rem , 1.387195122rem  +  2.4390243902vw , 3.125rem )) {
+  .welcome__title {
+    font-size: clamp( 1.875rem , 1.387195122rem  +  2.4390243902vw , 3.125rem );
+  }
+}
+@supports not (font-size: clamp( 1.875rem , 1.387195122rem  +  2.4390243902vw , 3.125rem )) {
+  .welcome__title {
+    font-size: calc(1.875rem + 1.25 * (100vw - 20rem) / 51.25);
+  }
+}
+@supports (line-height: clamp( 2.5625rem , 2.1234756098rem  +  2.1951219512vw , 3.6875rem )) {
+  .welcome__title {
+    line-height: clamp( 2.5625rem , 2.1234756098rem  +  2.1951219512vw , 3.6875rem );
+  }
+}
+@supports not (line-height: clamp( 2.5625rem , 2.1234756098rem  +  2.1951219512vw , 3.6875rem )) {
+  .welcome__title {
+    line-height: calc(2.5625rem + 1.125 * (100vw - 20rem) / 51.25);
+  }
+}
+.welcome__items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18.125rem, 1fr));
+}
+@supports (gap: clamp( 0.625rem , 0.137195122rem  +  2.4390243902vw , 1.875rem )) {
+  .welcome__items {
+    gap: clamp( 0.625rem , 0.137195122rem  +  2.4390243902vw , 1.875rem );
+  }
+}
+@supports not (gap: clamp( 0.625rem , 0.137195122rem  +  2.4390243902vw , 1.875rem )) {
+  .welcome__items {
+    gap: calc(0.625rem + 1.25 * (100vw - 20rem) / 51.25);
+  }
+}
+.welcome__item {
+  display: flex;
+  padding: 2.1875rem 2.5rem;
+  justify-content: space-between;
+  align-items: flex-end;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: var(--color-white);
+}
+@supports (min-height: clamp( 18.75rem , 17.5304878049rem  +  6.0975609756vw , 21.875rem )) {
+  .welcome__item {
+    min-height: clamp( 18.75rem , 17.5304878049rem  +  6.0975609756vw , 21.875rem );
+  }
+}
+@supports not (min-height: clamp( 18.75rem , 17.5304878049rem  +  6.0975609756vw , 21.875rem )) {
+  .welcome__item {
+    min-height: calc(18.75rem + 3.125 * (100vw - 20rem) / 51.25);
+  }
+}
+@media (max-width: 29.99875em) {
+  .welcome__item {
+    padding: 1.5625rem 1.25rem;
+  }
+}
+.welcome__item-title {
+  flex: 0 1 13.875rem;
+  font-size: 1.875rem;
+  font-weight: 300;
+  line-height: 1.16;
+}
+.welcome__item svg {
+  width: 1.875rem;
+  height: 0.625rem;
+  margin-bottom: 0.625rem;
 }
