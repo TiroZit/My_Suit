@@ -154,13 +154,12 @@
     opacity: 0;
     visibility: hidden;
     padding-top: rem(0);
-    padding-right: rem(15);
     padding-bottom: rem(40);
-    padding-left: rem(15);
     transition: padding-top .5s,
       opacity .3s,
       visibility .3s;
     border-bottom: 1px solid var(--color-white-chinese);
+    background-color: var(--color-white);
   }
 
   &.submenu-open {
