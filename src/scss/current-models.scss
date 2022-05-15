@@ -7,13 +7,19 @@
   // .current-models__title
   &__title {
     @include adaptiveValue("font-size", 25, 20);
+    @include adaptiveValue("margin-bottom", -10, -15);
   }
 
   // .current-models__slider
   &__slider {
     position: relative;
-    @include adaptiveValue("margin-top", 40, 30);
+    padding-top: rem(50) !important;
     padding-bottom: rem(40) !important;
+
+    @include media-breakpoint-down(tablet) {
+      padding-top: rem(35) !important;
+      padding-bottom: rem(35) !important;
+    }
   }
 
   // .current-models__swiper
@@ -22,11 +28,24 @@
   }
 
   // .current-models__slide
-  &__slide {}
+  &__slide {
+    width: auto;
+
+    @include media-breakpoint-down(mobile) {
+      width: rem(192);
+    }
+
+  }
 
   // .current-models__button-prev
   &__button-prev {
-    left: 0;
+    @include media-breakpoint-up(tablet) {
+      left: 0;
+    }
+
+    @include media-breakpoint-down(tablet) {
+      @include adaptiveValue("right", 65, 50, 768, 320, 1);
+    }
   }
 
   // .current-models__button-next
@@ -37,11 +56,18 @@
   &__button-prev,
   &__button-next {
     position: absolute;
-    bottom: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: rem(-13.5);
+
+    @include media-breakpoint-up(tablet) {
+      bottom: 0;
+    }
+
+    @include media-breakpoint-down(tablet) {
+      top: rem(-13);
+    }
 
     @media (any-hover: hover) {
       transition: color .3s;
@@ -51,9 +77,15 @@
       }
     }
 
+    &.swiper-button-disabled {
+      color: var(--color-dark-gray);
+      cursor: not-allowed;
+    }
+
     svg {
       width: rem(40);
       height: rem(40);
+
     }
   }
 
@@ -61,11 +93,14 @@
   &__scrollbar {
     top: unset !important;
     bottom: rem(5) !important;
-    left: calc(50% - rem(490)) !important;
-    width: percent(980, $maxWidthContainer) !important;
     height: rem(2) !important;
     background-color: var(--color-white-chinese) !important;
     border-radius: 0 !important;
+
+    @include media-breakpoint-up(tablet) {
+      left: calc(50% - 44%) !important;
+      width: percent(980, $maxWidthContainer) !important;
+    }
 
     & div {
       background-color: #5E5E5E !important;

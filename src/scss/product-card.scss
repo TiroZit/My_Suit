@@ -10,8 +10,8 @@
     gap: rem(15);
 
     svg {
-      width: rem(20);
-      height: rem(20);
+      width: percent(20, 45);
+      height: percent(20, 45);
     }
   }
 
@@ -19,8 +19,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: rem(45);
-    height: rem(45);
+    @include adaptiveValue("width", 45, 30);
+    @include adaptiveValue("height", 45, 30);
     border-radius: 50%;
     background-color: var(--color-white);
 
@@ -28,11 +28,14 @@
   }
 
   &__img {
+    width: 100%;
     margin-bottom: rem(15);
   }
 
   // .product-card__info
-  &__info {}
+  &__info {
+    max-width: 65%;
+  }
 
   // .product-card__title
   &__title {

@@ -61,7 +61,7 @@ function initSliders() {
       },
       // observer: true,
       // observeParents: true,
-      slidesPerView: 2,
+      slidesPerView: 'auto',
       spaceBetween: 10,
       // autoHeight: true,
       speed: 500,
@@ -82,16 +82,7 @@ function initSliders() {
         prevEl: '.current-models__button-prev',
       },
       breakpoints: {
-        320: {
-          slidesPerView: 1,
-          spaceBetween: 10,
-          // autoHeight: true,
-        },
-        992: {
-          slidesPerView: 2,
-          spaceBetween: 30,
-        },
-        1200: {
+        1110: {
           slidesPerView: 3,
           spaceBetween: 30,
         },
