@@ -285,7 +285,7 @@
             prevSlideMessage: "Предыдущий слайд",
             nextSlideMessage: "Следующий слайд"
           },
-          slidesPerView: 2,
+          slidesPerView: "auto",
           spaceBetween: 10,
           speed: 500,
           loop: false,
@@ -302,15 +302,7 @@
             prevEl: ".current-models__button-prev"
           },
           breakpoints: {
-            320: {
-              slidesPerView: 1,
-              spaceBetween: 10
-            },
-            992: {
-              slidesPerView: 2,
-              spaceBetween: 30
-            },
-            1200: {
+            1110: {
               slidesPerView: 3,
               spaceBetween: 30
             }
