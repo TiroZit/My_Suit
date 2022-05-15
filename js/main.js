@@ -1,8 +1,7 @@
 (function() {
   var __webpack_modules__ = {
-    644: function() {},
     537: function() {},
-    700: function(__unused_webpack___webpack_module__, __unused_webpack___webpack_exports__, __webpack_require__) {
+    253: function(__unused_webpack___webpack_module__, __unused_webpack___webpack_exports__, __webpack_require__) {
       "use strict";
       var injectStylesIntoStyleTag = __webpack_require__(379);
       var injectStylesIntoStyleTag_default = __webpack_require__.n(injectStylesIntoStyleTag);
@@ -270,16 +269,6 @@
       }
       __webpack_require__(944);
       var swiper_esm = __webpack_require__(930);
-      var swiper = __webpack_require__(644);
-      var swiper_default = __webpack_require__.n(swiper);
-      var swiper_options = {};
-      swiper_options.styleTagTransform = styleTagTransform_default();
-      swiper_options.setAttributes = setAttributesWithoutAttributes_default();
-      swiper_options.insert = insertBySelector_default().bind(null, "head");
-      swiper_options.domAPI = styleDomAPI_default();
-      swiper_options.insertStyleElement = insertStyleElement_default();
-      injectStylesIntoStyleTag_default()(swiper_default(), swiper_options);
-      swiper_default() && swiper_default().locals && swiper_default().locals;
       function bildSliders() {
         let sliders = document.querySelectorAll('[class*="__swiper"]:not(.swiper-wrapper)');
         if (sliders) sliders.forEach((slider => {
@@ -463,7 +452,7 @@
     __webpack_require__.nc = void 0;
   }();
   var __webpack_exports__ = __webpack_require__.O(void 0, [ 216 ], (function() {
-    return __webpack_require__(700);
+    return __webpack_require__(253);
   }));
   __webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 })();
