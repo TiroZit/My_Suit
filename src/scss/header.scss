@@ -101,7 +101,7 @@
       transition: color .3s;
 
       &:hover {
-        color: var(--color-gray);
+        color: var(--color-dark-gray);
       }
     }
 
@@ -120,7 +120,7 @@
 
     &.submenu-active {
       @include media-breakpoint-up(tablet) {
-        color: var(--color-gray);
+        color: var(--color-dark-gray);
       }
     }
 
@@ -199,7 +199,7 @@
       transition: color .3s;
 
       &:hover {
-        color: var(--color-gray);
+        color: var(--color-dark-gray);
       }
     }
   }
@@ -218,7 +218,7 @@
         transition: color .3s;
 
         &:hover {
-          color: var(--color-gray);
+          color: var(--color-dark-gray);
         }
       }
 
@@ -261,7 +261,7 @@
       transition: color .3s;
 
       &:hover {
-        color: var(--color-gray);
+        color: var(--color-dark-gray);
       }
     }
 

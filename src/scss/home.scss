@@ -11,6 +11,11 @@
       @include adaptiveValue("margin-top", 70, 35);
     }
   }
+
+  &__current-models {
+    @include adaptiveValue("margin-top", 40, 30);
+  }
 }
 
-@import 'welcome'
+@import 'welcome';
+@import 'current-models';
