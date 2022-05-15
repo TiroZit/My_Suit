@@ -8,8 +8,8 @@
     position: relative;
     display: flex;
     align-items: center;
-    padding-top: rem(28);
-    padding-bottom: rem(22);
+    padding-top: rem(28) !important;
+    padding-bottom: rem(22) !important;
     border-bottom: 1px solid var(--color-white-chinese);
   }
 
