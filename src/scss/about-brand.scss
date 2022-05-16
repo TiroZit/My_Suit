@@ -1,0 +1,149 @@
+.about-brand {
+  background-color: var(--color-white-cultured);
+
+
+  &__container {
+    @include media-breakpoint-up(tablet) {
+      min-height: rem(1130);
+    }
+
+    border-bottom: 1px solid var(--color-white-chinese);
+  }
+
+  &__wrapper {
+    position: relative;
+
+    @include media-breakpoint-up(container) {
+      margin-right: rem(190);
+    }
+
+    @include media-breakpoint-down(tablet) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  &__info {
+    @include media-breakpoint-up(tablet) {
+      position: relative;
+      z-index: 1;
+    }
+
+    @include adaptiveValue("max-width", 490, 420, 992, 767.92, 1);
+
+    @include media-breakpoint-up(tablet) {
+      margin-left: auto;
+    }
+
+    @include media-breakpoint-up(container) {
+      margin-right: rem(-45);
+    }
+  }
+
+  &__title {
+    @include adaptiveValue("font-size", 60, 35);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+
+    span {
+      display: block;
+      text-align: right;
+    }
+  }
+
+  &__text {
+    line-height: math.div(18, 13);
+    max-width: rem(444);
+    color: var(--color-gray-spanish);
+    @include adaptiveValue("margin-top", 75, 40);
+    margin-bottom: rem(30);
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+
+    svg {
+      width: rem(25);
+      height: rem(20);
+      margin-left: rem(35);
+    }
+
+    @media (any-hover: hover) {
+      transition: color .3s;
+
+      &:hover {
+        color: var(--color-dark-gray);
+      }
+    }
+  }
+
+  &__products {
+    @include media-breakpoint-down(tablet) {
+      max-width: rem(350);
+      margin-top: rem(50);
+      margin-bottom: rem(50);
+    }
+
+    @include media-breakpoint-up(tablet) {
+      position: absolute;
+      top: rem(128);
+      left: 0;
+      z-index: 0;
+      width: 100%;
+      min-height: rem(868);
+    }
+  }
+
+  &__product {
+    @include media-breakpoint-up(tablet) {
+      position: absolute;
+    }
+
+    &:nth-child(1) {
+      @include media-breakpoint-up(tablet) {
+        top: 0;
+        left: 0;
+      }
+
+      @include adaptiveValue("max-width", 350, 300, 992, 767.92, 2);
+
+      & img {
+        height: rem(518);
+      }
+    }
+
+    &:nth-child(2) {
+      @include media-breakpoint-up(tablet) {
+        bottom: 0;
+        left: percent(285, 920);
+        max-width: rem(160);
+
+        & img {
+          height: rem(175);
+        }
+      }
+
+      @include media-breakpoint-down(tablet) {
+        display: none;
+      }
+    }
+
+    &:nth-child(3) {
+      @include media-breakpoint-down(tablet) {
+        display: none;
+      }
+
+      @include media-breakpoint-up(tablet) {
+        bottom: 0;
+        right: 0;
+        @include adaptiveValue("max-width", 350, 300, 992, 767.92, 1);
+
+        & img {
+          height: rem(374);
+        }
+      }
+    }
+  }
+}

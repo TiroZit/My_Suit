@@ -1,0 +1,52 @@
+.about-brand__container
+  .about-brand__wrapper 
+    .about-brand__info 
+      h2.about-brand__title
+        | Собственное
+        br
+        span производство
+      p.about-brand__text 
+        | Текст для примера. С другой стороны консультация с широким активом собой интересный эксперимент проверки направлений прогрессивного развития. Таким образом рамки и место 
+        br
+        |обучения кадров требуют определения и уточнения систем массового участия. 
+        br
+        br
+        | Значимость этих проблем настолько очевидна, 
+        br
+        | что дальнейшее развитие различных форм деятельности представляет собой интересный эксперимент проверки 
+        br
+        | систем массового участия.
+      a.about-brand__link(href="#")
+        | О бренде
+        +icon('arrow-long-right').i-arrow-long-right
+    .about-brand__products
+      article.about-brand__product.product-card
+        .product-card__actions
+          .product-card__action.product-card__action_discount
+            +icon('discount').i-discount(aria-label="Скидка")
+        +image('img/goods/4.jpg', 'alt').product-card__img.lazy
+        .product-card__info
+          a.product-card__title(href="#") Шёлковый костюм в красном цвете
+          .product-card__prices
+            .product-card__price_current
+              span 13900
+              |  RUB
+            s.product-card__price_old
+              span 15900
+              |  RUB
+      article.about-brand__product.product-card
+        +image('img/goods/5.jpg', 'alt').product-card__img.lazy
+        .product-card__info
+          a.product-card__title(href="#") Шёлковый костюм в красном цвете
+          .product-card__prices
+            .product-card__price_current
+              span 13900
+              |  RUB
+      article.about-brand__product.product-card
+        +image('img/goods/6.jpg', 'alt').product-card__img.lazy
+        .product-card__info
+          a.product-card__title(href="#") Шёлковый костюм в красном цвете
+          .product-card__prices
+            .product-card__price_current
+              span 13900
+              |  RUB

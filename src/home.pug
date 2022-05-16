@@ -14,9 +14,11 @@ html(lang='ru')
   body
     .wrapper
       include pug/_header
-      main.page
+      main.page.page_home
         section.page__welcome.welcome
           include pug/welcome
         section.page__current-models.current-models
           include pug/current-models
+        section.page__about-brand.about-brand
+          include pug/about-brand
       include pug/_footer

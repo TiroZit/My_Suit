@@ -1,4 +1,6 @@
 .page {
+  &_home {}
+
   &__welcome {
     @include adaptiveValue("margin-top", 50, 30);
 
@@ -16,7 +18,13 @@
     @include adaptiveValue("margin-top", 40, 30);
     @include adaptiveValue("margin-bottom", 90, 60);
   }
+
+  &__about-brand {
+    @include adaptiveValue("padding-top", 90, 50);
+    padding-bottom: rem(15);
+  }
 }
 
 @import 'welcome';
 @import 'current-models';
+@import 'about-brand';
