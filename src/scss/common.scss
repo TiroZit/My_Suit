@@ -1,3 +1,38 @@
 .i-arrow-long-left {
   transform: rotate(180deg);
 }
+
+.btn {
+  border-radius: 2px;
+
+  &_white {
+    border: 1px solid var(--color-black);
+
+    @media (any-hover: hover) {
+      transition: color .3s, border .3s;
+
+      &:hover {
+        color: var(--color-gray-davys);
+        border: 1px solid var(--color-gray-davys);
+      }
+    }
+  }
+
+  &_black {
+    color: var(--color-white);
+    background-color: var(--color-black);
+
+    @media (any-hover: hover) {
+      transition: background-color .3s;
+
+      &:hover {
+        background-color: var(--color-gray-davys);
+      }
+    }
+  }
+
+  &-shopping {
+    @include adaptiveValue("font-size", 18, 13);
+    padding: rem(19) rem(40);
+  }
+}

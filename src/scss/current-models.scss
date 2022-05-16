@@ -1,5 +1,4 @@
 .current-models {
-  margin-bottom: rem(100);
 
   // .current-models__container
   &__container {}
@@ -7,7 +6,13 @@
   // .current-models__title
   &__title {
     @include adaptiveValue("font-size", 25, 20);
-    @include adaptiveValue("margin-bottom", -10, -15);
+    @include adaptiveValue("margin-bottom", -30, -28);
+  }
+
+  &__btn-shopping {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
   }
 
   // .current-models__slider
@@ -15,9 +20,10 @@
     position: relative;
     padding-top: rem(50) !important;
     padding-bottom: rem(40) !important;
+    @include adaptiveValue("margin-bottom", 90, 60);
 
     @include media-breakpoint-down(tablet) {
-      padding-top: rem(35) !important;
+      padding-top: rem(55) !important;
       padding-bottom: rem(35) !important;
     }
   }
@@ -59,14 +65,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: rem(-13.5);
+
+    @include media-breakpoint-up(tablet) {
+      margin-bottom: rem(-13.5);
+    }
 
     @include media-breakpoint-up(tablet) {
       bottom: 0;
     }
 
     @include media-breakpoint-down(tablet) {
-      top: rem(-13);
+      top: 0;
     }
 
     @media (any-hover: hover) {
@@ -103,7 +112,7 @@
     }
 
     & div {
-      background-color: #5E5E5E !important;
+      background-color: var(--color-gray-davys) !important;
       border-radius: 0 !important;
     }
   }
