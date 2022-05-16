@@ -1,0 +1,115 @@
+.footer {
+  background-color: var(--color-white-cultured);
+  @include adaptiveValue("padding-top", 90, 50);
+  @include adaptiveValue("padding-bottom", 110, 40);
+
+  // .footer__container
+  &__container {
+    display: flex;
+    align-items: center;
+
+    @include media-breakpoint-up(tablet-xl) {
+      justify-content: space-between;
+      gap: rem(15);
+    }
+
+    @include media-breakpoint-down(tablet-xl) {
+      flex-direction: column;
+    }
+  }
+
+  &__copy {
+    @include media-breakpoint-up(tablet-xl) {
+      display: none;
+    }
+
+    @include media-breakpoint-down(tablet-xl) {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      margin-top: rem(40);
+
+      // & .menu__link {
+      //   font-size: rem(10);
+      // }
+    }
+  }
+
+  // .footer__logo
+  &__logo {
+    & .logo {
+      margin-bottom: rem(40);
+    }
+  }
+
+  // .footer__copyright
+  &__copyright {}
+
+  &__copyright,
+  &__policy {
+    @include adaptiveValue("font-size", 8, 10);
+    color: var(--color-gray-quick);
+  }
+
+  // .footer__body
+  &__body {
+    @include media-breakpoint-down(tablet-xl) {
+      display: none;
+    }
+
+    @include media-breakpoint-up(tablet-xl) {
+      flex: 0 0 auto;
+    }
+  }
+
+  // .footer__menu
+  &__menu {
+    @include media-breakpoint-up(tablet-xl) {
+      line-height: math.div(18, 13);
+
+      & .menu__list {
+        @include adaptiveValue("gap", 28, 10, $maxWidthContainer, 767.92, 2);
+      }
+    }
+  }
+
+  // .footer__bottom
+  &__bottom {
+    @include media-breakpoint-down(tablet-xl) {
+      &.socials {
+        display: none;
+      }
+    }
+
+    @include media-breakpoint-up(tablet-xl) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: rem(62);
+
+      & .socials__items {
+        @include adaptiveValue("gap", 30, 10, $maxWidthContainer, 767.92, 2);
+      }
+    }
+  }
+
+  // .footer__policy
+  &__policy {
+    text-decoration: underline !important;
+
+    @media (any-hover: hover) {
+      transition: color .3s;
+
+      &:hover {
+        color: var(--color-black);
+      }
+    }
+  }
+
+  // .footer__subscribe
+  &__subscribe {
+    @include media-breakpoint-up(tablet-xl) {
+      flex: 0 1 rem(560);
+    }
+  }
+}

@@ -1,3 +1,34 @@
 footer.footer
   .footer__container
-    
+    .footer__logo
+      .logo
+        a.logo__link(href="home.html")
+          +image('img/logo.svg', 'Логотип').lazy
+      .footer__copyright(data-da=`.footer__copy, ${992/16}, first`) © MY SUIT 2020
+    .footer__body
+      nav.footer__menu.menu
+        ul.menu__list
+          li.menu__item
+            a.menu__link(href="#") Каталог
+          li.menu__item
+            a.menu__link(href="#") Доставка и возврат
+          li.menu__item
+            a.menu__link(href="#") Контакты
+      .footer__bottom.socials
+        include socials
+        a.footer__policy(href="#" data-da=`.footer__copy, ${992/16}, 2`) Политика обработки данных
+    form.footer__subscribe.subscribe(action='#' method="post")
+      .subscribe__info 
+        .subscribe__title 
+          | Подпишись на наши
+          br
+          | акции и новинки!
+        label.subscribe__checkbox.checkbox(data-da=`.subscribe__fieldset,${992/16},last`)
+          input.subscribe__checkbox-input.checkbox__input(type='checkbox' name='agree' required)
+          span.subscribe__checkbox-title.checkbox__title
+            |Я соглашаюсь на обработку моих персональных данных и ознакомлен(а) с условиями публичной оферты
+      fieldset.subscribe__fieldset
+        input.input.subscribe__input(type='email' name='email' placeholder='E mail' required)
+        button.btn.btn_black.subscribe__button(type='submit') Подписаться
+    .footer__copy 
+      //- a.menu__link(href="#") Контакты
