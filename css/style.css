@@ -418,6 +418,9 @@ body {
     background-color: var(--color-gray-davys);
   }
 }
+.btn_black.focus-visible {
+  outline: 0.1875rem solid var(--color-dark-gray);
+}
 .btn-shopping {
   padding: 1.1875rem 2.5rem;
 }
@@ -558,10 +561,16 @@ body {
   left: 0;
   appearance: none;
 }
+.checkbox__input.focus-visible {
+  outline: none;
+}
 .checkbox__input:checked + .checkbox__title::before {
   background-image: url("../img/check.svg");
   background-repeat: no-repeat;
   background-position: center;
+}
+.checkbox__input.focus-visible + .checkbox__title::before {
+  outline: 0.1875rem solid var(--color-black-eerie);
 }
 
 .input {
@@ -685,7 +694,7 @@ body {
     padding-left: 0.625rem;
   }
 }
-.header__socials .socials__item {
+.header__socials .socials__items {
   gap: 2.5rem;
 }
 @media (max-width: 47.99875em) {

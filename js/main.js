@@ -421,7 +421,7 @@
         if (targetElement.closest("[data-parent]") || buttonClose) {
           const subMenuId = targetElement.dataset.parent ? targetElement.dataset.parent : null;
           const subMenu = document.querySelector(`[data-submenu='${subMenuId}']`);
-          const activeButton = document.querySelector(".submenu-acitve");
+          const activeButton = document.querySelector(".submenu-active");
           const activeSubMenu = document.querySelector(".submenu-open");
           if (subMenu) {
             if (activeButton && activeButton !== targetElement) {
@@ -430,6 +430,10 @@
             }
             targetElement.classList.toggle("submenu-active");
             subMenu.classList.toggle("submenu-open");
+          }
+          if (buttonClose) {
+            activeButton.classList.remove("submenu-active");
+            activeSubMenu.classList.remove("submenu-open");
           }
           e.preventDefault();
         }
