@@ -29,6 +29,10 @@
         background-color: var(--color-gray-davys);
       }
     }
+
+    &.focus-visible {
+      outline: rem(3) solid var(--color-dark-gray);
+    }
   }
 
   &-shopping {
@@ -150,10 +154,18 @@
     left: 0;
     appearance: none;
 
+    &.focus-visible {
+      outline: none;
+    }
+
     &:checked+.checkbox__title::before {
       background-image: url('@img/check.svg');
       background-repeat: no-repeat;
       background-position: center;
+    }
+
+    &.focus-visible+.checkbox__title::before {
+      outline: rem(3) solid var(--color-black-eerie);
     }
   }
 }
