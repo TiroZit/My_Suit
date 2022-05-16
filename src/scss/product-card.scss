@@ -34,13 +34,18 @@
 
   // .product-card__info
   &__info {
-    max-width: 65%;
+    max-width: 80%;
+
+    @include media-breakpoint-down(tablet) {
+      max-width: 65%;
+    }
   }
 
   // .product-card__title
   &__title {
     display: block;
     margin-bottom: rem(15);
+    line-height: math.div(18, 13);
 
     &::before {
       content: '';
@@ -66,7 +71,7 @@
 
     // .product-card__price_old
     &_old {
-      font-size: rem(10);
+      font-size: rem(12);
       color: var(--color-gray);
       margin-left: rem(12);
     }
