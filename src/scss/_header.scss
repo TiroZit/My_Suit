@@ -48,6 +48,32 @@
     // @include adaptiveValue("margin-left", 140, 0);
   }
 
+  &__search {
+    position: absolute;
+    top: rem(95);
+    left: 0;
+    z-index: 1;
+    background-color: var(--color-white);
+    opacity: 0;
+    visibility: hidden;
+    padding: rem(0) rem(15) rem(25) rem(15);
+    transition: padding-top .5s,
+      opacity .3s,
+      visibility .3s;
+    width: 100%;
+    border-bottom: 1px solid var(--color-white-chinese);
+
+    &.search-open {
+      opacity: 1;
+      visibility: visible;
+      padding: rem(25) rem(15) rem(25) rem(15);
+    }
+
+    @include media-breakpoint-down(tablet) {
+      top: rem(83);
+    }
+  }
+
   // .header__menu-icons
   &__menu-icons {}
 

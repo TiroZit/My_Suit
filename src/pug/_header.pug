@@ -61,7 +61,7 @@ header.header
         +image('img/logo.svg', 'Логотип').lazy
     a.menu__link.menu__link_contacts(href="#") Контакты
     .header__menu-icons.menu-icons
-      button.menu-icons__item
+      button.menu-icons__item#searchButton
         svg.i-search(style='stroke: currentColor;' aria-label="Поиск")
           use(xlink:href='img/icons/icons.svg#svg-search')
       a.menu-icons__item(href='#')
@@ -75,3 +75,11 @@ header.header
           use(xlink:href='img/icons/icons.svg#svg-cart')
       button.burger(aria-label="Меню")
         span
+    form.header__search.search(action='#')
+      button.search__button(type="submit")
+        svg.i-search(style='stroke: currentColor;' aria-label="Поиск")
+          use(xlink:href='img/icons/icons.svg#svg-search')
+      input.search__input(type="search" placeholder="Введите запрос")
+      button.search__close
+        svg.i-close-search(style='fill: currentColor;' aria-label='Закрыть поиск')
+          use(xlink:href='img/icons/icons.svg#svg-close')
