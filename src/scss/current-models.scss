@@ -113,6 +113,14 @@
     background-color: var(--color-white-chinese) !important;
     border-radius: 0 !important;
 
+    &::before {
+      content: '';
+      position: absolute;
+      inset: rem(-10) 0 rem(20) 0;
+      width: 100%;
+      height: rem(20);
+    }
+
     @include media-breakpoint-up(tablet) {
       left: calc(50% - 44%) !important;
       width: percent(980, $maxWidthContainer) !important;
