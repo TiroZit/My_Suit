@@ -41,6 +41,9 @@
       width: rem(192);
     }
 
+    & .product-card__img {
+      max-height: rem(380);
+    }
   }
 
   // .current-models__button-prev
