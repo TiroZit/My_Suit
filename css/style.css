@@ -1451,6 +1451,13 @@ body {
   background-color: var(--color-white-chinese) !important;
   border-radius: 0 !important;
 }
+.current-models__scrollbar::before {
+  content: "";
+  position: absolute;
+  inset: -0.625rem 0 1.25rem 0;
+  width: 100%;
+  height: 1.25rem;
+}
 @media (min-width: 48em) {
   .current-models__scrollbar {
     left: 6% !important;
