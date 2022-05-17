@@ -588,8 +588,8 @@ body {
   transition: border 0.3s;
 }
 .input.focus-visible {
-  border: 1px solid var(--color-black);
   outline: none;
+  border: 1px solid var(--color-black);
 }
 .input::placeholder {
   color: var(--color-gray-spanish);
@@ -607,6 +607,68 @@ body {
   right: 0;
   font-size: 0.6875rem;
   text-align: right;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+}
+.search__button {
+  display: inline-flex;
+}
+.search__button svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+@media (any-hover: hover) {
+  .search__button {
+    transition: color 0.3s;
+  }
+  .search__button:hover {
+    color: var(--color-dark-gray);
+  }
+}
+.search__input {
+  margin-left: 1.25rem;
+  border-bottom: 1px solid transparent;
+}
+@supports (flex-basis: clamp( 12.5rem , 11.2804878049rem  +  6.0975609756vw , 15.625rem )) {
+  .search__input {
+    flex-basis: clamp( 12.5rem , 11.2804878049rem  +  6.0975609756vw , 15.625rem );
+  }
+}
+@supports not (flex-basis: clamp( 12.5rem , 11.2804878049rem  +  6.0975609756vw , 15.625rem )) {
+  .search__input {
+    flex-basis: calc(12.5rem + 3.125 * (100vw - 20rem) / 51.25);
+  }
+}
+.search__input.focus-visible {
+  outline: none;
+  border-bottom: 1px solid var(--color-black);
+}
+.search__input::-webkit-search-cancel-button {
+  appearance: none;
+  cursor: pointer;
+  width: 1.25rem;
+  height: 1.25rem;
+  background: url("../img/close.svg") no-repeat 50% 50%;
+}
+.search__close {
+  position: absolute;
+  top: calc(50% - 1.25rem);
+  right: 0.3125rem;
+}
+@media (any-hover: hover) {
+  .search__close {
+    transition: color 0.3s;
+  }
+  .search__close:hover {
+    color: var(--color-dark-gray);
+  }
+}
+.search__close svg {
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 @media (min-width: 48em) {
@@ -714,6 +776,29 @@ body {
     justify-content: center;
     padding-right: 0.625rem;
     padding-left: 0.625rem;
+  }
+}
+.header__search {
+  position: absolute;
+  top: 5.9375rem;
+  left: 0;
+  z-index: 1;
+  background-color: var(--color-white);
+  opacity: 0;
+  visibility: hidden;
+  padding: 0rem 0.9375rem 1.5625rem 0.9375rem;
+  transition: padding-top 0.5s, opacity 0.3s, visibility 0.3s;
+  width: 100%;
+  border-bottom: 1px solid var(--color-white-chinese);
+}
+.header__search.search-open {
+  opacity: 1;
+  visibility: visible;
+  padding: 1.5625rem 0.9375rem 1.5625rem 0.9375rem;
+}
+@media (max-width: 47.99875em) {
+  .header__search {
+    top: 5.1875rem;
   }
 }
 .header__socials .socials__items {
