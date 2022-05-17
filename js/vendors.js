@@ -128,6 +128,1017 @@
       if ("undefined" !== typeof document) applyFocusVisiblePolyfill(document);
     }));
   },
+  11: function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+    __webpack_require__.d(__webpack_exports__, {
+      Z: function() {
+        return JustValidate;
+      }
+    });
+    var __defProp = Object.defineProperty;
+    var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+    var __hasOwnProp = Object.prototype.hasOwnProperty;
+    var __propIsEnum = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, {
+      enumerable: true,
+      configurable: true,
+      writable: true,
+      value: value
+    }) : obj[key] = value;
+    var __spreadValues = (a, b) => {
+      for (var prop in b || (b = {})) if (__hasOwnProp.call(b, prop)) __defNormalProp(a, prop, b[prop]);
+      if (__getOwnPropSymbols) for (var prop of __getOwnPropSymbols(b)) if (__propIsEnum.call(b, prop)) __defNormalProp(a, prop, b[prop]);
+      return a;
+    };
+    var __publicField = (obj, key, value) => {
+      __defNormalProp(obj, "symbol" !== typeof key ? key + "" : key, value);
+      return value;
+    };
+    const EMAIL_REGEXP = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const NUMBER_REGEXP = /^[0-9]+$/;
+    const PASSWORD_REGEXP = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const STRONG_PASSWORD_REGEXP = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const isEmpty = value => {
+      let newVal = value;
+      if ("string" === typeof value) newVal = value.trim();
+      return !newVal;
+    };
+    const isEmail = value => EMAIL_REGEXP.test(value);
+    const isLengthMoreThanMax = (value, len) => value.length > len;
+    const isLengthLessThanMin = (value, len) => value.length < len;
+    const isNumber = value => NUMBER_REGEXP.test(value);
+    const isPassword = value => PASSWORD_REGEXP.test(value);
+    const isStrongPassword = value => STRONG_PASSWORD_REGEXP.test(value);
+    const isNumberMoreThanMax = (value, len) => value > len;
+    const isNumberLessThanMin = (value, len) => value < len;
+    var Rules = (Rules2 => {
+      Rules2["Required"] = "required";
+      Rules2["Email"] = "email";
+      Rules2["MinLength"] = "minLength";
+      Rules2["MaxLength"] = "maxLength";
+      Rules2["Password"] = "password";
+      Rules2["Number"] = "number";
+      Rules2["MaxNumber"] = "maxNumber";
+      Rules2["MinNumber"] = "minNumber";
+      Rules2["StrongPassword"] = "strongPassword";
+      Rules2["CustomRegexp"] = "customRegexp";
+      Rules2["MinFilesCount"] = "minFilesCount";
+      Rules2["MaxFilesCount"] = "maxFilesCount";
+      Rules2["Files"] = "files";
+      return Rules2;
+    })(Rules || {});
+    var GroupRules = (GroupRules2 => {
+      GroupRules2["Required"] = "required";
+      return GroupRules2;
+    })(GroupRules || {});
+    var CustomStyleTagIds = (CustomStyleTagIds2 => {
+      CustomStyleTagIds2["Label"] = "label";
+      CustomStyleTagIds2["LabelArrow"] = "labelArrow";
+      return CustomStyleTagIds2;
+    })(CustomStyleTagIds || {});
+    const getDefaultFieldMessage = (rule, ruleValue) => {
+      switch (rule) {
+       case Rules.Required:
+        return "The field is required";
+
+       case Rules.Email:
+        return "Email has invalid format";
+
+       case Rules.MaxLength:
+        return "The field must contain a maximum of :value characters".replace(":value", String(ruleValue));
+
+       case Rules.MinLength:
+        return "The field must contain a minimum of :value characters".replace(":value", String(ruleValue));
+
+       case Rules.Password:
+        return "Password must contain minimum eight characters, at least one letter and one number";
+
+       case Rules.Number:
+        return "Value should be a number";
+
+       case Rules.StrongPassword:
+        return "Password should contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character";
+
+       case Rules.MaxNumber:
+        return "Number should be less or equal than :value".replace(":value", String(ruleValue));
+
+       case Rules.MinNumber:
+        return "Number should be more or equal than :value".replace(":value", String(ruleValue));
+
+       case Rules.MinFilesCount:
+        return "Files count should be more or equal than :value".replace(":value", String(ruleValue));
+
+       case Rules.MaxFilesCount:
+        return "Files count should be less or equal than :value".replace(":value", String(ruleValue));
+
+       case Rules.Files:
+        return "Uploaded files have one or several invalid properties (extension/size/type etc)";
+
+       default:
+        return "Value is incorrect";
+      }
+    };
+    const getDefaultGroupMessage = rule => {
+      switch (rule) {
+       case GroupRules.Required:
+        return "The field is required";
+
+       default:
+        return "Group is incorrect";
+      }
+    };
+    const isPromise = val => !!val && "function" === typeof val.then;
+    const getNodeParents = el => {
+      let elem = el;
+      const els = [];
+      while (elem) {
+        els.unshift(elem);
+        elem = elem.parentNode;
+      }
+      return els;
+    };
+    const getClosestParent = (groups, parents) => {
+      const reversedParents = [ ...parents ].reverse();
+      for (let i = 0, len = reversedParents.length; i < len; ++i) {
+        const parent = reversedParents[i];
+        for (const key in groups) {
+          const group = groups[key];
+          if (group.groupElem === parent) return [ key, group ];
+        }
+      }
+      return null;
+    };
+    const getClassList = classList => {
+      const list = [];
+      if (Array.isArray(classList)) list.push(...classList); else if ("string" === typeof classList && classList.trim()) list.push(...classList.trim().split(" "));
+      return list;
+    };
+    const errorLabelCss = `.just-validate-error-label[data-tooltip=true]{position:fixed;padding:4px 8px;background:#423f3f;color:#fff;white-space:nowrap;z-index:10;border-radius:4px;transform:translateY(-5px)}.just-validate-error-label[data-tooltip=true]:before{content:'';width:0;height:0;border-left:solid 5px transparent;border-right:solid 5px transparent;border-bottom:solid 5px #423f3f;position:absolute;z-index:3;display:block;bottom:-5px;transform:rotate(180deg);left:calc(50% - 5px)}.just-validate-error-label[data-tooltip=true][data-direction=left]{transform:translateX(-5px)}.just-validate-error-label[data-tooltip=true][data-direction=left]:before{right:-7px;bottom:auto;left:auto;top:calc(50% - 2px);transform:rotate(90deg)}.just-validate-error-label[data-tooltip=true][data-direction=right]{transform:translateX(5px)}.just-validate-error-label[data-tooltip=true][data-direction=right]:before{right:auto;bottom:auto;left:-7px;top:calc(50% - 2px);transform:rotate(-90deg)}.just-validate-error-label[data-tooltip=true][data-direction=bottom]{transform:translateY(5px)}.just-validate-error-label[data-tooltip=true][data-direction=bottom]:before{right:auto;bottom:auto;left:calc(50% - 5px);top:-5px;transform:rotate(0)}`;
+    const TOOLTIP_ARROW_HEIGHT = 5;
+    const defaultGlobalConfig = {
+      errorFieldStyle: {
+        color: "#b81111",
+        border: "1px solid #B81111"
+      },
+      errorFieldCssClass: "just-validate-error-field",
+      successFieldCssClass: "just-validate-success-field",
+      errorLabelStyle: {
+        color: "#b81111"
+      },
+      errorLabelCssClass: "just-validate-error-label",
+      successLabelCssClass: "just-validate-success-label",
+      focusInvalidField: true,
+      lockForm: true,
+      testingMode: false
+    };
+    class JustValidate {
+      constructor(form, globalConfig, dictLocale) {
+        __publicField(this, "form", null);
+        __publicField(this, "fields", {});
+        __publicField(this, "groupFields", {});
+        __publicField(this, "errors", {});
+        __publicField(this, "isValid", false);
+        __publicField(this, "isSubmitted", false);
+        __publicField(this, "globalConfig", defaultGlobalConfig);
+        __publicField(this, "errorLabels", {});
+        __publicField(this, "successLabels", {});
+        __publicField(this, "eventListeners", []);
+        __publicField(this, "dictLocale", []);
+        __publicField(this, "currentLocale");
+        __publicField(this, "customStyleTags", {});
+        __publicField(this, "onSuccessCallback");
+        __publicField(this, "onFailCallback");
+        __publicField(this, "tooltips", []);
+        __publicField(this, "lastScrollPosition");
+        __publicField(this, "isScrollTick");
+        __publicField(this, "refreshAllTooltips", (() => {
+          this.tooltips.forEach((item => {
+            item.refresh();
+          }));
+        }));
+        __publicField(this, "handleDocumentScroll", (() => {
+          this.lastScrollPosition = window.scrollY;
+          if (!this.isScrollTick) {
+            window.requestAnimationFrame((() => {
+              this.refreshAllTooltips();
+              this.isScrollTick = false;
+            }));
+            this.isScrollTick = true;
+          }
+        }));
+        __publicField(this, "formSubmitHandler", (ev => {
+          ev.preventDefault();
+          this.isSubmitted = true;
+          this.validateHandler(ev);
+        }));
+        __publicField(this, "handleFieldChange", (target => {
+          let currentFieldName;
+          for (const fieldName in this.fields) {
+            const field = this.fields[fieldName];
+            if (field.elem === target) {
+              currentFieldName = fieldName;
+              break;
+            }
+          }
+          if (!currentFieldName) return;
+          this.validateField(currentFieldName, true);
+        }));
+        __publicField(this, "handleGroupChange", (target => {
+          let currentGroup;
+          let currentGroupName;
+          for (const groupName in this.groupFields) {
+            const group = this.groupFields[groupName];
+            if (group.elems.find((elem => elem === target))) {
+              currentGroup = group;
+              currentGroupName = groupName;
+              break;
+            }
+          }
+          if (!currentGroup || !currentGroupName) return;
+          this.validateGroup(currentGroupName, currentGroup);
+        }));
+        __publicField(this, "handlerChange", (ev => {
+          if (!ev.target) return;
+          this.handleFieldChange(ev.target);
+          this.handleGroupChange(ev.target);
+          this.renderErrors();
+        }));
+        this.initialize(form, globalConfig, dictLocale);
+      }
+      initialize(form, globalConfig, dictLocale) {
+        this.form = null;
+        this.errors = {};
+        this.isValid = false;
+        this.isSubmitted = false;
+        this.globalConfig = defaultGlobalConfig;
+        this.errorLabels = {};
+        this.successLabels = {};
+        this.eventListeners = [];
+        this.customStyleTags = {};
+        this.tooltips = [];
+        if ("string" === typeof form) {
+          const elem = document.querySelector(form);
+          if (!elem) throw Error(`Form with ${form} selector not found! Please check the form selector`);
+          this.setForm(elem);
+        } else if (form instanceof HTMLFormElement) this.setForm(form); else throw Error(`Form selector is not valid. Please specify a string selector or a DOM element.`);
+        this.globalConfig = __spreadValues(__spreadValues({}, defaultGlobalConfig), globalConfig);
+        if (dictLocale) this.dictLocale = dictLocale;
+        if (this.isTooltip()) {
+          const styleTag = document.createElement("style");
+          styleTag.textContent = errorLabelCss;
+          this.customStyleTags[CustomStyleTagIds.Label] = document.head.appendChild(styleTag);
+          this.addListener("scroll", document, this.handleDocumentScroll);
+        }
+      }
+      getLocalisedString(str) {
+        var _a;
+        if (!this.currentLocale || !this.dictLocale.length) return str;
+        const localisedStr = null == (_a = this.dictLocale.find((item => item.key === str))) ? void 0 : _a.dict[this.currentLocale];
+        return localisedStr || str;
+      }
+      getFieldErrorMessage(fieldRule, elem) {
+        const msg = "function" === typeof fieldRule.errorMessage ? fieldRule.errorMessage(this.getElemValue(elem), this.fields) : fieldRule.errorMessage;
+        return this.getLocalisedString(msg) || getDefaultFieldMessage(fieldRule.rule, fieldRule.value);
+      }
+      getFieldSuccessMessage(successMessage, elem) {
+        const msg = "function" === typeof successMessage ? successMessage(this.getElemValue(elem), this.fields) : successMessage;
+        return this.getLocalisedString(msg);
+      }
+      getGroupErrorMessage(groupRule) {
+        return this.getLocalisedString(groupRule.errorMessage) || getDefaultGroupMessage(groupRule.rule);
+      }
+      getGroupSuccessMessage(groupRule) {
+        return this.getLocalisedString(groupRule.successMessage);
+      }
+      setFieldInvalid(field, fieldRule) {
+        this.fields[field].isValid = false;
+        this.fields[field].errorMessage = this.getFieldErrorMessage(fieldRule, this.fields[field].elem);
+      }
+      setFieldValid(field, successMessage) {
+        this.fields[field].isValid = true;
+        if (void 0 !== successMessage) this.fields[field].successMessage = this.getFieldSuccessMessage(successMessage, this.fields[field].elem);
+      }
+      setGroupInvalid(groupName, groupRule) {
+        this.groupFields[groupName].isValid = false;
+        this.groupFields[groupName].errorMessage = this.getGroupErrorMessage(groupRule);
+      }
+      setGroupValid(groupName, groupRule) {
+        this.groupFields[groupName].isValid = true;
+        this.groupFields[groupName].successMessage = this.getGroupSuccessMessage(groupRule);
+      }
+      getElemValue(elem) {
+        switch (elem.type) {
+         case "checkbox":
+          return elem.checked;
+
+         case "file":
+          return elem.files;
+
+         default:
+          return elem.value;
+        }
+      }
+      validateGroupRule(groupName, elems, groupRule) {
+        switch (groupRule.rule) {
+         case GroupRules.Required:
+          if (elems.every((elem => !elem.checked))) this.setGroupInvalid(groupName, groupRule); else this.setGroupValid(groupName, groupRule);
+        }
+      }
+      validateFieldRule(field, elem, fieldRule, afterInputChanged = false) {
+        const ruleValue = fieldRule.value;
+        const elemValue = this.getElemValue(elem);
+        if (fieldRule.plugin) {
+          const result = fieldRule.plugin(elemValue, this.fields);
+          if (!result) this.setFieldInvalid(field, fieldRule);
+          return;
+        }
+        switch (fieldRule.rule) {
+         case Rules.Required:
+          if (isEmpty(elemValue)) this.setFieldInvalid(field, fieldRule);
+          break;
+
+         case Rules.Email:
+          if ("string" !== typeof elemValue) {
+            this.setFieldInvalid(field, fieldRule);
+            break;
+          }
+          if (!isEmail(elemValue)) this.setFieldInvalid(field, fieldRule);
+          break;
+
+         case Rules.MaxLength:
+          if (void 0 === ruleValue) {
+            console.error(`Value for ${fieldRule.rule} rule for [${field}] field is not defined. The field will be always invalid.`);
+            this.setFieldInvalid(field, fieldRule);
+            break;
+          }
+          if ("number" !== typeof ruleValue) {
+            console.error(`Value for ${fieldRule.rule} rule for [${field}] should be a number. The field will be always invalid.`);
+            this.setFieldInvalid(field, fieldRule);
+            break;
+          }
+          if ("string" !== typeof elemValue) {
+            this.setFieldInvalid(field, fieldRule);
+            break;
+          }
+          if ("" === elemValue) break;
+          if (isLengthMoreThanMax(elemValue, ruleValue)) this.setFieldInvalid(field, fieldRule);
+          break;
+
+         case Rules.MinLength:
+          if (void 0 === ruleValue) {
+            console.error(`Value for ${fieldRule.rule} rule for [${field}] field is not defined. The field will be always invalid.`);
+            this.setFieldInvalid(field, fieldRule);
+            break;
+          }
+          if ("number" !== typeof ruleValue) {
+            console.error(`Value for ${fieldRule.rule} rule for [${field}] should be a number. The field will be always invalid.`);
+            this.setFieldInvalid(field, fieldRule);
+            break;
+          }
+          if ("string" !== typeof elemValue) {
+            this.setFieldInvalid(field, fieldRule);
+            break;
+          }
+          if ("" === elemValue) break;
+          if (isLengthLessThanMin(elemValue, ruleValue)) this.setFieldInvalid(field, fieldRule);
+          break;
+
+         case Rules.Password:
+          if ("string" !== typeof elemValue) {
+            this.setFieldInvalid(field, fieldRule);
+            break;
+          }
+          if ("" === elemValue) break;
+          if (!isPassword(elemValue)) this.setFieldInvalid(field, fieldRule);
+          break;
+
+         case Rules.StrongPassword:
+          if ("string" !== typeof elemValue) {
+            this.setFieldInvalid(field, fieldRule);
+            break;
+          }
+          if ("" === elemValue) break;
+          if (!isStrongPassword(elemValue)) this.setFieldInvalid(field, fieldRule);
+          break;
+
+         case Rules.Number:
+          if ("string" !== typeof elemValue) {
+            this.setFieldInvalid(field, fieldRule);
+            break;
+          }
+          if ("" === elemValue) break;
+          if (!isNumber(elemValue)) this.setFieldInvalid(field, fieldRule);
+          break;
+
+         case Rules.MaxNumber:
+          {
+            if (void 0 === ruleValue) {
+              console.error(`Value for ${fieldRule.rule} rule for [${field}] field is not defined. The field will be always invalid.`);
+              this.setFieldInvalid(field, fieldRule);
+              break;
+            }
+            if ("number" !== typeof ruleValue) {
+              console.error(`Value for ${fieldRule.rule} rule for [${field}] field should be a number. The field will be always invalid.`);
+              this.setFieldInvalid(field, fieldRule);
+              break;
+            }
+            if ("string" !== typeof elemValue) {
+              this.setFieldInvalid(field, fieldRule);
+              break;
+            }
+            if ("" === elemValue) break;
+            const num = +elemValue;
+            if (Number.isNaN(num) || isNumberMoreThanMax(num, ruleValue)) this.setFieldInvalid(field, fieldRule);
+            break;
+          }
+
+         case Rules.MinNumber:
+          {
+            if (void 0 === ruleValue) {
+              console.error(`Value for ${fieldRule.rule} rule for [${field}] field is not defined. The field will be always invalid.`);
+              this.setFieldInvalid(field, fieldRule);
+              break;
+            }
+            if ("number" !== typeof ruleValue) {
+              console.error(`Value for ${fieldRule.rule} rule for [${field}] field should be a number. The field will be always invalid.`);
+              this.setFieldInvalid(field, fieldRule);
+              break;
+            }
+            if ("string" !== typeof elemValue) {
+              this.setFieldInvalid(field, fieldRule);
+              break;
+            }
+            if ("" === elemValue) break;
+            const num = +elemValue;
+            if (Number.isNaN(num) || isNumberLessThanMin(num, ruleValue)) this.setFieldInvalid(field, fieldRule);
+            break;
+          }
+
+         case Rules.CustomRegexp:
+          {
+            if (void 0 === ruleValue) {
+              console.error(`Value for ${fieldRule.rule} rule for [${field}] field is not defined. This field will be always invalid.`);
+              this.setFieldInvalid(field, fieldRule);
+              return;
+            }
+            let regexp;
+            try {
+              regexp = new RegExp(ruleValue);
+            } catch (e) {
+              console.error(`Value for ${fieldRule.rule} rule for [${field}] should be a valid regexp. This field will be always invalid.`);
+              this.setFieldInvalid(field, fieldRule);
+              break;
+            }
+            const str = String(elemValue);
+            if ("" !== str && !regexp.test(str)) this.setFieldInvalid(field, fieldRule);
+            break;
+          }
+
+         case Rules.MinFilesCount:
+          if (void 0 === ruleValue) {
+            console.error(`Value for ${fieldRule.rule} rule for [${field}] field is not defined. This field will be always invalid.`);
+            this.setFieldInvalid(field, fieldRule);
+            break;
+          }
+          if ("number" !== typeof ruleValue) {
+            console.error(`Value for ${fieldRule.rule} rule for [${field}] field should be a number. The field will be always invalid.`);
+            this.setFieldInvalid(field, fieldRule);
+            break;
+          }
+          if (Number.isFinite(null == elemValue ? void 0 : elemValue.length) && elemValue.length < ruleValue) {
+            this.setFieldInvalid(field, fieldRule);
+            break;
+          }
+          break;
+
+         case Rules.MaxFilesCount:
+          if (void 0 === ruleValue) {
+            console.error(`Value for ${fieldRule.rule} rule for [${field}] field is not defined. This field will be always invalid.`);
+            this.setFieldInvalid(field, fieldRule);
+            break;
+          }
+          if ("number" !== typeof ruleValue) {
+            console.error(`Value for ${fieldRule.rule} rule for [${field}] field should be a number. The field will be always invalid.`);
+            this.setFieldInvalid(field, fieldRule);
+            break;
+          }
+          if (Number.isFinite(null == elemValue ? void 0 : elemValue.length) && elemValue.length > ruleValue) {
+            this.setFieldInvalid(field, fieldRule);
+            break;
+          }
+          break;
+
+         case Rules.Files:
+          {
+            if (void 0 === ruleValue) {
+              console.error(`Value for ${fieldRule.rule} rule for [${field}] field is not defined. This field will be always invalid.`);
+              this.setFieldInvalid(field, fieldRule);
+              return;
+            }
+            if ("object" !== typeof ruleValue) {
+              console.error(`Value for ${fieldRule.rule} rule for [${field}] field should be an object. This field will be always invalid.`);
+              this.setFieldInvalid(field, fieldRule);
+              return;
+            }
+            const filesConfig = ruleValue.files;
+            if ("object" !== typeof filesConfig) {
+              console.error(`Value for ${fieldRule.rule} rule for [${field}] field should be an object with files array. This field will be always invalid.`);
+              this.setFieldInvalid(field, fieldRule);
+              return;
+            }
+            const isFilePropsInvalid = (file, fileConfig) => {
+              const minSizeInvalid = Number.isFinite(fileConfig.minSize) && file.size < fileConfig.minSize;
+              const maxSizeInvalid = Number.isFinite(fileConfig.maxSize) && file.size > fileConfig.maxSize;
+              const nameInvalid = Array.isArray(fileConfig.names) && !fileConfig.names.includes(file.name);
+              const extInvalid = Array.isArray(fileConfig.extensions) && !fileConfig.extensions.includes(file.name.split(".")[file.name.split(".").length - 1]);
+              const typeInvalid = Array.isArray(fileConfig.types) && !fileConfig.types.includes(file.type);
+              return minSizeInvalid || maxSizeInvalid || nameInvalid || extInvalid || typeInvalid;
+            };
+            if ("object" === typeof elemValue && null !== elemValue) for (let fileIdx = 0, len = elemValue.length; fileIdx < len; ++fileIdx) {
+              const file = elemValue.item(fileIdx);
+              if (!file) {
+                this.setFieldInvalid(field, fieldRule);
+                break;
+              }
+              const filesInvalid = isFilePropsInvalid(file, filesConfig);
+              if (filesInvalid) {
+                this.setFieldInvalid(field, fieldRule);
+                break;
+              }
+            }
+            break;
+          }
+
+         default:
+          {
+            if ("function" !== typeof fieldRule.validator) {
+              console.error(`Validator for custom rule for [${field}] field should be a function. This field will be always invalid.`);
+              this.setFieldInvalid(field, fieldRule);
+              return;
+            }
+            const result = fieldRule.validator(elemValue, this.fields);
+            if ("boolean" !== typeof result && "function" !== typeof result) console.error(`Validator return value for [${field}] field should be boolean or function. It will be cast to boolean.`);
+            if ("function" === typeof result) if (afterInputChanged) this.fields[field].asyncCheckPending = true; else {
+              this.fields[field].asyncCheckPending = false;
+              const promise = result();
+              if (!isPromise(promise)) {
+                console.error(`Validator function for custom rule for [${field}] field should return a Promise. This field will be always invalid.`);
+                this.setFieldInvalid(field, fieldRule);
+                return;
+              }
+              return promise.then((resp => {
+                if (!resp) this.setFieldInvalid(field, fieldRule);
+              })).catch((() => {
+                this.setFieldInvalid(field, fieldRule);
+              }));
+            }
+            if (!result) this.setFieldInvalid(field, fieldRule);
+          }
+        }
+      }
+      validateField(fieldName, afterInputChanged = false) {
+        var _a;
+        const field = this.fields[fieldName];
+        field.isValid = true;
+        const promises = [];
+        [ ...field.rules ].reverse().forEach((rule => {
+          const res = this.validateFieldRule(fieldName, field.elem, rule, afterInputChanged);
+          if (isPromise(res)) promises.push(res);
+        }));
+        if (field.isValid) this.setFieldValid(fieldName, null == (_a = field.config) ? void 0 : _a.successMessage);
+        return Promise.allSettled(promises);
+      }
+      revalidateField(field) {
+        if ("string" !== typeof field) throw Error(`Field selector is not valid. Please specify a string selector.`);
+        if (!this.fields[field]) {
+          console.error(`Field not found. Check the field selector.`);
+          return Promise.reject();
+        }
+        return new Promise((resolve => {
+          this.validateField(field, true).finally((() => {
+            this.clearFieldError(field);
+            this.clearFieldLabel(field);
+            this.renderFieldError(field);
+            resolve(!!this.fields[field].isValid);
+          }));
+        }));
+      }
+      validateGroup(groupName, group) {
+        const promises = [];
+        [ ...group.rules ].reverse().forEach((rule => {
+          const res = this.validateGroupRule(groupName, group.elems, rule);
+          if (isPromise(res)) promises.push(res);
+        }));
+        return Promise.allSettled(promises);
+      }
+      focusInvalidField() {
+        for (const fieldName in this.fields) {
+          const field = this.fields[fieldName];
+          if (!field.isValid) {
+            setTimeout((() => field.elem.focus()), 0);
+            break;
+          }
+        }
+      }
+      afterSubmitValidation(forceRevalidation = false) {
+        this.renderErrors(forceRevalidation);
+        if (this.globalConfig.focusInvalidField) this.focusInvalidField();
+      }
+      validate(forceRevalidation = false) {
+        return new Promise((resolve => {
+          const promises = [];
+          Object.keys(this.fields).forEach((fieldName => {
+            const promise = this.validateField(fieldName);
+            if (isPromise(promise)) promises.push(promise);
+          }));
+          Object.keys(this.groupFields).forEach((groupName => {
+            const group = this.groupFields[groupName];
+            const promise = this.validateGroup(groupName, group);
+            if (isPromise(promise)) promises.push(promise);
+          }));
+          if (promises.length) Promise.allSettled(promises).then((() => {
+            this.afterSubmitValidation(forceRevalidation);
+            resolve(true);
+          })); else {
+            this.afterSubmitValidation(forceRevalidation);
+            resolve(false);
+          }
+        }));
+      }
+      revalidate() {
+        return new Promise((resolve => {
+          this.validateHandler(void 0, true).finally((() => {
+            if (this.globalConfig.focusInvalidField) this.focusInvalidField();
+            resolve(this.isValid);
+          }));
+        }));
+      }
+      validateHandler(ev, forceRevalidation = false) {
+        if (this.globalConfig.lockForm) this.lockForm();
+        return this.validate(forceRevalidation).finally((() => {
+          var _a, _b;
+          if (this.globalConfig.lockForm) this.unlockForm();
+          if (this.isValid) null == (_a = this.onSuccessCallback) ? void 0 : _a.call(this, ev); else null == (_b = this.onFailCallback) ? void 0 : _b.call(this, this.fields, this.groupFields);
+        }));
+      }
+      setForm(form) {
+        this.form = form;
+        this.form.setAttribute("novalidate", "novalidate");
+        this.removeListener("submit", this.form, this.formSubmitHandler);
+        this.addListener("submit", this.form, this.formSubmitHandler);
+      }
+      addListener(type, elem, handler) {
+        elem.addEventListener(type, handler);
+        this.eventListeners.push({
+          type: type,
+          elem: elem,
+          func: handler
+        });
+      }
+      removeListener(type, elem, handler) {
+        elem.removeEventListener(type, handler);
+        this.eventListeners = this.eventListeners.filter((item => item.type !== type || item.elem !== elem));
+      }
+      addField(field, rules, config) {
+        if ("string" !== typeof field) throw Error(`Field selector is not valid. Please specify a string selector.`);
+        const elem = this.form.querySelector(field);
+        if (!elem) throw Error(`Field with ${field} selector not found! Please check the field selector.`);
+        if (!Array.isArray(rules) || !rules.length) throw Error(`Rules argument for the field [${field}] should be an array and should contain at least 1 element.`);
+        rules.forEach((item => {
+          if (!("rule" in item || "validator" in item || "plugin" in item)) throw Error(`Rules argument for the field [${field}] must contain at least one rule or validator property.`);
+          if (!item.validator && !item.plugin && (!item.rule || !Object.values(Rules).includes(item.rule))) throw Error(`Rule should be one of these types: ${Object.values(Rules).join(", ")}. Provided value: ${item.rule}`);
+        }));
+        this.fields[field] = {
+          elem: elem,
+          rules: rules,
+          isValid: void 0,
+          config: config
+        };
+        this.setListeners(elem);
+        if (this.isSubmitted) this.validate();
+        return this;
+      }
+      removeField(field) {
+        if ("string" !== typeof field) throw Error(`Field selector is not valid. Please specify a string selector.`);
+        if (!this.fields[field]) {
+          console.error(`Field not found. Check the field selector.`);
+          return this;
+        }
+        const type = this.getListenerType(this.fields[field].elem.type);
+        this.removeListener(type, this.fields[field].elem, this.handlerChange);
+        this.clearErrors();
+        delete this.fields[field];
+        return this;
+      }
+      removeGroup(group) {
+        if ("string" !== typeof group) throw Error(`Group selector is not valid. Please specify a string selector.`);
+        if (!this.groupFields[group]) {
+          console.error(`Group not found. Check the group selector.`);
+          return this;
+        }
+        this.groupFields[group].elems.forEach((elem => {
+          const type = this.getListenerType(elem.type);
+          this.removeListener(type, elem, this.handlerChange);
+        }));
+        this.clearErrors();
+        delete this.groupFields[group];
+        return this;
+      }
+      addRequiredGroup(groupField, errorMessage, config, successMessage) {
+        if ("string" !== typeof groupField) throw Error(`Group selector is not valid. Please specify a string selector.`);
+        const elem = this.form.querySelector(groupField);
+        if (!elem) throw Error(`Group with ${groupField} selector not found! Please check the group selector.`);
+        const inputs = elem.querySelectorAll("input");
+        const childrenInputs = Array.from(inputs).filter((input => {
+          const parent = getClosestParent(this.groupFields, getNodeParents(input));
+          if (!parent) return true;
+          return parent[1].elems.find((elem2 => elem2 !== input));
+        }));
+        this.groupFields[groupField] = {
+          rules: [ {
+            rule: GroupRules.Required,
+            errorMessage: errorMessage,
+            successMessage: successMessage
+          } ],
+          groupElem: elem,
+          elems: childrenInputs,
+          isDirty: false,
+          isValid: void 0,
+          config: config
+        };
+        inputs.forEach((input => {
+          this.setListeners(input);
+        }));
+        return this;
+      }
+      getListenerType(type) {
+        switch (type) {
+         case "checkbox":
+         case "select-one":
+         case "file":
+         case "radio":
+          return "change";
+
+         default:
+          return "input";
+        }
+      }
+      setListeners(elem) {
+        const type = this.getListenerType(elem.type);
+        this.removeListener(type, elem, this.handlerChange);
+        this.addListener(type, elem, this.handlerChange);
+      }
+      clearFieldLabel(fieldName) {
+        var _a, _b;
+        null == (_a = this.errorLabels[fieldName]) ? void 0 : _a.remove();
+        null == (_b = this.successLabels[fieldName]) ? void 0 : _b.remove();
+      }
+      clearFieldError(fieldName) {
+        var _a, _b, _c, _d;
+        const field = this.fields[fieldName];
+        const errorStyle = (null == (_a = field.config) ? void 0 : _a.errorFieldStyle) || this.globalConfig.errorFieldStyle;
+        Object.keys(errorStyle).forEach((key => {
+          field.elem.style[key] = "";
+        }));
+        const successStyle = (null == (_b = field.config) ? void 0 : _b.successFieldStyle) || this.globalConfig.successFieldStyle || {};
+        Object.keys(successStyle).forEach((key => {
+          field.elem.style[key] = "";
+        }));
+        field.elem.classList.remove(...getClassList((null == (_c = field.config) ? void 0 : _c.errorFieldCssClass) || this.globalConfig.errorFieldCssClass), ...getClassList((null == (_d = field.config) ? void 0 : _d.successFieldCssClass) || this.globalConfig.successFieldCssClass));
+      }
+      clearErrors() {
+        var _a, _b;
+        Object.keys(this.errorLabels).forEach((key => this.errorLabels[key].remove()));
+        Object.keys(this.successLabels).forEach((key => this.successLabels[key].remove()));
+        for (const fieldName in this.fields) this.clearFieldError(fieldName);
+        for (const groupName in this.groupFields) {
+          const group = this.groupFields[groupName];
+          const errorStyle = (null == (_a = group.config) ? void 0 : _a.errorFieldStyle) || this.globalConfig.errorFieldStyle;
+          Object.keys(errorStyle).forEach((key => {
+            group.elems.forEach((elem => {
+              var _a2;
+              elem.style[key] = "";
+              elem.classList.remove(...getClassList((null == (_a2 = group.config) ? void 0 : _a2.errorFieldCssClass) || this.globalConfig.errorFieldCssClass));
+            }));
+          }));
+          const successStyle = (null == (_b = group.config) ? void 0 : _b.successFieldStyle) || this.globalConfig.successFieldStyle || {};
+          Object.keys(successStyle).forEach((key => {
+            group.elems.forEach((elem => {
+              var _a2;
+              elem.style[key] = "";
+              elem.classList.remove(...getClassList((null == (_a2 = group.config) ? void 0 : _a2.successFieldCssClass) || this.globalConfig.successFieldCssClass));
+            }));
+          }));
+        }
+        this.tooltips = [];
+      }
+      isTooltip() {
+        return !!this.globalConfig.tooltip;
+      }
+      lockForm() {
+        const elems = this.form.querySelectorAll("input, textarea, button, select");
+        for (let i = 0, len = elems.length; i < len; ++i) {
+          elems[i].setAttribute("data-just-validate-fallback-disabled", elems[i].disabled ? "true" : "false");
+          elems[i].setAttribute("disabled", "disabled");
+          elems[i].style.pointerEvents = "none";
+          elems[i].style.webkitFilter = "grayscale(100%)";
+          elems[i].style.filter = "grayscale(100%)";
+        }
+      }
+      unlockForm() {
+        const elems = this.form.querySelectorAll("input, textarea, button, select");
+        for (let i = 0, len = elems.length; i < len; ++i) {
+          if ("true" !== elems[i].getAttribute("data-just-validate-fallback-disabled")) elems[i].removeAttribute("disabled");
+          elems[i].style.pointerEvents = "";
+          elems[i].style.webkitFilter = "";
+          elems[i].style.filter = "";
+        }
+      }
+      renderTooltip(elem, errorLabel, position) {
+        var _a;
+        const {top: top, left: left, width: width, height: height} = elem.getBoundingClientRect();
+        const errorLabelRect = errorLabel.getBoundingClientRect();
+        const pos = position || (null == (_a = this.globalConfig.tooltip) ? void 0 : _a.position);
+        switch (pos) {
+         case "left":
+          errorLabel.style.top = `${top + height / 2 - errorLabelRect.height / 2}px`;
+          errorLabel.style.left = `${left - errorLabelRect.width - TOOLTIP_ARROW_HEIGHT}px`;
+          break;
+
+         case "top":
+          errorLabel.style.top = `${top - errorLabelRect.height - TOOLTIP_ARROW_HEIGHT}px`;
+          errorLabel.style.left = `${left + width / 2 - errorLabelRect.width / 2}px`;
+          break;
+
+         case "right":
+          errorLabel.style.top = `${top + height / 2 - errorLabelRect.height / 2}px`;
+          errorLabel.style.left = `${left + width + TOOLTIP_ARROW_HEIGHT}px`;
+          break;
+
+         case "bottom":
+          errorLabel.style.top = `${top + height + TOOLTIP_ARROW_HEIGHT}px`;
+          errorLabel.style.left = `${left + width / 2 - errorLabelRect.width / 2}px`;
+          break;
+        }
+        errorLabel.dataset.direction = pos;
+        const refresh = () => {
+          this.renderTooltip(elem, errorLabel, position);
+        };
+        return {
+          refresh: refresh
+        };
+      }
+      createErrorLabelElem(name, errorMessage, config) {
+        const errorLabel = document.createElement("div");
+        errorLabel.innerHTML = errorMessage;
+        const customErrorLabelStyle = this.isTooltip() ? null == config ? void 0 : config.errorLabelStyle : (null == config ? void 0 : config.errorLabelStyle) || this.globalConfig.errorLabelStyle;
+        Object.assign(errorLabel.style, customErrorLabelStyle);
+        errorLabel.classList.add(...getClassList((null == config ? void 0 : config.errorLabelCssClass) || this.globalConfig.errorLabelCssClass), "just-validate-error-label");
+        if (this.isTooltip()) errorLabel.dataset.tooltip = "true";
+        if (this.globalConfig.testingMode) errorLabel.dataset.testId = `error-label-${name}`;
+        this.errorLabels[name] = errorLabel;
+        return errorLabel;
+      }
+      createSuccessLabelElem(name, successMessage, config) {
+        if (void 0 === successMessage) return null;
+        const successLabel = document.createElement("div");
+        successLabel.innerHTML = successMessage;
+        const customSuccessLabelStyle = (null == config ? void 0 : config.successLabelStyle) || this.globalConfig.successLabelStyle;
+        Object.assign(successLabel.style, customSuccessLabelStyle);
+        successLabel.classList.add(...getClassList((null == config ? void 0 : config.successLabelCssClass) || this.globalConfig.successLabelCssClass), "just-validate-success-label");
+        if (this.globalConfig.testingMode) successLabel.dataset.testId = `success-label-${name}`;
+        this.successLabels[name] = successLabel;
+        return successLabel;
+      }
+      renderErrorsContainer(label, errorsContainer) {
+        const container = errorsContainer || this.globalConfig.errorsContainer;
+        if ("string" === typeof container) {
+          const elem = this.form.querySelector(container);
+          if (elem) {
+            elem.appendChild(label);
+            return true;
+          } else console.error(`Error container with ${container} selector not found. Errors will be rendered as usual`);
+        }
+        if (container instanceof Element) {
+          container.appendChild(label);
+          return true;
+        }
+        if (void 0 !== container) console.error(`Error container not found. It should be a string or existing Element. Errors will be rendered as usual`);
+        return false;
+      }
+      renderGroupLabel(elem, label, errorsContainer, isSuccess) {
+        if (!isSuccess) {
+          const renderedInErrorsContainer = this.renderErrorsContainer(label, errorsContainer);
+          if (renderedInErrorsContainer) return;
+        }
+        elem.appendChild(label);
+      }
+      renderFieldLabel(elem, label, errorsContainer, isSuccess) {
+        var _a, _b, _c, _d, _e, _f, _g;
+        if (!isSuccess) {
+          const renderedInErrorsContainer = this.renderErrorsContainer(label, errorsContainer);
+          if (renderedInErrorsContainer) return;
+        }
+        if ("checkbox" === elem.type || "radio" === elem.type) {
+          const labelElem = document.querySelector(`label[for="${elem.getAttribute("id")}"]`);
+          if ("label" === (null == (_b = null == (_a = elem.parentElement) ? void 0 : _a.tagName) ? void 0 : _b.toLowerCase())) null == (_d = null == (_c = elem.parentElement) ? void 0 : _c.parentElement) ? void 0 : _d.appendChild(label); else if (labelElem) null == (_e = labelElem.parentElement) ? void 0 : _e.appendChild(label); else null == (_f = elem.parentElement) ? void 0 : _f.appendChild(label);
+        } else null == (_g = elem.parentElement) ? void 0 : _g.appendChild(label);
+      }
+      showErrors(errors) {
+        if ("object" !== typeof errors) throw Error("[showErrors]: Errors should be an object with key: value format");
+        Object.keys(errors).forEach(((fieldName, i) => {
+          const error = errors[fieldName];
+          const field = this.fields[fieldName];
+          field.isValid = false;
+          this.clearFieldError(fieldName);
+          this.clearFieldLabel(fieldName);
+          this.renderFieldError(fieldName, error);
+          if (0 === i && this.globalConfig.focusInvalidField) setTimeout((() => field.elem.focus()), 0);
+        }));
+      }
+      renderFieldError(fieldName, error) {
+        var _a, _b, _c, _d, _e, _f;
+        const field = this.fields[fieldName];
+        if (field.isValid) {
+          if (!field.asyncCheckPending) {
+            const successLabel = this.createSuccessLabelElem(fieldName, field.successMessage, field.config);
+            if (successLabel) this.renderFieldLabel(field.elem, successLabel, null == (_a = field.config) ? void 0 : _a.errorsContainer, true);
+            field.elem.classList.add(...getClassList((null == (_b = field.config) ? void 0 : _b.successFieldCssClass) || this.globalConfig.successFieldCssClass));
+          }
+          return;
+        }
+        this.isValid = false;
+        field.elem.classList.add(...getClassList((null == (_c = field.config) ? void 0 : _c.errorFieldCssClass) || this.globalConfig.errorFieldCssClass));
+        const errorLabel = this.createErrorLabelElem(fieldName, void 0 !== error ? error : field.errorMessage, field.config);
+        this.renderFieldLabel(field.elem, errorLabel, null == (_d = field.config) ? void 0 : _d.errorsContainer);
+        if (this.isTooltip()) this.tooltips.push(this.renderTooltip(field.elem, errorLabel, null == (_f = null == (_e = field.config) ? void 0 : _e.tooltip) ? void 0 : _f.position));
+      }
+      renderErrors(forceRevalidation = false) {
+        var _a, _b, _c, _d;
+        if (!this.isSubmitted && !forceRevalidation) return;
+        this.clearErrors();
+        this.isValid = true;
+        for (const groupName in this.groupFields) {
+          const group = this.groupFields[groupName];
+          if (group.isValid) {
+            group.elems.forEach((elem => {
+              var _a2, _b2;
+              Object.assign(elem.style, (null == (_a2 = group.config) ? void 0 : _a2.successFieldStyle) || this.globalConfig.successFieldStyle);
+              elem.classList.add(...getClassList((null == (_b2 = group.config) ? void 0 : _b2.successFieldCssClass) || this.globalConfig.successFieldCssClass));
+            }));
+            const successLabel = this.createSuccessLabelElem(groupName, group.successMessage, group.config);
+            if (successLabel) this.renderGroupLabel(group.groupElem, successLabel, null == (_a = group.config) ? void 0 : _a.errorsContainer, true);
+            continue;
+          }
+          this.isValid = false;
+          group.elems.forEach((elem => {
+            var _a2, _b2;
+            Object.assign(elem.style, (null == (_a2 = group.config) ? void 0 : _a2.errorFieldStyle) || this.globalConfig.errorFieldStyle);
+            elem.classList.add(...getClassList((null == (_b2 = group.config) ? void 0 : _b2.errorFieldCssClass) || this.globalConfig.errorFieldCssClass));
+          }));
+          const errorLabel = this.createErrorLabelElem(groupName, group.errorMessage, group.config);
+          this.renderGroupLabel(group.groupElem, errorLabel, null == (_b = group.config) ? void 0 : _b.errorsContainer);
+          if (this.isTooltip()) this.tooltips.push(this.renderTooltip(group.groupElem, errorLabel, null == (_d = null == (_c = group.config) ? void 0 : _c.tooltip) ? void 0 : _d.position));
+        }
+        for (const fieldName in this.fields) this.renderFieldError(fieldName);
+      }
+      destroy() {
+        this.eventListeners.forEach((event => {
+          this.removeListener(event.type, event.elem, event.func);
+        }));
+        Object.keys(this.customStyleTags).forEach((key => {
+          this.customStyleTags[key].remove();
+        }));
+        this.clearErrors();
+        if (this.globalConfig.lockForm) this.unlockForm();
+      }
+      refresh() {
+        this.destroy();
+        if (!this.form) console.error("Cannot initialize the library! Form is not defined"); else {
+          this.initialize(this.form, this.globalConfig);
+          Object.keys(this.fields).forEach((key => {
+            this.addField(key, [ ...this.fields[key].rules ], this.fields[key].config);
+          }));
+        }
+      }
+      setCurrentLocale(locale) {
+        if ("string" !== typeof locale && void 0 !== locale) {
+          console.error("Current locale should be a string");
+          return;
+        }
+        this.currentLocale = locale;
+        if (this.isSubmitted) this.validate();
+      }
+      onSuccess(callback) {
+        this.onSuccessCallback = callback;
+        return this;
+      }
+      onFail(callback) {
+        this.onFailCallback = callback;
+        return this;
+      }
+    }
+  },
   585: function(module) {
     !function(n, t) {
       true ? module.exports = t() : 0;

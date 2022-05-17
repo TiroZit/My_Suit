@@ -1,7 +1,7 @@
 (function() {
   var __webpack_modules__ = {
     537: function() {},
-    666: function(__unused_webpack___webpack_module__, __unused_webpack___webpack_exports__, __webpack_require__) {
+    290: function(__unused_webpack___webpack_module__, __unused_webpack___webpack_exports__, __webpack_require__) {
       "use strict";
       var injectStylesIntoStyleTag = __webpack_require__(379);
       var injectStylesIntoStyleTag_default = __webpack_require__.n(injectStylesIntoStyleTag);
@@ -268,6 +268,17 @@
         }
       }
       __webpack_require__(944);
+      var just_validate_es = __webpack_require__(11);
+      const validation = new just_validate_es.Z(".subscribe", {
+        errorFieldCssClass: "is-invalid"
+      });
+      validation.addField("#email", [ {
+        rule: "required",
+        errorMessage: "Обязательное поле!"
+      }, {
+        rule: "email",
+        errorMessage: "Неверный Email!"
+      } ]);
       var swiper_esm = __webpack_require__(930);
       function bildSliders() {
         let sliders = document.querySelectorAll('[class*="__swiper"]:not(.swiper-wrapper)');
@@ -544,7 +555,7 @@
     __webpack_require__.nc = void 0;
   }();
   var __webpack_exports__ = __webpack_require__.O(void 0, [ 216 ], (function() {
-    return __webpack_require__(666);
+    return __webpack_require__(290);
   }));
   __webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 })();
