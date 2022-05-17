@@ -100,7 +100,7 @@
   &__fieldset {
     display: flex;
     flex-direction: column;
-    gap: rem(15);
+    gap: rem(20);
 
     @include media-breakpoint-up(tablet-xl) {
       flex: 0 1 rem(255);
@@ -115,8 +115,15 @@
     }
   }
 
+  &__label {
+    position: relative;
+    flex: 0 1 100%;
+  }
+
   // .subscribe__input
-  &__input {}
+  &__input {
+    width: 100%;
+  }
 
   // .subscribe__button
   &__button {
@@ -184,6 +191,22 @@
   &::placeholder {
     color: var(--color-gray-spanish);
   }
+
+  &.is-invalid {
+    border: 1px solid var(--color-red);
+
+    &::placeholder {
+      color: var(--color-red);
+    }
+  }
+}
+
+.just-validate-error-label {
+  position: absolute;
+  bottom: rem(-15);
+  right: 0;
+  font-size: rem(11);
+  text-align: right;
 }
 
 .menu {

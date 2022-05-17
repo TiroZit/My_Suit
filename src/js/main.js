@@ -104,6 +104,14 @@ import * as flsForms from './files/forms/forms.js'
 */
 // import "./files/forms/inputmask.js";
 
+/* (В работе) Модуль работы с валидацией.*/
+/*
+Подключение и настройка выполняется в файле js/files/forms/validate.js
+Документация по работе в шаблоне:
+Документация плагина: https://github.com/horprogs/Just-validate
+*/
+import './files/forms/validate.js'
+
 /* Модуль работы с ползунком */
 /*
 Подключение и настройка выполняется в файле js/files/forms/range.js

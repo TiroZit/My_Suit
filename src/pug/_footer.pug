@@ -28,7 +28,8 @@ footer.footer
           span.subscribe__checkbox-title.checkbox__title
             |Я соглашаюсь на обработку моих персональных данных и ознакомлен(а) с условиями публичной оферты
       fieldset.subscribe__fieldset
-        input.input.subscribe__input(type='email' name='email' placeholder='E mail' required)
+        label.subscribe__label
+          input.input.subscribe__input#email(type='email' name='email' placeholder='E mail' required)
         button.btn.btn_black.subscribe__button(type='submit') Подписаться
     .footer__copy 
       //- a.menu__link(href="#") Контакты

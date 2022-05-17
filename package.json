@@ -78,6 +78,7 @@
   "dependencies": {
     "focus-visible": "latest",
     "inputmask": "latest",
+    "just-validate": "^3.7.0",
     "lightgallery": "latest",
     "nouislider": "latest",
     "simplebar": "latest",
