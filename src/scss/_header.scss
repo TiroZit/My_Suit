@@ -172,8 +172,9 @@
 
     @include media-breakpoint-up(tablet) {
       position: absolute;
-      top: 0;
-      right: 0;
+      top: rem(20);
+      right: rem(15);
+      display: flex;
 
       @media (any-hover: hover) {
         transition: color .3s;
@@ -184,8 +185,8 @@
       }
 
       svg {
-        width: rem(60);
-        height: rem(60);
+        width: rem(20);
+        height: rem(20);
       }
     }
   }
