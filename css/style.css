@@ -655,8 +655,8 @@ body {
 }
 .search__close {
   position: absolute;
-  top: calc(50% - 1.25rem);
-  right: 0.3125rem;
+  top: calc(50% - 0.46875rem);
+  right: 0.9375rem;
 }
 @media (any-hover: hover) {
   .search__close {
@@ -667,8 +667,8 @@ body {
   }
 }
 .search__close svg {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 0.9375rem;
+  height: 0.9375rem;
 }
 
 @media (min-width: 48em) {
@@ -895,8 +895,9 @@ body {
 @media (min-width: 48em) {
   .submenu__close {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 1.25rem;
+    right: 0.9375rem;
+    display: flex;
   }
 }
 @media (min-width: 48em) and (any-hover: hover) {
@@ -909,8 +910,8 @@ body {
 }
 @media (min-width: 48em) {
   .submenu__close svg {
-    width: 3.75rem;
-    height: 3.75rem;
+    width: 1.25rem;
+    height: 1.25rem;
   }
 }
 
