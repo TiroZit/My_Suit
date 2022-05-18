@@ -13,6 +13,8 @@ function documentActions(e) {
   const searchButtonClose =
     targetElement.classList.contains('search__close') ||
     targetElement.classList.contains('i-close-search')
+  const searchForm = document.querySelector(`.header__search`)
+
   if (targetElement.closest('[data-parent]') || subMenuButtonClose) {
     const subMenuId = targetElement.dataset.parent
       ? targetElement.dataset.parent
@@ -29,7 +31,7 @@ function documentActions(e) {
 
       targetElement.classList.toggle('submenu-active')
       subMenu.classList.toggle('submenu-open')
-      subMenu.hidden = false
+      if (searchForm) searchForm.classList.remove('search-open')
     }
     if (subMenuButtonClose) {
       activeButton.classList.remove('submenu-active')
@@ -39,10 +41,14 @@ function documentActions(e) {
   }
 
   if (targetElement.closest('#searchButton') || searchButtonClose) {
-    const searchForm = document.querySelector(`.header__search`)
-
+    const activeButton = document.querySelector('.submenu-active')
+    const activeSubMenu = document.querySelector('.submenu-open')
     if (searchForm) {
       searchForm.classList.toggle('search-open')
+      if (activeSubMenu) {
+        activeButton.classList.remove('submenu-active')
+        activeSubMenu.classList.remove('submenu-open')
+      }
     }
 
     if (searchButtonClose) {
