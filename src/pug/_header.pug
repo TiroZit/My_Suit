@@ -3,49 +3,50 @@ header.header
     nav.header__menu.menu
       ul.menu__list(data-spollers='767.98')
         li.menu__item 
-          button.menu__link.menu__button(data-parent='1' data-spoller data-spoller-close)
+          button.menu__link.menu__button(data-parent='1' data-spoller)
             |Каталог
             svg.i-arrow-dropdown(style='fill: currentColor;' aria-hidden)
               use(xlink:href='img/icons/icons.svg#svg-arrow-dropdown')
           .menu__submenu.submenu(data-submenu='1')
-            ul.submenu__list
-              li.submenu__item 
-                a.submenu__link(href="#") Все
-              li.submenu__item 
-                a.submenu__link(href="#") Новинки
-              li.submenu__item 
-                a.submenu__link(href="#") Купальники
-              li.submenu__item 
-                a.submenu__link(href="#") Костюмы из щёлка
-              li.submenu__item 
-                a.submenu__link(href="#") Костюмы из трикотажа 
-              li.submenu__item 
-                a.submenu__link(href="#") Костюмы из льна 
-              li.submenu__item 
-                a.submenu__link(href="#") Костюмы из футера 
-              li.submenu__item 
-                a.submenu__link(href="#") Костюмы классика
-              li.submenu__item 
-                a.submenu__link(href="#") Костюмы классика
-              li.submenu__item 
-                a.submenu__link(href="#") Комплекты
-              li.submenu__item 
-                a.submenu__link(href="#") Комплекты 
-              li.submenu__item 
-                a.submenu__link(href="#") Платья
-              li.submenu__item 
-                a.submenu__link(href="#") Юбки
-              li.submenu__item 
-                a.submenu__link(href="#") Рубашки
-              li.submenu__item 
-                a.submenu__link(href="#") Шорты
-              li.submenu__item 
-                a.submenu__link(href="#") Топы / Корсеты
-              li.submenu__item 
-                a.submenu__link(href="#") Верхняя одежда
-            button.submenu__close
-              svg.i-close(aria-label='Закрыть каталог')
-                use(xlink:href='img/icons/icons.svg#svg-close')
+            .submenu__container
+              ul.submenu__list
+                li.submenu__item 
+                  a.submenu__link(href="#") Все
+                li.submenu__item 
+                  a.submenu__link(href="#") Новинки
+                li.submenu__item 
+                  a.submenu__link(href="#") Купальники
+                li.submenu__item 
+                  a.submenu__link(href="#") Костюмы из щёлка
+                li.submenu__item 
+                  a.submenu__link(href="#") Костюмы из трикотажа 
+                li.submenu__item 
+                  a.submenu__link(href="#") Костюмы из льна 
+                li.submenu__item 
+                  a.submenu__link(href="#") Костюмы из футера 
+                li.submenu__item 
+                  a.submenu__link(href="#") Костюмы классика
+                li.submenu__item 
+                  a.submenu__link(href="#") Костюмы классика
+                li.submenu__item 
+                  a.submenu__link(href="#") Комплекты
+                li.submenu__item 
+                  a.submenu__link(href="#") Комплекты 
+                li.submenu__item 
+                  a.submenu__link(href="#") Платья
+                li.submenu__item 
+                  a.submenu__link(href="#") Юбки
+                li.submenu__item 
+                  a.submenu__link(href="#") Рубашки
+                li.submenu__item 
+                  a.submenu__link(href="#") Шорты
+                li.submenu__item 
+                  a.submenu__link(href="#") Топы / Корсеты
+                li.submenu__item 
+                  a.submenu__link(href="#") Верхняя одежда
+              button.submenu__close
+                svg.i-close(aria-label='Закрыть каталог')
+                  use(xlink:href='img/icons/icons.svg#svg-close')
         li.menu__item 
           a.menu__link(href="#") Размеры
         li.menu__item 
@@ -76,10 +77,11 @@ header.header
       button.burger(aria-label="Меню")
         span
     form.header__search.search(action='#')
-      button.search__button(type="submit")
-        svg.i-search(style='stroke: currentColor;' aria-label="Поиск")
-          use(xlink:href='img/icons/icons.svg#svg-search')
-      input.search__input(type="search" placeholder="Введите запрос")
-      button.search__close(type="button")
-        svg.i-close-search( aria-label='Закрыть поиск')
-          use(xlink:href='img/icons/icons.svg#svg-close')
+      .search__container
+        button.search__button(type="submit")
+          svg.i-search(style='stroke: currentColor;' aria-label="Поиск")
+            use(xlink:href='img/icons/icons.svg#svg-search')
+        input.search__input(type="search" placeholder="Введите запрос")
+        button.search__close(type="button")
+          svg.i-close-search( aria-label='Закрыть поиск')
+            use(xlink:href='img/icons/icons.svg#svg-close')

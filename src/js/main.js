@@ -158,13 +158,13 @@ import './files/scroll/lazyload.js'
 // import './libs/watcher.js'
 
 // Функции работы скроллом
-// import * as flsScroll from "./files/scroll/scroll.js";
+import * as flsScroll from './files/scroll/scroll.js'
 
 // Плавная навигация по странице
 // flsScroll.pageNavigation();
 
 // Функционал добавления классов к хедеру при прокрутке
-// flsScroll.headerScroll();
+// flsScroll.headerScroll()
 
 // Функционал липкого блока
 // flsScroll.stickyBlock();

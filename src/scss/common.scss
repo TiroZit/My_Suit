@@ -210,8 +210,14 @@
 }
 
 .search {
-  display: flex;
-  align-items: center;
+
+  &__container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--color-white-chinese);
+    padding-bottom: rem(25);
+  }
 
   &__button {
     display: inline-flex;
@@ -251,7 +257,7 @@
 
   &__close {
     position: absolute;
-    top: calc(50% - rem(7.5));
+    top: 0;
     right: rem(15);
 
     @media (any-hover: hover) {

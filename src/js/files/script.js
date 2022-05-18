@@ -29,6 +29,7 @@ function documentActions(e) {
 
       targetElement.classList.toggle('submenu-active')
       subMenu.classList.toggle('submenu-open')
+      subMenu.hidden = false
     }
     if (subMenuButtonClose) {
       activeButton.classList.remove('submenu-active')

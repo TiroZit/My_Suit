@@ -1,11 +1,28 @@
 .header {
+  // position: relative;
+  // top: 0;
+  // left: 0;
+  // right: 0;
+  // z-index: 10;
+  // background-color: var(--color-white);
+
+  // &._header-scroll {
+  //   position: fixed;
+  //   transition: transform .3s;
+  //   transform: translateY(-100%);
+  // }
+
+  // &._header-show {
+  //   transform: translateY(0);
+  // }
+
+
   @include media-breakpoint-down(tablet) {
     font-weight: 300;
   }
 
   // .header__container
   &__container {
-    position: relative;
     display: flex;
     align-items: center;
     padding-top: rem(28) !important;
@@ -56,17 +73,17 @@
     background-color: var(--color-white);
     opacity: 0;
     visibility: hidden;
-    padding: rem(0) rem(15) rem(25) rem(15);
+    padding-top: 0;
     transition: padding-top .5s,
       opacity .3s,
       visibility .3s;
     width: 100%;
-    border-bottom: 1px solid var(--color-white-chinese);
+
 
     &.search-open {
       opacity: 1;
       visibility: visible;
-      padding: rem(25) rem(15) rem(25) rem(15);
+      padding-top: rem(25);
     }
 
     @include media-breakpoint-down(tablet) {
@@ -110,17 +127,23 @@
     position: absolute;
     top: rem(95);
     left: 0;
-    display: flex;
     width: 100%;
     opacity: 0;
     visibility: hidden;
     padding-top: rem(0);
-    padding-bottom: rem(40);
     transition: padding-top .5s,
       opacity .3s,
       visibility .3s;
-    border-bottom: 1px solid var(--color-white-chinese);
     background-color: var(--color-white);
+  }
+
+  &__container {
+    @include media-breakpoint-up(tablet) {
+      position: relative;
+      display: flex;
+      border-bottom: 1px solid var(--color-white-chinese);
+      padding-bottom: rem(40);
+    }
   }
 
   &.submenu-open {
@@ -132,6 +155,8 @@
   }
 
   &__list {
+    max-width: rem(1110);
+
     @include media-breakpoint-up(tablet) {
       display: flex;
       flex: 0 1 890px;
@@ -172,7 +197,7 @@
 
     @include media-breakpoint-up(tablet) {
       position: absolute;
-      top: rem(20);
+      top: 0;
       right: rem(15);
       display: flex;
 
