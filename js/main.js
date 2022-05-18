@@ -1,7 +1,7 @@
 (function() {
   var __webpack_modules__ = {
     537: function() {},
-    290: function(__unused_webpack___webpack_module__, __unused_webpack___webpack_exports__, __webpack_require__) {
+    397: function(__unused_webpack___webpack_module__, __unused_webpack___webpack_exports__, __webpack_require__) {
       "use strict";
       var injectStylesIntoStyleTag = __webpack_require__(379);
       var injectStylesIntoStyleTag_default = __webpack_require__.n(injectStylesIntoStyleTag);
@@ -329,6 +329,15 @@
         class_loaded: "_lazy-loaded",
         use_native: false
       });
+      let addWindowScrollEvent = false;
+      setTimeout((() => {
+        if (addWindowScrollEvent) {
+          let windowScroll = new Event("windowScroll");
+          window.addEventListener("scroll", (function(e) {
+            document.dispatchEvent(windowScroll);
+          }));
+        }
+      }), 0);
       function DynamicAdapt(type) {
         this.type = type;
       }
@@ -430,6 +439,7 @@
         const targetElement = e.target;
         const subMenuButtonClose = targetElement.classList.contains("submenu__close") || targetElement.classList.contains("i-close");
         const searchButtonClose = targetElement.classList.contains("search__close") || targetElement.classList.contains("i-close-search");
+        const searchForm = document.querySelector(`.header__search`);
         if (targetElement.closest("[data-parent]") || subMenuButtonClose) {
           const subMenuId = targetElement.dataset.parent ? targetElement.dataset.parent : null;
           const subMenu = document.querySelector(`[data-submenu='${subMenuId}']`);
@@ -442,6 +452,7 @@
             }
             targetElement.classList.toggle("submenu-active");
             subMenu.classList.toggle("submenu-open");
+            if (searchForm) searchForm.classList.remove("search-open");
           }
           if (subMenuButtonClose) {
             activeButton.classList.remove("submenu-active");
@@ -450,8 +461,15 @@
           e.preventDefault();
         }
         if (targetElement.closest("#searchButton") || searchButtonClose) {
-          const searchForm = document.querySelector(`.header__search`);
-          if (searchForm) searchForm.classList.toggle("search-open");
+          const activeButton = document.querySelector(".submenu-active");
+          const activeSubMenu = document.querySelector(".submenu-open");
+          if (searchForm) {
+            searchForm.classList.toggle("search-open");
+            if (activeSubMenu) {
+              activeButton.classList.remove("submenu-active");
+              activeSubMenu.classList.remove("submenu-open");
+            }
+          }
           if (searchButtonClose) document.querySelector(`.header__search`).classList.remove("search-open");
           e.preventDefault();
         }
@@ -562,7 +580,7 @@
     __webpack_require__.nc = void 0;
   }();
   var __webpack_exports__ = __webpack_require__.O(void 0, [ 216 ], (function() {
-    return __webpack_require__(290);
+    return __webpack_require__(397);
   }));
   __webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 })();
