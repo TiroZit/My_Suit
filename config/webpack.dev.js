@@ -111,10 +111,6 @@ const config = {
             loader: 'string-replace-loader',
             options: {
               multiple: [
-                {
-                  search: "link(rel='stylesheet' href='css/style.min.css')",
-                  replace: ' ',
-                },
                 { search: 'PROJECT_NAME', replace: rootFolder, flags: 'g' },
               ],
             },

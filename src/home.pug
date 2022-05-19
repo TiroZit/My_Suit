@@ -1,28 +1,23 @@
-include ../assets/pug/_mixins
-doctype html
-html(lang='ru')
-  head
-    meta(charset="UTF-8")
-    meta(name="viewport" content="width=device-width, initial-scale=1.0")
-    link(rel="icon" type="image/x-icon" href="favicon.ico")
-    link(rel='stylesheet' href='css/style.min.css')
-    link(rel="preload" href='fonts/Manrope-Medium.woff2' as="font" type="font/woff2" crossorigin)
-    link(rel="preload" href='fonts/Manrope-Regular.woff2' as="font" type="font/woff2" crossorigin)
-    link(rel="preload" href='fonts/Manrope-Light.woff2' as="font" type="font/woff2" crossorigin)
-    link(rel="preload" href='fonts/Manrope-Bold.woff2' as="font" type="font/woff2" crossorigin)
-    script.
-      const detect=function(A=[]){var t=[{type:"webp",url:"data:image/webp;base64,UklGRhwAAABXRUJQVlA4TBAAAAAvAAAAEAfQpv5HmQMR0f8A"},{type:"avif",url:"data:image/avif;base64,AAAAHGZ0eXBtaWYxAAAAAG1pZjFhdmlmbWlhZgAAAPFtZXRhAAAAAAAAACFoZGxyAAAAAAAAAABwaWN0AAAAAAAAAAAAAAAAAAAAAA5waXRtAAAAAAABAAAAHmlsb2MAAAAABEAAAQABAAAAAAEVAAEAAAAeAAAAKGlpbmYAAAAAAAEAAAAaaW5mZQIAAAAAAQAAYXYwMUltYWdlAAAAAHBpcHJwAAAAUWlwY28AAAAUaXNwZQAAAAAAAAABAAAAAQAAABBwYXNwAAAAAQAAAAEAAAAVYXYxQ4EgAAAKBzgABpAQ0AIAAAAQcGl4aQAAAAADCAgIAAAAF2lwbWEAAAAAAAAAAQABBAECg4QAAAAmbWRhdAoHOAAGkBDQAjITFkAAAEgAAAB5TNw9UxdXU6F6oA == "}].concat(A),e={},o=[],a=document.querySelector('html');return t.map(((A,t)=>{!function(A){let t=new Image;t.src=A.url,t.onerror=function(t){var s=new Set(a.getAttribute("class")?a.getAttribute("class").split(" "):[]);o.push(new Promise((function(t,o){e[A.type.toLowerCase()]=!1,t({[A.type.toLowerCase()]:!1})}))),s.add("no-"+A.type.toLowerCase()),a.setAttribute("class",[...s].join(" ")),console.log(A.type.toUpperCase()+" not supported in this browser",t)},t.onload=function(t){var s=new Set(a.getAttribute("class")?a.getAttribute("class").split(" "):[]);o.push(new Promise((function(t,o){e[A.type.toLowerCase()]=!0,t({[A.type.toLowerCase()]:!0})}))),s.add(A.type.toLowerCase()),a.setAttribute("class",[...s].join(" ")),console.log(A.type.toUpperCase()+" supported in this browser")}}(A)})),Promise.all(o).then((function(){return e}))};detect()
-    script(defer src='js/vendors.min.js')
-    script(defer src='js/main.min.js')
-    title My Suit | Главная
-  body
-    .wrapper
-      include pug/_header
-      main.page.page_home
-        section.page__welcome.welcome
-          include pug/welcome
-        section.page__current-models.current-models
-          include pug/current-models
-        section.page__about-brand.about-brand
-          include pug/about-brand
-      include pug/_footer
+extends ../assets/pug/_base
+block vars
+  - var lang = 'ru'
+  - var title = 'My Suit | Главная'
+  - var description = ''
+  - var keywords = ''
+  //- Open Graph:
+  - var type = 'website'
+  - var imageOG = ''
+  //- Preload fonts
+  - var fonts = ['Manrope-Medium', 'Manrope-Regular', 'Manrope-Light' ]
+
+block content
+  .wrapper
+    include pug/_header
+    main.page.page_home
+      section.page__welcome.welcome
+        include pug/welcome
+      section.page__current-models.current-models
+        include pug/current-models
+      section.page__about-brand.about-brand
+        include pug/about-brand
+    include pug/_footer

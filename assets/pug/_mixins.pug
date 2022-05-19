@@ -13,6 +13,13 @@ mixin image(file, alt="")
       source(srcset=`${fileName}.webp` type="image/webp")
       img(data-src=`${file}` alt=`${alt}` loading='lazy')&attributes(attributes)
 
+mixin linkCSS(file)
+
+  if isDev
+
+  else
+    link(rel='stylesheet' href=`${file}`)
+
 mixin icon(id)
   svg&attributes(attributes)
     use(xlink:href=`img/icons/icons.svg#svg-${id}`)
