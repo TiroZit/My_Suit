@@ -147,6 +147,11 @@ const config = {
           to: `../img/favicons`,
           noErrorOnMissing: true,
         },
+        {
+          from: `${paths.assets}/img/favicons/site.webmanifest`,
+          to: `../img/favicons`,
+          noErrorOnMissing: true,
+        },
       ],
     }),
   ],
