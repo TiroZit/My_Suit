@@ -1,0 +1,8 @@
+mixin breadcrumbs(pathLine)
+  nav.breadcrumbs
+    .breadcrumbs__container
+      ul.breadcrumbs__list
+        each item in pathLine
+          - const { name, path } = item
+          li.breadcrumbs__item
+            a.breadcrumbs__link(href=path)= name
