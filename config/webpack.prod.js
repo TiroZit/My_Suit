@@ -143,8 +143,8 @@ const config = {
           noErrorOnMissing: true,
         },
         {
-          from: `${paths.assets}/favicon.ico`,
-          to: `../`,
+          from: `${paths.assets}/img/favicons/favicon.ico`,
+          to: `../img/favicons`,
           noErrorOnMissing: true,
         },
       ],
