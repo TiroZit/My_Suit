@@ -2,8 +2,9 @@
   &__container_catalog {
     display: grid;
     grid-template-columns: auto 1fr;
-    column-gap: rem(40);
+    column-gap: rem(30);
     margin-top: rem(50);
+    margin-bottom: rem(100);
   }
 }
 
@@ -12,6 +13,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: rem(20);
   }
 
   &__title {
@@ -20,6 +22,25 @@
 
   &__select {
     flex: 0 1 rem(294);
+  }
+
+  &__body {
+    position: relative;
+    z-index: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(rem(254), 1fr));
+    grid-template-rows: repeat(auto-fit, minmax(rem(341), 1fr));
+
+    @include media-breakpoint-down(tablet-xl) {}
+
+    @include adaptiveValue("column-gap", 20, 10);
+    @include adaptiveValue("row-gap", 30, 20);
+  }
+
+  &__product-card {
+    .product-card__img {
+      @include adaptiveValue("height", 380, 216);
+    }
   }
 }
 
