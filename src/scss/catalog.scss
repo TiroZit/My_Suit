@@ -1,1 +1,10 @@
-@import 'breadcrumbs'
+.page {
+  &__container_catalog {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    margin-top: rem(50);
+  }
+}
+
+@import 'breadcrumbs';
+@import 'aside';

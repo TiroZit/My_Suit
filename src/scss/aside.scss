@@ -1,0 +1,21 @@
+.aside-catalog {
+  &__list {}
+
+  &__item {
+    &:not(:last-child) {
+      margin-bottom: rem(20);
+    }
+  }
+
+  &__link {
+    color: var(--color-dark-gray);
+
+    @media (any-hover: hover) {
+      transition: color .3s;
+
+      &:hover {
+        color: var(--color-black);
+      }
+    }
+  }
+}

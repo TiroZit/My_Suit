@@ -94,6 +94,10 @@ body {
   }
 }
 
+.page {
+  margin-top: rem(20);
+}
+
 // Ограничивающий контейнер
 .js-focus-visible :focus-visible {
   outline: rem(3) solid var(--color-black-eerie);
