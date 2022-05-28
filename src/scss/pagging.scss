@@ -27,6 +27,11 @@
   }
 
   &__arrow {
+    &:disabled {
+      cursor: not-allowed;
+      color: var(--color-gray-spanish);
+    }
+
     svg {
       width: rem(12);
       height: rem(10);

@@ -34,11 +34,7 @@
 
   // .product-card__info
   &__info {
-    max-width: 80%;
-
-    @include media-breakpoint-down(tablet) {
-      max-width: 65%;
-    }
+    max-width: 90%;
   }
 
   // .product-card__title

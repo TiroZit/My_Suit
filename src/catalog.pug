@@ -26,22 +26,26 @@ block content
         }
       ])
       .page__container.page__container_catalog
-        aside.aside-catalog
+        aside.aside-catalog(data-spollers='767.98')
+          button.aside-catalog__button(data-spoller)
+            |Каталог
+            svg.i-arrow-dropdown(style='fill: currentColor;' aria-hidden)
+              use(xlink:href='img/icons/icons.svg#svg-arrow-dropdown')
           ul.aside-catalog__list 
             li.aside-catalog__item 
               a.aside-catalog__link(href="#") Все
             li.aside-catalog__item 
-              a.aside-catalog__link(href="#") Новинки
+              a.aside-catalog__link.aside-catalog__link_active(href="#") Новинки
             li.aside-catalog__item 
               a.aside-catalog__link(href="#") Купальники
             li.aside-catalog__item 
-              a.aside-catalog__link(href="#") Костюмы из щёлка 
+              a.aside-catalog__link(href="#") Костюмы из щёлка
             li.aside-catalog__item 
-              a.aside-catalog__link(href="#") Костюмы из трикотажа 
+              a.aside-catalog__link(href="#") Костюмы из трикотажа
             li.aside-catalog__item 
-              a.aside-catalog__link(href="#") Костюмы изо льна 
+              a.aside-catalog__link(href="#") Костюмы изо льна
             li.aside-catalog__item 
-              a.aside-catalog__link(href="#") Костюмы из футера 
+              a.aside-catalog__link(href="#") Костюмы из футера
             li.aside-catalog__item 
               a.aside-catalog__link(href="#") Костюмы классика
             li.aside-catalog__item 
@@ -86,6 +90,22 @@ block content
                     |  RUB
                   s.product-card__price_old
                     span 15900
+                    |  RUB
+            article.product-card.catalog__product-card
+              +image('img/goods/8.jpg', 'alt').product-card__img.lazy
+              .product-card__info
+                a.product-card__title(href="#") Шёлковый костюм в красном цвете Шёлковый костюм
+                .product-card__prices
+                  .product-card__price_current
+                    span 13900
+                    |  RUB
+            article.product-card.catalog__product-card
+              +image('img/goods/9.jpg', 'alt').product-card__img.lazy
+              .product-card__info
+                a.product-card__title(href="#") Шёлковый костюм в красном цвете Шёлковый костюм
+                .product-card__prices
+                  .product-card__price_current
+                    span 13900
                     |  RUB
             article.product-card.catalog__product-card
               .product-card__actions
@@ -173,7 +193,7 @@ block content
                     |  RUB
           .catalog__footer
             .catalog__pagging.pagging 
-              button.pagging__arrow.pagging__arrow_left(aria-label='Предыдущая страница')
+              button.pagging__arrow.pagging__arrow_left(disabled aria-label='Предыдущая страница')
                 svg.i-arrow-left(style='fill: currentColor;' aria-hidden)
                   use(xlink:href='img/icons/icons.svg#svg-arrow-left')
               ul.pagging__list 
