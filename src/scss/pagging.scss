@@ -1,0 +1,47 @@
+.pagging {
+  display: flex;
+  align-items: center;
+  gap: rem(20);
+
+  &__list {
+    display: flex;
+    gap: rem(16);
+  }
+
+  &__item {}
+
+  &__link {
+    color: var(--color-gray-spanish);
+
+    &_active {
+      color: var(--color-black);
+    }
+
+    @media (any-hover: hover) {
+      transition: color .3s;
+
+      &:hover {
+        color: var(--color-black);
+      }
+    }
+  }
+
+  &__arrow {
+    svg {
+      width: rem(12);
+      height: rem(10);
+    }
+
+    @media (any-hover: hover) {
+      transition: color .3s;
+
+      &:hover {
+        color: var(--color-gray-spanish);
+      }
+    }
+
+    &_left {}
+
+    &_right {}
+  }
+}

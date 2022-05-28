@@ -42,7 +42,27 @@
       @include adaptiveValue("height", 380, 216);
     }
   }
+
+  &__footer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    @include adaptiveValue("margin-top", 70, 50);
+  }
+
+  &__pagging {
+    position: absolute;
+    top: calc(50% - rem(11));
+    left: 0;
+  }
+
+  &__more {
+    display: block;
+    margin: 0 auto;
+    padding: rem(13) rem(65);
+  }
 }
 
 @import 'breadcrumbs';
 @import 'aside';
+@import 'pagging';

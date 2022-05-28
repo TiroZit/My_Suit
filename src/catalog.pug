@@ -171,4 +171,26 @@ block content
                   s.product-card__price_old
                     span 15900
                     |  RUB
+          .catalog__footer
+            .catalog__pagging.pagging 
+              button.pagging__arrow.pagging__arrow_left(aria-label='Предыдущая страница')
+                svg.i-arrow-left(style='fill: currentColor;' aria-hidden)
+                  use(xlink:href='img/icons/icons.svg#svg-arrow-left')
+              ul.pagging__list 
+                li.pagging__item 
+                  a.pagging__link.pagging__link_active(href="#") 1
+                li.pagging__item 
+                  a.pagging__link(href="#") 2
+                li.pagging__item 
+                  a.pagging__link(href="#") 3
+                li.pagging__item 
+                  a.pagging__link(href="#") 4
+                li.pagging__item 
+                  a.pagging__link(href="#") ...
+                li.pagging__item 
+                  a.pagging__link(href="#") 12
+              button.pagging__arrow.pagging__arrow_right(aria-label='Следующая страница')
+                svg.i-arrow-right(style='fill: currentColor;' aria-hidden)
+                  use(xlink:href='img/icons/icons.svg#svg-arrow-right')
+            a.catalog__more.btn.btn_white(href="#") Показать еще
     include pug/_footer
