@@ -63,4 +63,13 @@ block content
             li.aside-catalog__item 
               a.aside-catalog__link(href="#") Верхняя одежда
         .catalog
+          .catalog__inner
+            h1.catalog__title Новинки
+            .catalog__select 
+              select.select(name='')
+                option.select__option(value='' selected) Сортировать по размеру
+                option.select__option(value='2') 42
+                option.select__option(value='3') 44
+                option.select__option(value='4') 46
+                option.select__option(value='5') 48
     include pug/_footer
