@@ -1,3 +1,7 @@
+@import 'breadcrumbs';
+@import 'aside';
+@import 'pagging';
+
 .page {
   &__container_catalog {
     margin-top: rem(50);
@@ -88,9 +92,15 @@
   }
 
   &__pagging {
-    position: absolute;
-    top: calc(50% - rem(11));
-    left: 0;
+    @include media-breakpoint-up(tablet-xl) {
+      position: absolute;
+      top: calc(50% - rem(11));
+      left: 0;
+    }
+
+    @include media-breakpoint-down(tablet) {
+      display: none;
+    }
   }
 
   &__more {
@@ -99,7 +109,3 @@
     padding: rem(13) rem(65);
   }
 }
-
-@import 'breadcrumbs';
-@import 'aside';
-@import 'pagging';
