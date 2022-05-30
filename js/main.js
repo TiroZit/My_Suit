@@ -706,6 +706,36 @@
             }
           }
         });
+        if (document.querySelector(".thumbs-images")) {
+          const thumbsSwiper = new swiper_esm.ZP(".thumbs-images", {
+            modules: [ swiper_esm.oM, swiper_esm.o3 ],
+            direction: "vertical",
+            slidesPerView: "auto",
+            spaceBetween: 12,
+            speed: 500,
+            loop: false,
+            preloadImages: false,
+            lazy: {
+              loadPrevNext: true
+            },
+            breakpoints: {}
+          });
+          new swiper_esm.ZP(".images-product__slider", {
+            modules: [ swiper_esm.oM, swiper_esm.o3 ],
+            grabCursor: true,
+            slidesPerView: 1,
+            speed: 500,
+            thumbs: {
+              swiper: thumbsSwiper
+            },
+            loop: false,
+            preloadImages: false,
+            lazy: {
+              loadPrevNext: true
+            },
+            breakpoints: {}
+          });
+        }
       }
       window.addEventListener("load", (function(e) {
         initSliders();
