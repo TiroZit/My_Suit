@@ -9,20 +9,34 @@
     padding-bottom: rem(55);
     border-bottom: 1px solid var(--color-white-chinese);
   }
+
+  &__info {}
 }
 
 .main-product {
-  display: grid;
-  grid-template-columns: percent(635, 1110) 1fr;
+  @include media-breakpoint-up(tablet) {
+    display: grid;
+    grid-template-columns: percent(635, 1110) 1fr;
+  }
 
   &__images {
-    display: grid;
-    grid-template-columns: rem(65) 1fr;
-    gap: rem(30);
+    @include media-breakpoint-up(tablet) {
+      display: grid;
+      grid-template-columns: rem(65) 1fr;
+      gap: rem(30);
+    }
   }
 }
 
 .images-product {
+  @include media-breakpoint-up(tablet) {
+    padding-right: rem(30);
+  }
+
+  @include media-breakpoint-down(tablet) {
+    margin-bottom: rem(18);
+  }
+
   &__slider {
     width: 100%;
   }
@@ -35,23 +49,183 @@
 }
 
 .thumbs-images {
-  width: 100%;
-
-  &__swiper {
-    display: flex;
-    flex-direction: column;
+  @include media-breakpoint-down(tablet) {
+    display: none;
   }
 
-  &__slide-ibg {
-    width: 100% !important;
-    height: rem(65);
-    cursor: pointer;
-    opacity: 0.5;
-    padding-bottom: percent(65, 585);
-    transition: opacity .3s;
+  @include media-breakpoint-up(tablet) {
+    width: 100%;
 
-    &.swiper-slide-thumb-active {
-      opacity: 1;
+    &__swiper {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__slide-ibg {
+      width: 100% !important;
+      height: rem(65);
+      cursor: pointer;
+      opacity: 0.5;
+      padding-bottom: percent(65, 585);
+      transition: opacity .3s;
+
+      &.swiper-slide-thumb-active {
+        opacity: 1;
+      }
+    }
+
+  }
+}
+
+.info-product {
+  &__block-title {
+    display: flex;
+    align-items: center;
+    font-weight: 400;
+    margin-bottom: rem(15);
+  }
+
+  &__title {
+    @include adaptiveValue("font-size", 20, 18);
+  }
+
+  &__btn-favourites {
+    display: flex;
+    margin-left: rem(20);
+
+    svg {
+      width: rem(22);
+      height: rem(20);
+      fill: none;
     }
   }
+
+  &__block-prices {
+    font-weight: 400;
+    color: var(--color-dark-gray);
+    margin-bottom: rem(25);
+  }
+
+  &__price {
+    font-size: rem(20);
+    margin-right: rem(10);
+
+    &-old {
+      font-size: rem(14);
+    }
+  }
+
+  &__block-sizes {
+    margin-bottom: rem(25);
+  }
+
+  &__size-inner {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: rem(20);
+  }
+
+  &__title-size {}
+
+  &__choose-size {
+    color: var(--color-gray-spanish);
+    text-decoration: underline !important;
+
+    @media (any-hover: hover) {
+      transition: color .3s;
+
+      &:hover {
+        color: var(--color-black);
+      }
+    }
+  }
+
+  &__size-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: rem(16);
+  }
+
+  &__btn-size {
+    padding: rem(10) 0;
+    line-height: math.div(18, 13);
+    @include adaptiveValue("width", 65, 100);
+
+    @media (any-hover: hover) {
+      transition: color .3s, border .3s;
+
+      &:hover {
+        color: var(--color-purple);
+        border: 1px solid var(--color-purple);
+      }
+    }
+  }
+
+  &__block-colors {
+    margin-bottom: rem(40);
+  }
+
+  &__title-color {
+    margin-bottom: rem(20);
+  }
+
+  &__color-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: rem(16);
+  }
+
+  &__link-color {
+    display: block;
+    @include adaptiveValue("width", 65, 100);
+    height: rem(40);
+  }
+
+  &__block-btns {
+    display: flex;
+    gap: rem(12);
+    margin-bottom: rem(40);
+  }
+
+  &__btn {
+    flex: 0 1 50%;
+    padding: rem(13.5) 0;
+
+    &_buy {}
+
+    &_cart {}
+  }
+
+  &__spollers {}
+}
+
+.spollers-product {
+  border-top: 1px solid var(--color-white-chinese);
+  border-bottom: 1px solid var(--color-white-chinese);
+
+  &__spoller {
+    position: relative;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--color-white-chinese);
+    }
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: rem(15) 0;
+
+    svg {
+      position: absolute;
+      top: calc(50% - rem(5));
+      right: 0;
+      width: rem(10);
+      height: rem(10);
+    }
+  }
+
+  &__content {}
 }

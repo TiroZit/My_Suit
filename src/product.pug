@@ -53,4 +53,49 @@ block content
                     +image('img/goods/1.jpg', 'alt').swiper-lazy
                   .images-product__slide-ibg
                     +image('img/goods/1.jpg', 'alt').swiper-lazy
+            .main-product__info.info-product
+              .info-product__block-title
+                h1.info-product__title Шёлковый костюм в красном цвете
+                button.info-product__btn-favourites(aria-label='Добавить в избранное')
+                  +icon('favourites').i-favourites(style='stroke: currentColor;' aria-hidden)
+              .info-product__block-prices 
+                span.info-product__price 13900 RUB
+                s.info-product__price-old 15900 RUB
+              .info-product__block-sizes
+                .info-product__size-inner 
+                  .info-product__title-size Размер
+                  a.info-product__choose-size(href="#") Подобрать размер
+                ul.info-product__size-list 
+                  li.info-product__size-item 
+                    button.info-product__btn-size.btn.btn_white 40
+                  li.info-product__size-item 
+                    button.info-product__btn-size.btn.btn_white 42
+                  li.info-product__size-item 
+                    button.info-product__btn-size.btn.btn_white 44
+              .info-product__block-colors 
+                .info-product__title-color Цвет
+                ul.info-product__color-list 
+                  li.info-product__color-item 
+                    a.info-product__link-color(href="#" style="background-color: #F4DEDE;")
+                  li.info-product__color-item 
+                    a.info-product__link-color(href="#" style="background-color: #AD3A9B;")
+              .info-product__block-btns 
+                button.info-product__btn.info-product__btn_buy.btn.btn_white Быстрая покупка
+                button.info-product__btn.info-product__btn_cart.btn.btn_black Добавить в корзину
+              .info-product__spollers.spollers-product(data-spollers)
+                .spollers-product__spoller
+                  button.spollers-product__title(data-spoller)
+                    | Состав
+                    +icon('plus').i-plus(aria-hidden)
+                  .spollers-product__content
+                .spollers-product__spoller
+                  button.spollers-product__title(data-spoller)
+                    | Рекомендации по уходу
+                    +icon('plus').i-plus(aria-hidden)
+                  .spollers-product__content
+                .spollers-product__spoller
+                  button.spollers-product__title(data-spoller)
+                    | Параметры модели
+                    +icon('plus').i-plus(aria-hidden)
+                  .spollers-product__content
     include pug/_footer
