@@ -7,7 +7,7 @@
 // Подключаем слайдер Swiper из node_modules
 // При необходимости подключаем дополнительные модули слайдера, указывая их в {} через запятую
 // Пример: { Navigation, Autoplay }
-import Swiper, { Navigation, Scrollbar, Lazy, A11y } from 'swiper'
+import Swiper, { Navigation, Scrollbar, Lazy, A11y, Thumbs } from 'swiper'
 /*
 Основниые модули слайдера:
 Navigation, Pagination, Autoplay, 
@@ -87,6 +87,70 @@ function initSliders() {
           spaceBetween: 30,
         },
       },
+      // on: {
+
+      // }
+    })
+  }
+  if (document.querySelector('.thumbs-images')) {
+    const thumbsSwiper = new Swiper('.thumbs-images', {
+      // Подключаем модули слайдера
+      // для конкретного случая
+      modules: [Lazy, Thumbs],
+      /*
+			effect: 'fade',
+			autoplay: {
+				delay: 3000,
+				disableOnInteraction: false,
+			},
+			*/
+      // observer: true,
+      // observeParents: true,
+      direction: 'vertical',
+      slidesPerView: 'auto',
+      spaceBetween: 12,
+      // autoHeight: true,
+      speed: 500,
+      //touchRatio: 0,
+      //simulateTouch: false,
+      loop: false,
+      preloadImages: false,
+      lazy: {
+        loadPrevNext: true,
+      },
+      breakpoints: {},
+      // on: {
+
+      // }
+    })
+    new Swiper('.images-product__slider', {
+      // Подключаем модули слайдера
+      // для конкретного случая
+      modules: [Lazy, Thumbs],
+      /*
+			effect: 'fade',
+			autoplay: {
+				delay: 3000,
+				disableOnInteraction: false,
+			},
+			*/
+      // observer: true,
+      // observeParents: true,
+      grabCursor: true,
+      slidesPerView: 1,
+      // autoHeight: true,
+      speed: 500,
+      //touchRatio: 0,
+      //simulateTouch: false,
+      thumbs: {
+        swiper: thumbsSwiper,
+      },
+      loop: false,
+      preloadImages: false,
+      lazy: {
+        loadPrevNext: true,
+      },
+      breakpoints: {},
       // on: {
 
       // }

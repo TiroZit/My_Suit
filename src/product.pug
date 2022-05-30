@@ -29,4 +29,28 @@ block content
           path: "product.html"
         }
       ])
+      .product
+        .product__container
+          .product__main.main-product 
+            .main-product__images.images-product
+              .images-product__thumbs.thumbs-images
+                .thumbs-images__swiper
+                  .thumbs-images__slide-ibg
+                    +image('img/goods/1.jpg', 'alt').lazy
+                  .thumbs-images__slide-ibg
+                    +image('img/goods/1.jpg', 'alt').lazy
+                  .thumbs-images__slide-ibg
+                    +image('img/goods/1.jpg', 'alt').lazy
+                  .thumbs-images__slide-ibg
+                    +image('img/goods/1.jpg', 'alt').lazy
+              .images-product__slider
+                .images-product__swiper
+                  .images-product__slide-ibg
+                    +image('img/goods/1.jpg', 'alt').swiper-lazy
+                  .images-product__slide-ibg
+                    +image('img/goods/1.jpg', 'alt').swiper-lazy
+                  .images-product__slide-ibg
+                    +image('img/goods/1.jpg', 'alt').swiper-lazy
+                  .images-product__slide-ibg
+                    +image('img/goods/1.jpg', 'alt').swiper-lazy
     include pug/_footer
