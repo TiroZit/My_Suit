@@ -87,9 +87,15 @@ function initSliders() {
           spaceBetween: 30,
         },
       },
-      // on: {
-
-      // }
+      on: {
+        init: function () {
+          const numberOfSlides = this.slides.length
+          if (numberOfSlides <= 3) {
+            this.navigation.prevEl.hidden = true
+            this.navigation.nextEl.hidden = true
+          }
+        },
+      },
     })
   }
   if (document.querySelector('.thumbs-images')) {

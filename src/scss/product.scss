@@ -1,5 +1,25 @@
 .page {
   &_product {}
+
+  &__similar-products {
+    margin-top: rem(30);
+
+    .current-models__slider {
+      margin-bottom: rem(60);
+    }
+  }
+
+  &__history-products {
+    .current-models__slider {
+      margin-bottom: rem(60);
+    }
+
+  }
+
+  .current-models__button-next[hidden],
+  .current-models__button-prev[hidden] {
+    display: none;
+  }
 }
 
 .product {
