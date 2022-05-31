@@ -163,6 +163,8 @@
     text-decoration: underline !important;
 
     @media (any-hover: hover) {
+      transition: color .3s;
+
       &:hover {
         color: var(--color-black);
       }
