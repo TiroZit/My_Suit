@@ -29,6 +29,17 @@
 }
 
 .images-product {
+  &__description {
+    @include media-breakpoint-down(tablet) {
+      display: none;
+    }
+
+    @include media-breakpoint-up(tablet) {
+      grid-column: 2;
+      line-height: math.div(18, 13);
+    }
+  }
+
   @include media-breakpoint-up(tablet) {
     padding-right: rem(30);
   }
