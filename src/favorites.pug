@@ -1,0 +1,114 @@
+extends ../assets/pug/_base
+block vars
+  - var lang = 'ru'
+  - var title = 'My Suit | Избранное'
+  - var description = ''
+  - var keywords = ''
+  //- Open Graph:
+  - var type = 'website'
+  - var imageOG = ''
+  //- Preload fonts
+  - var fonts = ['Manrope-Medium', 'Manrope-Regular', 'Manrope-Light' ]
+
+include pug/_breadcrumbs
+block content
+  .wrapper
+    header.header
+      .header__container
+        nav.header__menu.menu
+          ul.menu__list(data-spollers='767.98')
+            li.menu__item 
+              button.menu__link.menu__button(data-parent='1' data-spoller)
+                |Каталог
+                svg.i-arrow-dropdown(style='fill: currentColor;' aria-hidden)
+                  use(xlink:href='img/icons/icons.svg#svg-arrow-dropdown')
+              .menu__submenu.submenu(data-submenu='1')
+                .submenu__container
+                  ul.submenu__list
+                    li.submenu__item 
+                      a.submenu__link(href="#") Все
+                    li.submenu__item 
+                      a.submenu__link(href="catalog.html") Новинки
+                    li.submenu__item 
+                      a.submenu__link(href="#") Купальники
+                    li.submenu__item 
+                      a.submenu__link(href="#") Костюмы из щёлка
+                    li.submenu__item 
+                      a.submenu__link(href="#") Костюмы из трикотажа 
+                    li.submenu__item 
+                      a.submenu__link(href="#") Костюмы из льна 
+                    li.submenu__item 
+                      a.submenu__link(href="#") Костюмы из футера 
+                    li.submenu__item 
+                      a.submenu__link(href="#") Костюмы классика
+                    li.submenu__item 
+                      a.submenu__link(href="#") Костюмы классика
+                    li.submenu__item 
+                      a.submenu__link(href="#") Комплекты
+                    li.submenu__item 
+                      a.submenu__link(href="#") Комплекты 
+                    li.submenu__item 
+                      a.submenu__link(href="#") Платья
+                    li.submenu__item 
+                      a.submenu__link(href="#") Юбки
+                    li.submenu__item 
+                      a.submenu__link(href="#") Рубашки
+                    li.submenu__item 
+                      a.submenu__link(href="#") Шорты
+                    li.submenu__item 
+                      a.submenu__link(href="#") Топы / Корсеты
+                    li.submenu__item 
+                      a.submenu__link(href="#") Верхняя одежда
+                  button.submenu__close
+                    svg.i-close(aria-label='Закрыть каталог')
+                      use(xlink:href='img/icons/icons.svg#svg-close')
+            li.menu__item 
+              a.menu__link(href="#") Размеры
+            li.menu__item 
+              a.menu__link(href="#") Доставка
+            li.menu__item 
+              a.menu__link(href="#") О бренде
+            li.menu__item.menu__item_contacts
+              a.menu__link(href="#") Контакты
+          .header__socials.socials 
+            include pug/socials
+        .header__logo.logo
+          a.logo__link(href="home.html")
+            +image('img/logo.svg', 'Логотип').lazy
+        a.menu__link.menu__link_contacts(href="#") Контакты
+        .header__menu-icons.menu-icons
+          button.menu-icons__item#searchButton
+            svg.i-search(style='stroke: currentColor;' aria-label="Поиск")
+              use(xlink:href='img/icons/icons.svg#svg-search')
+          a.menu-icons__item.menu-icons__item-heart_active(href='favorites.html')
+            svg.i-heart(style='stroke: currentColor;' aria-label="Избранное")
+              use(xlink:href='img/icons/icons.svg#svg-heart')
+          a.menu-icons__item(href='#')
+            svg.i-profile(style='' aria-label="Личный кабинет")
+              use(xlink:href='img/icons/icons.svg#svg-profile')
+          button.menu-icons__item
+            svg.i-cart(style='stroke: currentColor;' aria-label="Открыть корзину")
+              use(xlink:href='img/icons/icons.svg#svg-cart')
+          button.burger(aria-label="Меню")
+            span
+        form.header__search.search(action='#')
+          .search__container
+            button.search__button(type="submit")
+              svg.i-search(style='stroke: currentColor;' aria-label="Поиск")
+                use(xlink:href='img/icons/icons.svg#svg-search')
+            input.search__input(type="search" placeholder="Введите запрос")
+            button.search__close(type="button")
+              svg.i-close-search( aria-label='Закрыть поиск')
+                use(xlink:href='img/icons/icons.svg#svg-close')
+    main.page.page_favorites
+      +breadcrumbs([
+        {
+          name: "Главная",
+          path: "home.html"
+        },
+        {
+          name: "Избранное",
+          path: "favorites.html"
+        }
+      ])
+    include pug/_footer

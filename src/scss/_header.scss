@@ -257,6 +257,10 @@
       width: rem(20);
       height: rem(20);
     }
+
+    &-heart_active {
+      color: var(--color-purple);
+    }
   }
 }
 
