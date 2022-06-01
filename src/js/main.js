@@ -12,7 +12,7 @@
 */
 
 // Включить/выключить FLS (Full Logging System) (в работе)
-window['FLS'] = false
+window['FLS'] = true
 
 // Подключение стилей
 import '../scss/style.scss'
@@ -67,7 +67,7 @@ flsFunctions.spollers()
 Попапы
 Сниппет (HTML): pl
 */
-// import './libs/popup.js'
+import './libs/popup.js'
 
 /*
 Модуль параллакса мышью

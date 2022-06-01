@@ -1,0 +1,36 @@
+.popup.popup-size#choose-size(aria-hidden='true')
+  .popup__wrapper.popup-size__wrapper
+    .popup__content.popup-size__content
+      button.popup__close(data-close aria-label="Закрыть")
+        +icon('close')(aria-hidden)
+      .popup-size__img-ibg
+        +image('img/popups/product-1.jpg', 'alt').lazy
+      .popup-size__info
+        .popup-size__title Подобрать размер
+        .popup-size__title-product Шёлковый костюм в красном цвете
+        .popup-size__prices
+          span.popup-size__price 13900 RUB
+          s.popup-size__price.popup-size__price_old 15900 RUB
+        table.popup-size__table.table-size
+          thead.table-size__head 
+            tr.table-size__row 
+              th.table-size__heading Размер
+              th.table-size__heading Обхват талии
+              th.table-size__heading Объем бедер
+          tbody.table-size__body 
+            tr.table-size__row 
+              td.table-size__data XS
+              td.table-size__data 62-50
+              td.table-size__data 92-95
+            tr.table-size__row 
+              td.table-size__data S
+              td.table-size__data 62-50
+              td.table-size__data 92-95
+            tr.table-size__row 
+              td.table-size__data M
+              td.table-size__data 62-50
+              td.table-size__data 92-95
+            tr.table-size__row 
+              td.table-size__data L
+              td.table-size__data 62-50
+              td.table-size__data 92-95
