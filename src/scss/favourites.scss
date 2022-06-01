@@ -1,0 +1,32 @@
+.favourites {
+  &__container {
+    @include adaptiveValue("margin-top", 60, 40);
+    @include adaptiveValue("margin-bottom", 90, 60);
+  }
+
+  &__inner {
+    @include media-breakpoint-up(tablet) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    @include adaptiveValue("margin-bottom", 60, 40);
+  }
+
+  &__title {
+    display: block !important;
+
+    @include media-breakpoint-down(tablet) {
+      margin-bottom: rem(20);
+    }
+  }
+
+  &__goods {}
+
+  &__footer {
+    position: relative;
+    display: flex;
+    margin-top: rem(50);
+  }
+}

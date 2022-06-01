@@ -87,17 +87,7 @@
     @include adaptiveValue("margin-top", 70, 50);
   }
 
-  &__pagging {
-    @include media-breakpoint-up(tablet-xl) {
-      position: absolute;
-      top: calc(50% - rem(11));
-      left: 0;
-    }
-
-    @include media-breakpoint-down(tablet) {
-      display: none;
-    }
-  }
+  &__pagging {}
 
   &__more {
     display: block;

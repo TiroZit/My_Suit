@@ -184,9 +184,11 @@ body {
 @import 'welcome';
 @import 'current-models';
 @import 'about-brand';
+@import 'goods';
 @import 'popups/choose-size';
 
 // Подключение стилей отдельных страниц
 @import "home";
 @import "catalog";
 @import "product";
+@import "favourites";

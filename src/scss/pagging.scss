@@ -3,6 +3,16 @@
   align-items: center;
   gap: rem(20);
 
+  @include media-breakpoint-up(tablet-xl) {
+    position: absolute;
+    top: calc(50% - rem(11));
+    left: 0;
+  }
+
+  @include media-breakpoint-down(tablet) {
+    display: none;
+  }
+
   &__list {
     display: flex;
     gap: rem(16);
