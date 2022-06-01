@@ -1,0 +1,147 @@
+extends ../assets/pug/_base
+block vars
+  - var lang = 'ru'
+  - var title = 'My Suit | Результаты поиска'
+  - var description = ''
+  - var keywords = ''
+  //- Open Graph:
+  - var type = 'website'
+  - var imageOG = ''
+  //- Preload fonts
+  - var fonts = ['Manrope-Medium', 'Manrope-Regular', 'Manrope-Light' ]
+
+include pug/_breadcrumbs
+block content
+  .wrapper
+    include pug/_header
+    main.page.page_result-search
+      +breadcrumbs([
+        {
+          name: "Главная",
+          path: "home.html"
+        },
+        {
+          name: "Результаты поиска",
+          path: "result-search.html"
+        }
+      ])
+      section.result-search
+        .result-search__container 
+          h1.result-search__title Результаты поиска
+          .result-search__find-title Вы искали:
+          .result-search__inner 
+            .result-search__find 
+              form.result-search__search(action='#')
+                button.result-search__button(type="submit")
+                  svg.i-search(style='stroke: currentColor;' aria-label="Поиск")
+                    use(xlink:href='img/icons/icons.svg#svg-search')
+                input.result-search__input(type="search" placeholder="Введите запрос" value='Платье на вечер')
+            .catalog__select 
+              select.select(name='')
+                option.select__option(value='' selected) Сортировать по размеру
+                option.select__option(value='1') 42
+                option.select__option(value='2') 44
+                option.select__option(value='3') 46
+                option.select__option(value='4') 48
+          .result-search__goods.goods
+            article.product-card.goods__product-card
+              .product-card__actions
+                .product-card__action.product-card__action_discount
+                  +icon('discount').i-discount(aria-label="Скидка")
+              +image('img/goods/1.jpg', 'alt').product-card__img.lazy
+              .product-card__info
+                a.product-card__title(href="#") Шёлковый костюм в красном цвете Шёлковый костюм
+                .product-card__prices
+                  .product-card__price_current
+                    span 13900
+                    |  RUB
+                  s.product-card__price_old
+                    span 15900
+                    |  RUB
+            article.product-card.goods__product-card
+              +image('img/goods/2.jpg', 'alt').product-card__img.lazy
+              .product-card__info
+                a.product-card__title(href="#") Шёлковый костюм в красном цвете Шёлковый костюм
+                .product-card__prices
+                  .product-card__price_current
+                    span 13900
+                    |  RUB
+            article.product-card.goods__product-card
+              +image('img/goods/6.jpg', 'alt').product-card__img.lazy
+              .product-card__info
+                a.product-card__title(href="#") Шёлковый костюм в красном цвете Шёлковый костюм
+                .product-card__prices
+                  .product-card__price_current
+                    span 13900
+                    |  RUB
+            article.product-card.goods__product-card
+              +image('img/goods/1.jpg', 'alt').product-card__img.lazy
+              .product-card__info
+                a.product-card__title(href="#") Шёлковый костюм в красном цвете Шёлковый костюм
+                .product-card__prices
+                  .product-card__price_current
+                    span 13900
+                    |  RUB
+            article.product-card.goods__product-card
+              +image('img/goods/3.jpg', 'alt').product-card__img.lazy
+              .product-card__info
+                a.product-card__title(href="#") Шёлковый костюм в красном цвете Шёлковый костюм
+                .product-card__prices
+                  .product-card__price_current
+                    span 13900
+                    |  RUB
+            article.product-card.goods__product-card
+              +image('img/goods/7.jpg', 'alt').product-card__img.lazy
+              .product-card__info
+                a.product-card__title(href="#") Шёлковый костюм в красном цвете Шёлковый костюм
+                .product-card__prices
+                  .product-card__price_current
+                    span 13900
+                    |  RUB
+            article.product-card.goods__product-card
+              +image('img/goods/4.jpg', 'alt').product-card__img.lazy
+              .product-card__info
+                a.product-card__title(href="#") Шёлковый костюм в красном цвете Шёлковый костюм
+                .product-card__prices
+                  .product-card__price_current
+                    span 13900
+                    |  RUB
+            article.product-card.goods__product-card
+              +image('img/goods/2.jpg', 'alt').product-card__img.lazy
+              .product-card__info
+                a.product-card__title(href="#") Шёлковый костюм в красном цвете Шёлковый костюм
+                .product-card__prices
+                  .product-card__price_current
+                    span 13900
+                    |  RUB
+            article.product-card.goods__product-card
+              +image('img/goods/2.jpg', 'alt').product-card__img.lazy
+              .product-card__info
+                a.product-card__title(href="#") Шёлковый костюм в красном цвете Шёлковый костюм
+                .product-card__prices
+                  .product-card__price_current
+                    span 13900
+                    |  RUB
+          .result-search__footer
+            .result-search__pagging.pagging 
+              button.pagging__arrow.pagging__arrow_left(disabled aria-label='Предыдущая страница')
+                svg.i-arrow-left(style='fill: currentColor;' aria-hidden)
+                  use(xlink:href='img/icons/icons.svg#svg-arrow-left')
+              ul.pagging__list 
+                li.pagging__item 
+                  a.pagging__link.pagging__link_active(href="#") 1
+                li.pagging__item 
+                  a.pagging__link(href="#") 2
+                li.pagging__item 
+                  a.pagging__link(href="#") 3
+                li.pagging__item 
+                  a.pagging__link(href="#") 4
+                li.pagging__item 
+                  a.pagging__link(href="#") ...
+                li.pagging__item 
+                  a.pagging__link(href="#") 12
+              button.pagging__arrow.pagging__arrow_right(aria-label='Следующая страница')
+                svg.i-arrow-right(style='fill: currentColor;' aria-hidden)
+                  use(xlink:href='img/icons/icons.svg#svg-arrow-right')
+            a.catalog__more.btn.btn_white(href="#") Показать еще
+    include pug/_footer

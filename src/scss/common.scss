@@ -2,6 +2,16 @@
   transform: rotate(180deg);
 }
 
+input[type='search'] {
+  &::-webkit-search-cancel-button {
+    appearance: none;
+    cursor: pointer;
+    width: rem(20);
+    height: rem(20);
+    background: url('@img/close.svg') no-repeat 50% 50%;
+  }
+}
+
 .btn {
   border-radius: 2px;
 
