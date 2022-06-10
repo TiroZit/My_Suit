@@ -1,0 +1,21 @@
+extends ../assets/pug/_base
+block vars
+  - var lang = 'ru'
+  - var title = 'My Suit | Страница не найдена'
+  - var description = ''
+  - var keywords = ''
+  //- Open Graph:
+  - var type = 'website'
+  - var imageOG = ''
+  //- Preload fonts
+  - var fonts = ['Manrope-Medium', 'Manrope-Regular', 'Manrope-Light' ]
+
+block content
+  .wrapper
+    include pug/_header
+    main.page.page_error-404 
+      section.error-404
+        .error-404__container
+          h1.error-404__title ОШИБКА 404. СТРАНИЦА НЕ НАЙДЕНА
+          a.error-404__link.btn.btn_black(href="catalog.html") Перейти в каталог
+    include pug/_footer
