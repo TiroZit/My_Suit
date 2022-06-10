@@ -357,3 +357,11 @@ input[type='search'] {
     }
   }
 }
+
+.order {
+  @include adaptiveValue("margin-top", 60, 30);
+
+  &__title {
+    @include adaptiveValue("font-size", 20, 18);
+  }
+}

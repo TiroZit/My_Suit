@@ -1,0 +1,48 @@
+extends ../assets/pug/_base
+block vars
+  - var lang = 'ru'
+  - var title = 'My Suit | Оформление заказа (успешно)'
+  - var description = ''
+  - var keywords = ''
+  //- Open Graph:
+  - var type = 'website'
+  - var imageOG = ''
+  //- Preload fonts
+  - var fonts = ['Manrope-Medium', 'Manrope-Regular', 'Manrope-Light' ]
+
+include pug/_breadcrumbs
+block content
+  .wrapper
+    include pug/_header
+    main.page.page_order-successfully
+      +breadcrumbs([
+        {
+          name: "Главная",
+          path: "home.html"
+        },
+        {
+          name: "Корзина",
+          path: "cart.html"
+        }
+      ])
+      section.order-successfully.order
+        .order-successfully__container
+          h1.order__title Оформить заказ
+          .order-successfully__wrapper 
+            h2.order-successfully__title 
+              |Ваш заказ успешно оформлен
+              br
+              |и будет обработан в ближайшее время
+            .order-successfully__footer
+              .order-successfully__info 
+                .order-successfully__text 
+                  |Номер вашего заказа – 
+                  span 987645
+                .order-successfully__text
+                  |Если у вас остались вопросы свяжитесь с нами по телефону 
+                  a(href="tel:+7890675434") +7 890 675 4 34
+                .order-successfully__text Спасибо что выбрали нас!
+              .order-successfully__links 
+                a.order-successfully__link.btn.btn_black(href="catalog.html") Перейти в каталог
+                a.order-successfully__link.btn.btn_white(href="catalog.html") Вернуться на главную
+    include pug/_footer
