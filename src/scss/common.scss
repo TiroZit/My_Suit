@@ -365,3 +365,32 @@ input[type='search'] {
     @include adaptiveValue("font-size", 20, 18);
   }
 }
+
+.spollers {
+  border-top: 1px solid var(--color-white-chinese);
+  border-bottom: 1px solid var(--color-white-chinese);
+
+  &__spoller {
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--color-white-chinese);
+    }
+  }
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    svg {
+      transition: transform .3s;
+      stroke: var(--color-black);
+    }
+
+    &._spoller-active {
+      svg {
+        transform: rotate(-45deg);
+      }
+    }
+  }
+}

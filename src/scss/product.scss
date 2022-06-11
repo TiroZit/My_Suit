@@ -236,33 +236,12 @@
 }
 
 .spollers-product {
-  border-top: 1px solid var(--color-white-chinese);
-  border-bottom: 1px solid var(--color-white-chinese);
-
-  &__spoller {
-    position: relative;
-
-    &:not(:last-child) {
-      border-bottom: 1px solid var(--color-white-chinese);
-    }
-  }
-
   &__title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
     padding: rem(15) 0;
 
     svg {
-      position: absolute;
-      top: calc(50% - rem(5));
-      right: 0;
       width: rem(10);
       height: rem(10);
-      stroke: var(--color-black);
     }
   }
-
-  &__content {}
 }

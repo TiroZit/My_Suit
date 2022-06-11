@@ -83,22 +83,22 @@ block content
               .info-product__block-btns 
                 button.info-product__btn.info-product__btn_buy.btn.btn_white Быстрая покупка
                 button.info-product__btn.info-product__btn_cart.btn.btn_black Добавить в корзину
-              .info-product__spollers.spollers-product(data-spollers)
-                .spollers-product__spoller
-                  button.spollers-product__title(data-spoller)
+              .info-product__spollers.spollers-product.spollers(data-spollers)
+                .spollers-product__spoller.spollers__spoller
+                  button.spollers-product__title.spollers__btn(data-spoller)
                     | Состав
                     +icon('plus').i-plus(aria-hidden)
-                  .spollers-product__content
-                .spollers-product__spoller
-                  button.spollers-product__title(data-spoller)
+                  .spollers-product__content.spollers__content
+                .spollers-product__spoller.spollers__spoller
+                  button.spollers-product__title.spollers__btn(data-spoller)
                     | Рекомендации по уходу
                     +icon('plus').i-plus(aria-hidden)
-                  .spollers-product__content
-                .spollers-product__spoller
-                  button.spollers-product__title(data-spoller)
+                  .spollers-product__content.spollers__content
+                .spollers-product__spoller.spollers__spoller
+                  button.spollers-product__title.spollers__btn(data-spoller)
                     | Параметры модели
                     +icon('plus').i-plus(aria-hidden)
-                  .spollers-product__content
+                  .spollers-product__content.spollers__content
       section.page__similar-products.similar-products
         .current-models__container
           h2.current-models__title Похожие товары
