@@ -55,7 +55,7 @@ flsFunctions.spollers()
 Модуль работы с табами
 Сниппет (HTML): tabs
 */
-// flsFunctions.tabs();
+flsFunctions.tabs()
 
 /*
 Модуль "показать еще"

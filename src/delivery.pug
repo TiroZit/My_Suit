@@ -1,0 +1,151 @@
+extends ../assets/pug/_base
+block vars
+  - var lang = 'ru'
+  - var title = 'My Suit | Оформление заказа (успешно)'
+  - var description = ''
+  - var keywords = ''
+  //- Open Graph:
+  - var type = 'website'
+  - var imageOG = ''
+  //- Preload fonts
+  - var fonts = ['Manrope-Medium', 'Manrope-Regular', 'Manrope-Light' ]
+
+include pug/_breadcrumbs
+block content
+  .wrapper
+    include pug/_header
+    main.page.page_delivery
+      +breadcrumbs([
+        {
+          name: "Главная",
+          path: "home.html"
+        },
+        {
+          name: "Каталог",
+          path: "catalog.html"
+        },
+        {
+          name: "Наименование товара",
+          path: "product.html"
+        }
+      ])
+      section.delivery 
+        .delivery__container
+          h1.delivery__title Доставка и возврат
+          .delivery__wrapper(data-tabs data-tabs-animate='500')
+            nav.delivery__nav(data-tabs-titles)
+              button.delivery__tab-title._tab-active Доставка
+              button.delivery__tab-title Возврат
+            .delivery__content(data-tabs-body)
+              .delivery__tab-body.spollers(data-spollers)
+                .spollers__spoller 
+                  button.delivery__spoller-btn.spollers__btn(data-spoller)
+                    | Москва и Московская область
+                    +icon('plus').i-plus(aria-hidden)
+                  .delivery__spoller-content.spollers__content
+                    .delivery__spoller-block
+                      .delivery__spoller-title.delivery__text.delivery__text_black Самовывоз
+                      p.delivery__text.delivery__text_gray
+                        |Заказ можно забрать в бутике ELEN DAN на следующий день после его подтверждения.
+                        br
+                        |Адрес: набережная Тараса Шевченко, дом 3к3. Ежедневно с 12:00 до 21:00. Телефон для связи с магазином: 
+                        a(href="tel:+7 910 000 59 59") +7 910 000 59 59
+                    .delivery__spoller-block
+                      .delivery__spoller-title.delivery__text.delivery__text_black Москва
+                      p.delivery__text.delivery__text_gray
+                        |Стоимость доставки - 350 рублей. Доставка курьером на следующий день после оформления заказа! Привезем до 7 вещей. Время на примерку - 15 минут. Заказ можно оплатить курьеру наличными, если вам ничего не подойдёт, вы оплачиваете только стоимость доставки.
+                        br
+                        |*Просим отнестись с пониманием и предоставить время курьеру при вас проверить возвращаемые вами вещи.
+                    .delivery__spoller-block
+                      .delivery__spoller-title.delivery__text.delivery__text_black Московская область
+                      p.delivery__text.delivery__text_gray
+                        |Доставка осуществляется курьером СДЭК (по 100% предоплате) или курьером Amour (доставка оплачивается наличными при получении). Стоимость услуги рассчитывается индивидуально при оформлении заказа.
+                .spollers__spoller 
+                  button.delivery__spoller-btn.spollers__btn(data-spoller)
+                    | Челябинск
+                    +icon('plus').i-plus(aria-hidden)
+                  .delivery__spoller-content.spollers__content
+                    .delivery__spoller-block
+                      .delivery__spoller-title.delivery__text.delivery__text_black Самовывоз
+                      p.delivery__text.delivery__text_gray
+                        |Заказ можно забрать в бутике ELEN DAN на следующий день после его подтверждения.
+                        br
+                        |Адрес: набережная Тараса Шевченко, дом 3к3. Ежедневно с 12:00 до 21:00. Телефон для связи с магазином: 
+                        a(href="tel:+7 910 000 59 59") +7 910 000 59 59
+                    .delivery__spoller-block
+                      .delivery__spoller-title.delivery__text.delivery__text_black Москва
+                      p.delivery__text.delivery__text_gray
+                        |Стоимость доставки - 350 рублей. Доставка курьером на следующий день после оформления заказа! Привезем до 7 вещей. Время на примерку - 15 минут. Заказ можно оплатить курьеру наличными, если вам ничего не подойдёт, вы оплачиваете только стоимость доставки.
+                        br
+                        |*Просим отнестись с пониманием и предоставить время курьеру при вас проверить возвращаемые вами вещи.
+                    .delivery__spoller-block
+                      .delivery__spoller-title.delivery__text.delivery__text_black Московская область
+                      p.delivery__text.delivery__text_gray
+                        |Доставка осуществляется курьером СДЭК (по 100% предоплате) или курьером Amour (доставка оплачивается наличными при получении). Стоимость услуги рассчитывается индивидуально при оформлении заказа.
+                .spollers__spoller 
+                  button.delivery__spoller-btn.spollers__btn(data-spoller)
+                    | Беларусь и Казахстан
+                    +icon('plus').i-plus(aria-hidden)
+                  .delivery__spoller-content.spollers__content
+                    .delivery__spoller-block
+                      .delivery__spoller-title.delivery__text.delivery__text_black Самовывоз
+                      p.delivery__text.delivery__text_gray
+                        |Заказ можно забрать в бутике ELEN DAN на следующий день после его подтверждения.
+                        br
+                        |Адрес: набережная Тараса Шевченко, дом 3к3. Ежедневно с 12:00 до 21:00. Телефон для связи с магазином: 
+                        a(href="tel:+7 910 000 59 59") +7 910 000 59 59
+                    .delivery__spoller-block
+                      .delivery__spoller-title.delivery__text.delivery__text_black Москва
+                      p.delivery__text.delivery__text_gray
+                        |Стоимость доставки - 350 рублей. Доставка курьером на следующий день после оформления заказа! Привезем до 7 вещей. Время на примерку - 15 минут. Заказ можно оплатить курьеру наличными, если вам ничего не подойдёт, вы оплачиваете только стоимость доставки.
+                        br
+                        |*Просим отнестись с пониманием и предоставить время курьеру при вас проверить возвращаемые вами вещи.
+                    .delivery__spoller-block
+                      .delivery__spoller-title.delivery__text.delivery__text_black Московская область
+                      p.delivery__text.delivery__text_gray
+                        |Доставка осуществляется курьером СДЭК (по 100% предоплате) или курьером Amour (доставка оплачивается наличными при получении). Стоимость услуги рассчитывается индивидуально при оформлении заказа.
+                .spollers__spoller 
+                  button.delivery__spoller-btn.spollers__btn(data-spoller)
+                    | Доставка по миру
+                    +icon('plus').i-plus(aria-hidden)
+                  .delivery__spoller-content.spollers__content
+                    .delivery__spoller-block
+                      .delivery__spoller-title.delivery__text.delivery__text_black Самовывоз
+                      p.delivery__text.delivery__text_gray
+                        |Заказ можно забрать в бутике ELEN DAN на следующий день после его подтверждения.
+                        br
+                        |Адрес: набережная Тараса Шевченко, дом 3к3. Ежедневно с 12:00 до 21:00. Телефон для связи с магазином: 
+                        a(href="tel:+7 910 000 59 59") +7 910 000 59 59
+                    .delivery__spoller-block
+                      .delivery__spoller-title.delivery__text.delivery__text_black Москва
+                      p.delivery__text.delivery__text_gray
+                        |Стоимость доставки - 350 рублей. Доставка курьером на следующий день после оформления заказа! Привезем до 7 вещей. Время на примерку - 15 минут. Заказ можно оплатить курьеру наличными, если вам ничего не подойдёт, вы оплачиваете только стоимость доставки.
+                        br
+                        |*Просим отнестись с пониманием и предоставить время курьеру при вас проверить возвращаемые вами вещи.
+                    .delivery__spoller-block
+                      .delivery__spoller-title.delivery__text.delivery__text_black Московская область
+                      p.delivery__text.delivery__text_gray
+                        |Доставка осуществляется курьером СДЭК (по 100% предоплате) или курьером Amour (доставка оплачивается наличными при получении). Стоимость услуги рассчитывается индивидуально при оформлении заказа.
+              .delivery__tab-body
+                h2.delivery__title.delivery__title-2 Условия возврата
+                .delivery__tab-body-inner.delivery__text.delivery__text_gray
+                  | Возврат можно осуществить в течение 14 дней с момента получения вашего заказа. Для запроса возврата или обмена необходимо заполнить форму ниже и отправить нам. После того, как мы обработаем вашу заявку, с вами свяжется менеджер для согласования передачи товара в наш магазин.
+                  br
+                  br
+                  | Обратите внимание, что возвращаемые товары необходимо отправить в течение 14 дней с момента получения вашего заказа, до истечения срока возврата.
+                .delivery__tab-body-title.delivery__text.delivery__text_black Доставка до склада возвращаемого клиентом товара осуществляется за наш счет в следующих случаях:
+                p.delivery__text.delivery__text_gray
+                  | Если клиент возвращает товар по причине брака.
+                  | Если клиент возвращает товар по причине некорректно подобранного менеджером размера согласно присланным им параметрам (при оформлении заказа просим клиентов внимательно проверять параметры и нужную длину).
+                br
+                .delivery__tab-body-title.delivery__text.delivery__text_black Необходимые документы:
+                ul.delivery__list 
+                  li.delivery__item Заполненное и подписанное заявление на возврат обязательно для всех возвратов
+                  li.delivery__item Копия паспорта лица, оплатившего заказ
+                  li.delivery__item Копия или оригинал документа об оплате заказа, в зависимости от формы оплаты
+                  li.delivery__item Если Вы оплатили заказ в магазине, приложите копию чека
+                p.delivery__text.delivery__text_gray В случае предоплаты заказа через интернет, приложите документ об оплате, который прилагается к Электронному письму о подтверждении Вашего заказа.
+                br
+                p.delivery__text.delivery__text_gray *Нижнее белье не подлежит обмену и возврату (*укороченный топ и боди AMOUR*), так как относится к категории нательного белья, примерка не допускается (согласно Постановлению Правительства РФ от 19.01.1998 N 55 (ред. от 27.01.2009) продажа нижнего белья, бывшего в употреблении, запрещена). Возврат и обмен возможен, если вы обнаружили дефекты, которые возникли до начала носки изделия. В этом случае, для проведения возврата должны быть сохранены товарный вид, фабричные ярлыки, этикетки, потребительские свойства, а также документ, подтверждающий факт покупки указанного товара. Нельзя вернуть товар, бывший в употреблении.
+                a.delivery__btn.btn.btn_black(href="#") Оформить возврат
+    include pug/_footer
