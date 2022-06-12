@@ -12,6 +12,17 @@ input[type='search'] {
   }
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .btn {
   border-radius: 2px;
 
@@ -132,6 +143,7 @@ input[type='search'] {
 
   // .subscribe__input
   &__input {
+    padding: rem(16) rem(20);
     width: 100%;
   }
 
@@ -190,7 +202,6 @@ input[type='search'] {
 .input {
   border: 1px solid var(--color-gray-spanish);
   border-radius: 2px;
-  padding: rem(16) rem(20);
   transition: border .3s;
 
   &.focus-visible {

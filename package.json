@@ -76,6 +76,7 @@
     "webpack-stream": "latest"
   },
   "dependencies": {
+    "choices.js": "^10.1.0",
     "focus-visible": "latest",
     "inputmask": "latest",
     "just-validate": "^3.7.0",

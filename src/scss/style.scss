@@ -17,6 +17,7 @@ $fontSize: rem(13); // где 14(px) - размер шрифта по умолч
 :root {
   --color-black: #000;
   --color-black-eerie: #1C1C1E;
+  --color-black-charcoal: #343131;
   --color-white: #fff;
   --color-white-chinese: #E1E1E1;
   --color-white-cultured: #F4F4F4;
@@ -194,5 +195,6 @@ body {
 @import "favourites";
 @import "result-search";
 @import "error-404";
+@import "order-registration";
 @import "order-successfully";
 @import "delivery";

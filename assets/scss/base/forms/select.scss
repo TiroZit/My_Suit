@@ -95,6 +95,10 @@
     padding: 10px 22px;
     color: inherit;
 
+    &[hidden] {
+      display: none;
+    }
+
     &:not(:last-child) {
       border-bottom: 1px solid #F4F4F4;
     }

@@ -1,0 +1,112 @@
+extends ../assets/pug/_base
+block vars
+  - var lang = 'ru'
+  - var title = 'My Suit | Оформление заказа'
+  - var description = ''
+  - var keywords = ''
+  //- Open Graph:
+  - var type = 'website'
+  - var imageOG = ''
+  //- Preload fonts
+  - var fonts = ['Manrope-Medium', 'Manrope-Regular', 'Manrope-Light' ]
+
+include pug/_breadcrumbs
+block content
+  .wrapper
+    include pug/_header
+    main.page.page_order-registration
+      +breadcrumbs([
+        {
+          name: "Главная",
+          path: "home.html"
+        },
+        {
+          name: "Корзина",
+          path: "cart.html"
+        }
+      ])
+      section.order-registration.order
+        .order-registration__container
+          h1.order__title Оформить заказ
+          form(action="#" method="post").order-registration__form
+            .order-registration__step Шаг 1 из 3
+            fieldset.order-registration__fieldset
+              legend.order-registration__legend Данные покупателя
+              input.order-registration__input.input(type="text" placeholder="Имя *" required)
+              input.order-registration__input.input(type="text" placeholder="Фамилия *" required)
+              input.order-registration__input.input(type="number" placeholder="Телефон *" required)
+              input.order-registration__input.input(type="email" placeholder="E-mail *" required)
+            .order-registration__step Шаг 2 из 3
+            fieldset.order-registration__fieldset.order-registration__fieldset_2
+              legend.order-registration__legend Способ доставки
+              .order-registration__select
+                select.select(name='country' data-search data-scroll)
+                  option.select__option(value='' selected) Выберите страну
+                  option.select__option(value='russia') Россия
+                  option.select__option(value='belarus') Беларусь
+                  option.select__option(value='kazakhstan') Казахстан
+              input.order-registration__input.input(type="text" placeholder="Улица *" required data-da=`.order-registration__fieldset_2, ${767.98/16}, 4`)
+              .order-registration__select
+                select.select(name='city' data-search data-scroll)
+                  option.select__option(value='' selected) Выберите город
+                  option.select__option(value='moscow') Москва
+                  option.select__option(value='ekaterinburg') Екатеринбург
+                  option.select__option(value='chelyabinsk') Челябинск
+                  option.select__option(value='minsk') Минск
+              .order-registration__block
+                input.order-registration__input.input(type="number" placeholder="Дом *" required)
+                input.order-registration__input.input(type="number" placeholder="Квартира *" required)
+              .order-registration__inputs-radio(data-da=`.order-registration__fieldset_2, ${767.98/16}, 3`)
+                label.order-registration__radio.radio
+                  input.order-registration__radio-input.radio__input(type="radio" name="delivery-method" value="pickup" checked="true" required)
+                  .order-registration__radio-info.radio__info 
+                    .order-registration__radio-title.radio__title Самовывоз
+                    .order-registration__radio-subtitle.radio__subtitle Челябинск, ул. Карла Макса. д, 81
+                label.order-registration__radio.radio
+                  input.order-registration__radio-input.radio__input(type="radio" name="delivery-method" value="delivery" required)
+                  .order-registration__radio-info.radio__info 
+                    .order-registration__radio-title.radio__title Доставка с примеркой
+                    .order-registration__radio-subtitle.radio__subtitle Доставка курьером по Челябинску
+                label.order-registration__radio.radio
+                  input.order-registration__radio-input.radio__input(type="radio" name="delivery-method" value="sdec" required)
+                  .order-registration__radio-info.radio__info 
+                    .order-registration__radio-title.radio__title СДЭК
+                    .order-registration__radio-subtitle.radio__subtitle Доставка курьером компании СДЭК
+            .order-registration__step Шаг 3 из 3
+            fieldset.order-registration__fieldset
+              legend.order-registration__legend Оплата
+              .order-registration__inputs-radio 
+                label.order-registration__radio.radio
+                  input.order-registration__radio-input.radio__input(type="radio" name="payment" value="card" checked="true" required)
+                  .order-registration__radio-info.radio__info 
+                    .order-registration__radio-title.radio__title Банковской картой
+                    .order-registration__radio-subtitle.radio__subtitle Visa, MasterCard, МИР
+                label.order-registration__radio.radio
+                  input.order-registration__radio-input.radio__input(type="radio" name="payment" value="cash" required)
+                  .order-registration__radio-info.radio__info 
+                    .order-registration__radio-title.radio__title Наличными при получении
+                    .order-registration__radio-subtitle.radio__subtitle Курьеру наличными или переводом
+              textarea.order-registration__input-textarea.input(name="comment" placeholder="Комментарий к заказу")
+            .order-registration__payment.order-payment 
+              .order-payment__title К оплате
+              table.order-payment__table
+                tbody.order-payment__body 
+                  tr.order-payment__row
+                    td.order-payment__data Товары
+                    td.order-payment__data 3 шт
+                    td.order-payment__data 27 900 RUB
+                  tr.order-payment__row
+                    td.order-payment__data Доставка
+                    td.order-payment__data СДЭК (Курьером)
+                    td.order-payment__data 200 RUB
+                  tr.order-payment__row.order-payment__row_black
+                    td.order-payment__data Итого
+                    td.order-payment__data 
+                    td.order-payment__data 700 RUB
+              .order-payment__pay-order 
+                button.order-payment__btn.btn.btn_black(type='submit') Оплатить заказ
+                .order-payment__agree
+                  |Нажимая на кнопку, вы подтверждаете свое совершеннолетие,
+                  |соглашаетесь на обработку персональных данных в соответствии с 
+                  a(href="#" target="_blank") условиями продажи
+    include pug/_footer
