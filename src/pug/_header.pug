@@ -71,9 +71,10 @@ header.header
       a.menu-icons__item(href='#')
         svg.i-profile(style='' aria-label="Личный кабинет")
           use(xlink:href='img/icons/icons.svg#svg-profile')
-      button.menu-icons__item
+      button.menu-icons__item.menu-icons__item_cart
         svg.i-cart(style='stroke: currentColor;' aria-label="Открыть корзину")
           use(xlink:href='img/icons/icons.svg#svg-cart')
+        .cart-count 1
       button.burger(aria-label="Меню")
         span
     form.header__search.search(action='#')
@@ -82,6 +83,20 @@ header.header
           svg.i-search(style='stroke: currentColor;' aria-label="Поиск")
             use(xlink:href='img/icons/icons.svg#svg-search')
         input.search__input(type="search" placeholder="Введите запрос")
-        button.search__close(type="button")
-          svg.i-close-search( aria-label='Закрыть поиск')
+        button.search__close(type="button" aria-label='Закрыть поиск')
+          svg.i-close-search(aria-hidden)
             use(xlink:href='img/icons/icons.svg#svg-close')
+  .cart-menu
+    .cart-menu__title Корзина
+    .cart-menu__products 
+      .cart-menu__product 
+        +image('img/goods/1.jpg', 'alt').cart-menu__img.lazy(width='63' height='68')
+        .cart-menu__product-info 
+          .cart-menu__product-title Шёлковый костюм в красном цвете
+          .cart-menu__product-price 13900 RUB
+        button.cart-menu__remove(aria-label='удалить товар')
+          +icon('close').i-close(aria-hidden)
+    a.cart-menu__link-to-cart.btn.btn_black(href="cart.html") Перейти в корзину
+    button.cart-menu__btn-close.btn.btn_white Продолжить покупки
+    button.cart-menu__close(aria-label='закрыть корзину')
+      +icon('close').i-close(aria-hidden)
