@@ -9,8 +9,6 @@
   }
 
   &__title {
-    @include adaptiveValue("font-size", 20, 18);
-
     &-2 {
       margin-bottom: rem(40);
     }

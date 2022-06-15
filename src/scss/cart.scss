@@ -1,0 +1,114 @@
+.page {
+
+  // .page_cart
+  &_cart {}
+}
+
+.cart {
+
+  // .cart__container
+  &__container {}
+
+  // .cart__title
+  &__title {}
+
+  // .cart__wrapper
+  &__wrapper {}
+
+  // .cart__products
+  &__products {}
+
+  // .cart__product
+  &__product {}
+
+  // .cart__total
+  &__total {}
+
+  // .cart__wrapper-empty
+  &__wrapper-empty {}
+
+  // .cart__title-empty
+  &__title-empty {}
+
+  // .cart__btn-empty
+  &__btn-empty {}
+}
+
+.cart-product {
+
+  // .cart-product__content
+  &__content {}
+
+  // .cart-product__img
+  &__img {}
+
+  // .cart-product__info
+  &__info {}
+
+  // .cart-product__title
+  &__title {}
+
+  // .cart-product__actions
+  &__actions {}
+
+  // .cart-product__size
+  &__size {}
+
+  // .cart-product__color
+  &__color {}
+
+  // .cart-product__block-quantity
+  &__block-quantity {}
+
+  // .cart-product__title-quantity
+  &__title-quantity {}
+
+  // .cart-product__btns-quantity
+  &__btns-quantity {}
+
+  // .cart-product__btn-quantity
+  &__btn-quantity {
+
+    // .cart-product__btn-quantity_minus
+    &_minus {}
+
+    // .cart-product__btn-quantity_plus
+    &_plus {}
+  }
+
+  // .cart-product__count
+  &__count {}
+
+  // .cart-product__block-cost
+  &__block-cost {}
+
+  // .cart-product__title-cost
+  &__title-cost {}
+
+  // .cart-product__price
+  &__price {}
+
+  // .cart-product__remove
+  &__remove {}
+}
+
+.cart-total {
+
+  // .cart-total__cost
+  &__cost {}
+
+  // .cart-total__title
+  &__title {}
+
+  // .cart-total__price
+  &__price {}
+
+  // .cart-total__title-quantity
+  &__title-quantity {}
+
+  // .cart-total__count
+  &__count {}
+
+  // .cart-total__btn
+  &__btn {}
+}

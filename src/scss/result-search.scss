@@ -11,7 +11,6 @@
   }
 
   &__title {
-    @include adaptiveValue("font-size", 20, 18);
     margin-bottom: rem(30);
   }
 
