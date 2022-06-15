@@ -1005,16 +1005,54 @@
       }
       modules_flsModules.select = new SelectConstructor({});
       var just_validate_es = __webpack_require__(11);
-      const validation = new just_validate_es.Z(".subscribe", {
-        errorFieldCssClass: "is-invalid"
-      });
-      validation.addField("#email", [ {
-        rule: "required",
-        errorMessage: "Обязательное поле!"
-      }, {
-        rule: "email",
-        errorMessage: "Неверный Email!"
-      } ]);
+      if (document.getElementById("form-subscribe")) {
+        const validationSubscribe = new just_validate_es.Z("#form-subscribe", {
+          errorFieldCssClass: "is-invalid"
+        });
+        validationSubscribe.addField("#input-email", [ {
+          rule: "required",
+          errorMessage: "Обязательное поле!"
+        }, {
+          rule: "email",
+          errorMessage: "Неверный Email!"
+        } ]);
+      }
+      if (document.getElementById("form-order")) {
+        const validationOrder = new just_validate_es.Z("#form-order", {
+          errorFieldCssClass: "is-invalid"
+        });
+        validationOrder.addField("#input-email", [ {
+          rule: "required",
+          errorMessage: "Обязательное поле!"
+        }, {
+          rule: "email",
+          errorMessage: "Неверный Email!"
+        } ]).addField("#input-first-name", [ {
+          rule: "required",
+          errorMessage: "Обязательное поле!"
+        } ]).addField("#input-last-name", [ {
+          rule: "required",
+          errorMessage: "Обязательное поле!"
+        } ]).addField("#input-phone", [ {
+          rule: "required",
+          errorMessage: "Обязательное поле!"
+        } ]).addField("#input-street", [ {
+          rule: "required",
+          errorMessage: "Обязательное поле!"
+        } ]).addField("#input-home-number", [ {
+          rule: "required",
+          errorMessage: "Обязательное поле!"
+        } ]).addField("#input-apartment-number", [ {
+          rule: "required",
+          errorMessage: "Обязательное поле!"
+        } ]).addField("#select-country", [ {
+          rule: "required",
+          errorMessage: "Обязательное поле!"
+        } ]).addField("#select-city", [ {
+          rule: "required",
+          errorMessage: "Обязательное поле!"
+        } ]);
+      }
       var swiper_esm = __webpack_require__(930);
       function bildSliders() {
         let sliders = document.querySelectorAll('[class*="__swiper"]:not(.swiper-wrapper)');
