@@ -61,6 +61,10 @@
     @include adaptiveValue("margin-bottom", 35, 25);
   }
 
+  &__label {
+    position: relative;
+  }
+
   // .order-registration__input
   &__input {
     width: 100%;

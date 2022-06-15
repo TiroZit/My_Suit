@@ -3,6 +3,10 @@
 .select {
   position: relative;
 
+  &.is-invalid+.select__body>.select__title {
+    border: 1px solid var(--color-red);
+  }
+
   // .select__body
   &__body {
     position: relative;

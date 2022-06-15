@@ -17,7 +17,7 @@ footer.footer
       .footer__bottom.socials
         include socials
         a.footer__policy(href="#" data-da=`.footer__copy, ${992/16}, 2`) Политика обработки данных
-    form.footer__subscribe.subscribe(action='#' method="post")
+    form.footer__subscribe.subscribe#form-subscribe(action='#' method="post")
       .subscribe__info 
         .subscribe__title 
           | Подпишись на наши
@@ -29,7 +29,7 @@ footer.footer
             |Я соглашаюсь на обработку моих персональных данных и ознакомлен(а) с условиями публичной оферты
       fieldset.subscribe__fieldset
         label.subscribe__label
-          input.input.subscribe__input#email(type='email' name='email' placeholder='E mail' required)
+          input.input.subscribe__input#input-email(type='email' name='email' placeholder='E mail' required)
         button.btn.btn_black.subscribe__button(type='submit') Подписаться
     .footer__copy 
       //- a.menu__link(href="#") Контакты
