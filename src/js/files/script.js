@@ -1,5 +1,5 @@
 // Подключение функционала
-import { isMobile } from './functions.js'
+import { isMobile, bodyLockToggle, bodyLock, bodyUnlock } from './functions.js'
 // Подключение списка активных модулей
 import { flsModules } from './modules.js'
 
@@ -55,5 +55,16 @@ function documentActions(e) {
       document.querySelector(`.header__search`).classList.remove('search-open')
     }
     e.preventDefault()
+  }
+  if (targetElement.closest('.menu-icons__item_cart')) {
+    bodyLock()
+    document.querySelector('html').classList.add('cart-menu-open')
+  }
+  if (
+    targetElement.closest('.cart-menu__close') ||
+    targetElement.closest('.cart-menu__btn-close')
+  ) {
+    bodyUnlock()
+    document.querySelector('html').classList.remove('cart-menu-open')
   }
 }

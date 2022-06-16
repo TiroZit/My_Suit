@@ -352,6 +352,20 @@
   border-radius: 50%;
 }
 
+.cart-menu-open {
+  & .cart-menu {
+    transform: translateX(0);
+  }
+
+  & body {
+    &::after {
+      content: '';
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+}
+
 .cart-menu {
   position: absolute;
   top: 0;
@@ -361,10 +375,11 @@
   max-width: rem(351);
   width: 100%;
   transform: translateX(100%);
+  transition: transform .5s;
   height: 100vh;
   overflow-y: auto;
   background-color: var(--color-white);
-  padding: rem(200) rem(32) 0 0;
+  padding: rem(200) rem(32) 0 rem(32);
 
   &__title {
     font-size: rem(20);

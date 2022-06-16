@@ -70,6 +70,7 @@ $responsiveType: 1;
 @import "@scss/base/null";
 
 body {
+  position: relative;
   font-weight: 500;
   overflow-x: hidden;
 
