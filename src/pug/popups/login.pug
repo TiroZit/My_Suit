@@ -1,5 +1,15 @@
-.popup.popup-login#login(aria-hidden='true')
-  .popup__wrapper.popup-login__wrapper
-    .popup__content.popup-login__content
+.popup.popup-auth#login(aria-hidden='true')
+  .popup__wrapper.popup-auth__wrapper
+    .popup__content.popup-auth__content
       button.popup__close(data-close aria-label="Закрыть")
         +icon('close')(aria-hidden)
+      form(action="#" method="post").popup-auth__form 
+        fieldset.popup-auth__fieldset 
+          legend.popup-auth__legend Вход на сайт
+          label.popup-auth__label
+            input.popup-auth__input.input#input-email(type="email" name="email" placeholder="E-mail*" required)
+          label.popup-auth__label
+            input.popup-auth__input.input#input-password(type="password" name="password" placeholder="Пароль" required)
+          button.popup-auth__btn.btn.btn_black(type="submit") Войти
+      .popup-auth__img-ibg 
+        +image('img/popups/login.jpg', 'alt').lazy

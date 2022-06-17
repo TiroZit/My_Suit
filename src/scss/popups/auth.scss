@@ -1,0 +1,57 @@
+.popup-auth {
+
+  // .popup-auth__wrapper
+  &__wrapper {}
+
+  // .popup-auth__content
+  &__content {
+    @include media-breakpoint-up(tablet) {
+      display: grid;
+      grid-template-columns: 1fr rem(350);
+    }
+
+    font-weight: 400;
+  }
+
+  // .popup-auth__form
+  &__form {
+    padding: rem(60) rem(40);
+
+    @include media-breakpoint-down(mobile) {
+      padding: rem(40) rem(20);
+    }
+  }
+
+  // .popup-auth__fieldset
+  &__fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: rem(15);
+  }
+
+  // .popup-auth__legend
+  &__legend {
+    font-size: rem(20);
+    margin-bottom: rem(35);
+  }
+
+  // .popup-auth__label
+  &__label {}
+
+  // .popup-auth__input
+  &__input {
+    border: 1px solid var(--color-white-chinese);
+    padding: rem(13);
+    width: 100%;
+  }
+
+  // .popup-auth__btn
+  &__btn {
+    padding: rem(13.5) 0;
+  }
+
+  // .popup-auth__img-ibg
+  &__img-ibg {
+    padding-bottom: percent(350, 350);
+  }
+}
