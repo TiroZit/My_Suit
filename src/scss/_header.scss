@@ -245,15 +245,15 @@
     display: flex;
     align-items: center;
 
+    &_cart {
+      position: relative;
+    }
+
     @media (any-hover: hover) {
       transition: color .3s;
 
       &:hover {
         color: var(--color-dark-gray);
-      }
-
-      &_cart {
-        position: relative;
       }
     }
 
@@ -367,7 +367,7 @@
 }
 
 .cart-menu {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   z-index: 5;

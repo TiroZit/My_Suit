@@ -1,0 +1,250 @@
+.page {
+
+  // .page_personal-account
+  &_personal-account {}
+
+  // .page__title
+  &__title {}
+}
+
+.personal-account {
+
+  // .personal-account__container
+  &__container {
+    @include adaptiveValue("margin-top", 60, 30);
+    @include adaptiveValue("margin-bottom", 120, 60);
+  }
+
+  // .personal-account__title
+  &__title {}
+
+  // .personal-account__wrapper
+  &__wrapper {
+    @include media-breakpoint-up(tablet) {
+      display: grid;
+      grid-template-columns: rem(150) 1fr;
+      gap: rem(40);
+    }
+
+    margin-top: rem(40);
+  }
+
+  // .personal-account__nav
+  &__nav {
+    @include media-breakpoint-down(tablet) {
+      margin-bottom: rem(40);
+    }
+  }
+
+  // .personal-account__tab-btn
+  &__tab-btn {
+    color: var(--color-dark-gray);
+
+    &._tab-active {
+      color: var(--color-black);
+    }
+
+    &:not(:last-child) {
+      @include media-breakpoint-up(tablet) {
+        margin-bottom: rem(20);
+      }
+
+      @include media-breakpoint-down(tablet) {
+        margin-right: rem(45);
+      }
+    }
+  }
+
+  // .personal-account__content
+  &__content {}
+
+  // .personal-account__tab-body
+  &__tab-body {}
+
+  &__form {
+    max-width: rem(730);
+  }
+
+  // .personal-account__fieldset
+  &__fieldset {
+    display: grid;
+
+    @include media-breakpoint-up(tablet) {
+      grid-template-columns: repeat(2, calc(50% - rem(15)));
+    }
+
+    gap: rem(30);
+
+    @include media-breakpoint-down(tablet) {
+      gap: rem(20);
+    }
+
+    margin-bottom: rem(45);
+
+    // .personal-account__fieldset_2
+    &_2 {}
+  }
+
+  // .personal-account__legend
+  &__legend {
+    font-weight: 400;
+    font-size: rem(20);
+    color: var(--color-black-charcoal);
+    margin-bottom: rem(35);
+  }
+
+  // .personal-account__label
+  &__label {}
+
+  // .personal-account__input
+  &__input {
+    width: 100%;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-white-chinese);
+    padding: rem(13) rem(15) rem(14) rem(15);
+  }
+
+  // .personal-account__select
+  &__select {
+    & .select__value {
+      height: rem(49);
+    }
+
+    & .select__options {
+      top: rem(49);
+    }
+
+    & .select__input.focus-visible {
+      outline: none;
+    }
+  }
+
+  // .personal-account__block
+  &__block {
+    display: flex;
+    gap: rem(30);
+
+    & .personal-account__label {
+      flex: 0 1 50%;
+      width: 100%;
+    }
+  }
+
+  // .personal-account__btns
+  &__btns {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  // .personal-account__btn
+  &__btn {
+    width: percent(160, 730);
+    padding: rem(13.5) 0;
+
+    @include media-breakpoint-down(tablet) {
+      width: 100%;
+    }
+
+    &:not(:last-child) {
+      @include adaptiveValue("margin-right", 30, 10);
+    }
+
+    // .personal-account__btn_edit
+    &_edit {}
+
+    // .personal-account__btn_save
+    &_save {}
+  }
+
+  // .personal-account__tab-body-title
+  &__tab-body-title {}
+
+  // .personal-account__list-order
+  &__list-order {
+    margin-top: rem(40);
+
+    & .list-order__item {
+      padding: rem(35) 0;
+    }
+  }
+}
+
+.list-order {
+  border-top: 1px solid var(--color-white-chinese);
+  border-bottom: 1px solid var(--color-white-chinese);
+
+  // .list-order__item
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    column-gap: rem(70);
+    row-gap: rem(30);
+
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--color-white-chinese);
+    }
+  }
+
+  // .list-order__block-number
+  &__block-number {
+    flex: 0 0 rem(120);
+  }
+
+  // .list-order__number
+  &__number {
+    margin-bottom: rem(20);
+  }
+
+  // .list-order__date
+  &__date {
+    color: var(--color-dark-gray);
+  }
+
+  // .list-order__block-status
+  &__block-status {
+    flex: 1 1 auto;
+  }
+
+  // .list-order__status
+  &__status {
+    svg {
+      width: rem(9);
+      height: rem(9);
+      margin-right: rem(6);
+    }
+
+    margin-bottom: rem(20);
+
+    // .list-order__status_accept
+    &_accept {
+      color: var(--color-purple);
+    }
+
+    // .list-order__status_sent
+    &_sent {
+      color: #62CEA1;
+    }
+
+    // .list-order__status_calcel
+    &_cancel {
+      color: var(--color-red);
+    }
+  }
+
+  // .list-order__price
+  &__price {
+    font-size: rem(18);
+  }
+
+  // .list-order__btn-more
+  &__btn-more {
+    flex: 0 0 rem(183);
+    padding: rem(13.5) 0;
+
+    @include media-breakpoint-down(tablet) {
+      flex: 1 1 auto;
+    }
+  }
+}

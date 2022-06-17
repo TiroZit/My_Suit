@@ -25,4 +25,81 @@ block content
           path: "lk.html"
         }
       ])
+      section.personal-account
+        .personal-account__container
+          h1.personal-account__title.page__title Личный кабинет
+          .personal-account__wrapper(data-tabs data-tabs-animate='500')
+            nav.personal-account__nav(data-tabs-titles)
+              button.personal-account__tab-btn._tab-active Мои данные
+              button.personal-account__tab-btn Мои заказы
+            .personal-account__content(data-tabs-body)
+              form.personal-account__tab-body.personal-account__form(action="#" method="post")
+                fieldset.personal-account__fieldset
+                  legend.personal-account__legend Данные покупателя
+                  label.personal-account__label
+                    input.personal-account__input.input#input-first-name(type="text" name="first_name" placeholder="Имя *" required disabled value='')
+                  label.personal-account__label
+                    input.personal-account__input.input#input-last-name(type="text" name="last_name" placeholder="Фамилия *" required disabled value='')
+                  label.personal-account__label
+                    input.personal-account__input.input#input-phone(type="number" name="phone" placeholder="Телефон *" required disabled value='')
+                  label.personal-account__label
+                    input.personal-account__input.input#input-email(type="email" name="email" placeholder="E-mail *" required disabled value='')
+                fieldset.personal-account__fieldset.personal-account__fieldset_2
+                  legend.personal-account__legend Адрес доставки
+                  .personal-account__select
+                    select.select#select-country(name='country' data-search data-scroll disabled value='')
+                      option.select__option(value='' selected) Выберите страну
+                      option.select__option(value='russia') Россия
+                      option.select__option(value='belarus') Беларусь
+                      option.select__option(value='kazakhstan') Казахстан
+                  label.personal-account__label
+                    input.personal-account__input.input#input-street(type="text" name="street" placeholder="Улица *" required disabled value='' )
+                  .personal-account__select
+                    select.select#select-city(name='city' data-search data-scroll disabled value='')
+                      option.select__option(value='' selected) Выберите город
+                      option.select__option(value='moscow') Москва
+                      option.select__option(value='ekaterinburg') Екатеринбург
+                      option.select__option(value='chelyabinsk') Челябинск
+                      option.select__option(value='minsk') Минск
+                  .personal-account__block
+                    label.personal-account__label
+                      input.personal-account__input.input#input-home-number(type="number" name="home_number" placeholder="Дом *" required disabled value='')
+                    label.personal-account__label
+                      input.personal-account__input.input#input-apartment-number(type="number" name="apartment_number" placeholder="Квартира *" required disabled value='')
+                .personal-account__btns 
+                  button.personal-account__btn.personal-account__btn_edit.btn.btn_white(type="button") Редактировать
+                  button.personal-account__btn.personal-account__btn_save.btn.btn_black(type="submit") Сохранить
+              .personal-account__tab-body
+                h2.personal-account__legend Мои заказы
+                ul.personal-account__list-order.list-order
+                  li.list-order__item 
+                    .list-order__block-number 
+                      .list-order__number № 67853246
+                      time.list-order__date(datetime='2022-04-25') 25.04.2022
+                    .list-order__block-status 
+                      .list-order__status.list-order__status_accept
+                        +icon('refresh').i-refresh
+                        | Принят
+                      .list-order__price 10850 RUB
+                    button.list-order__btn-more.btn.btn_white Подробнее о заказе
+                  li.list-order__item 
+                    .list-order__block-number 
+                      .list-order__number № 67853246
+                      time.list-order__date(datetime='2022-04-25') 25.04.2022
+                    .list-order__block-status 
+                      .list-order__status.list-order__status_sent
+                        +icon('check').i-check
+                        | Отправлен
+                      .list-order__price 10850 RUB
+                    button.list-order__btn-more.btn.btn_white Подробнее о заказе
+                  li.list-order__item 
+                    .list-order__block-number 
+                      .list-order__number № 67853246
+                      time.list-order__date(datetime='2022-04-25') 25.04.2022
+                    .list-order__block-status 
+                      .list-order__status.list-order__status_cancel
+                        +icon('cancel').i-cancel
+                        | Отменен
+                      .list-order__price 10850 RUB
+                    button.list-order__btn-more.btn.btn_white Подробнее о заказе
     include pug/_footer

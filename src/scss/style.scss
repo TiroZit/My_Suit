@@ -72,7 +72,6 @@ $responsiveType: 1;
 body {
   position: relative;
   font-weight: 500;
-  overflow-x: hidden;
 
   // Скролл заблокирован
   .lock & {
@@ -206,3 +205,4 @@ body {
 @import "order-successfully";
 @import "delivery";
 @import "cart";
+@import "personal-account";
