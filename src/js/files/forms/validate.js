@@ -18,6 +18,72 @@ if (document.getElementById('form-subscribe')) {
   ])
 }
 
+if (document.getElementById('form-registration')) {
+  const validationSubscribe = new JustValidate('#form-registration', {
+    errorFieldCssClass: 'is-invalid',
+  })
+
+  validationSubscribe
+    .addField('#input-email', [
+      {
+        rule: 'required',
+        errorMessage: 'Обязательное поле!',
+      },
+      {
+        rule: 'email',
+        errorMessage: 'Неверный Email!',
+      },
+    ])
+    .addField('#input-password', [
+      {
+        rule: 'required',
+        errorMessage: 'Обязательное поле!',
+      },
+    ])
+    .addField('#input-repeat-password', [
+      {
+        validator: (value, fields) => {
+          if (fields['#input-password'] && fields['#input-password'].elem) {
+            const repeatPasswordValue = fields['#input-password'].elem.value
+
+            return value === repeatPasswordValue
+          }
+
+          return true
+        },
+        errorMessage: 'Пароли должны быть одинаковыми!',
+      },
+      {
+        rule: 'required',
+        errorMessage: 'Обязательное поле!',
+      },
+    ])
+}
+
+if (document.getElementById('form-login')) {
+  const validationSubscribe = new JustValidate('#form-login', {
+    errorFieldCssClass: 'is-invalid',
+  })
+
+  validationSubscribe
+    .addField('#input-email', [
+      {
+        rule: 'required',
+        errorMessage: 'Обязательное поле!',
+      },
+      {
+        rule: 'email',
+        errorMessage: 'Неверный Email!',
+      },
+    ])
+    .addField('#input-password', [
+      {
+        rule: 'required',
+        errorMessage: 'Обязательное поле!',
+      },
+    ])
+}
+
 if (document.getElementById('form-order')) {
   const validationOrder = new JustValidate('#form-order', {
     errorFieldCssClass: 'is-invalid',

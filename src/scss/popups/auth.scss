@@ -26,7 +26,7 @@
   &__fieldset {
     display: flex;
     flex-direction: column;
-    gap: rem(15);
+    gap: rem(20);
   }
 
   // .popup-auth__legend
@@ -36,7 +36,9 @@
   }
 
   // .popup-auth__label
-  &__label {}
+  &__label {
+    position: relative;
+  }
 
   // .popup-auth__input
   &__input {
