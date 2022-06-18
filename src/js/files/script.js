@@ -14,7 +14,7 @@ function documentActions(e) {
     targetElement.classList.contains('search__close') ||
     targetElement.classList.contains('i-close-search')
   const searchForm = document.querySelector(`.header__search`)
-
+  console.log(targetElement)
   if (targetElement.closest('[data-parent]') || subMenuButtonClose) {
     const subMenuId = targetElement.dataset.parent
       ? targetElement.dataset.parent
@@ -56,15 +56,16 @@ function documentActions(e) {
     }
     e.preventDefault()
   }
-  if (targetElement.closest('.menu-icons__item_cart')) {
-    bodyLock()
-    document.querySelector('html').classList.add('cart-menu-open')
-  }
   if (
     targetElement.closest('.cart-menu__close') ||
-    targetElement.closest('.cart-menu__btn-close')
+    targetElement.closest('.cart-menu__btn-close') ||
+    (targetElement.closest('body') && !targetElement.closest('.cart-menu'))
   ) {
     bodyUnlock()
     document.querySelector('html').classList.remove('cart-menu-open')
+  }
+  if (targetElement.closest('.menu-icons__item_cart')) {
+    bodyLock()
+    document.querySelector('html').classList.add('cart-menu-open')
   }
 }
