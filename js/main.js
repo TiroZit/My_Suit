@@ -1017,6 +1017,48 @@
           errorMessage: "Неверный Email!"
         } ]);
       }
+      if (document.getElementById("form-registration")) {
+        const validationSubscribe = new just_validate_es.Z("#form-registration", {
+          errorFieldCssClass: "is-invalid"
+        });
+        validationSubscribe.addField("#input-email", [ {
+          rule: "required",
+          errorMessage: "Обязательное поле!"
+        }, {
+          rule: "email",
+          errorMessage: "Неверный Email!"
+        } ]).addField("#input-password", [ {
+          rule: "required",
+          errorMessage: "Обязательное поле!"
+        } ]).addField("#input-repeat-password", [ {
+          validator: (value, fields) => {
+            if (fields["#input-password"] && fields["#input-password"].elem) {
+              const repeatPasswordValue = fields["#input-password"].elem.value;
+              return value === repeatPasswordValue;
+            }
+            return true;
+          },
+          errorMessage: "Пароли должны быть одинаковыми!"
+        }, {
+          rule: "required",
+          errorMessage: "Обязательное поле!"
+        } ]);
+      }
+      if (document.getElementById("form-login")) {
+        const validationSubscribe = new just_validate_es.Z("#form-login", {
+          errorFieldCssClass: "is-invalid"
+        });
+        validationSubscribe.addField("#input-email", [ {
+          rule: "required",
+          errorMessage: "Обязательное поле!"
+        }, {
+          rule: "email",
+          errorMessage: "Неверный Email!"
+        } ]).addField("#input-password", [ {
+          rule: "required",
+          errorMessage: "Обязательное поле!"
+        } ]);
+      }
       if (document.getElementById("form-order")) {
         const validationOrder = new just_validate_es.Z("#form-order", {
           errorFieldCssClass: "is-invalid"
