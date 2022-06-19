@@ -1,0 +1,30 @@
+/* <block28> */
+.tpl-block-28[data-nc-b2~="800"] .tpl-block-28-list {
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+align-items: flex-start;
+margin-bottom: -15px;
+margin-right: -20px;
+transform: translateY(-15px) translateX(-20px);
+justify-content: flex-start;
+}
+.tpl-block-28[data-nc-b2~="800"] .tpl-block-28-list > * {
+margin-top: 15px;
+margin-left: 20px;
+}
+.tpl-block-28[data-nc-b1~="800"] .tpl-block-28-list {
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+align-items: flex-start;
+margin-bottom: -15px;
+margin-right: -40px;
+transform: translateY(-15px) translateX(-40px);
+justify-content: flex-start;
+}
+.tpl-block-28[data-nc-b1~="800"] .tpl-block-28-list > * {
+margin-top: 15px;
+margin-left: 40px;
+}
+/* </block28> */

@@ -1,0 +1,96 @@
+<!-- FormPrefix --><?
+$user_hash = $nc_core->input->fetch_get('hash');
+$order_id = (int)$nc_core->input->fetch_get('order_id');
+$netshop = nc_netshop::get_instance($catalogue_id);
+$order_component_id =  $netshop->get_setting('OrderComponentID');
+// для безопасности надо удостовериться, что переданный хэш и номер заказа соответствуют друг другу
+$order_id = $db->get_var(
+        "SELECT `Message_ID` FROM Message{$order_component_id}
+          WHERE `Message_ID` = $order_id
+            AND `user_hash` = '{$db->escape($user_hash)}'"
+);
+
+$order = $netshop->load_order($order_id);
+if ($order) {
+?>
+<div class="block-content">
+    <div class="tpl-component-cart-page js-cart">
+    <div class="cart-page-top">
+        <div class="cart-page-labels js-stage-labels">
+            <span class="cart-page-label  js-stage-label">Ваша корзина</span>
+            <span class="cart-page-label js-stage-label">Контакты</span>
+            <span class="cart-page-label js-stage-label">Доставка</span>
+            <span class="cart-page-label js-stage-label">Оплата</span>
+            <span class="cart-page-label active js-stage-label">Заказ принят</span>
+        </div>
+    </div>
+        <div class="cart-page-stage cart-page-stage--ok active">
+            <div class="cart-page-content">
+                <div class="cart-stage-top">
+                    <div class="cart-stage-header">Спасибо за Ваш заказ!</div>
+                    <div class="cart-stage-postfix">
+                        Подробная информация о заказе придёт на почту <span><?=$order['Email']?></span>
+                        в течение 5 минут.
+                    </div>
+                    <?
+                    try {
+                        $invoice_id = (int)$nc_core->input->fetch_get('invoice_id');
+
+                        if ($invoice_id) {
+                            $invoice = new nc_payment_invoice($invoice_id);
+                            if ($order_id == $invoice->get('order_id')) {
+                                if ($invoice->get('status') == nc_payment_invoice::STATUS_SUCCESS) {
+                                    ?>Благодарим Вас за оплату!<?
+                                } else {
+                                    $invoice_customer_id = $invoice->get('customer_id');
+                                    if (!$invoice_customer_id || $invoice_customer_id == $AUTH_USER_ID) {
+                                        $payment_method = nc_payment_factory::create($invoice->get('payment_system_id'));
+                                        $immediate_payment = $cc_settings['execute_payment_form'];
+                                        echo '<div class="tpl-order-pay-button">' ,
+                                             $payment_method->get_request_form($invoice, !$immediate_payment, false),
+                                             '</div>';
+                                    } else if (!$AUTH_USER_ID) {
+                                        ?>
+                                        <div class="tpl-block-message tpl-state-error">
+                                            Пожалуйста, войдите на сайт со своим логином и паролем,<br>
+                                            чтобы оплатить заказ.
+                                        </div>
+                                        <?
+                                    }
+                                }
+                            }
+                        }
+                        else {
+                        ?>
+                            <a class="tpl-button-primary" href="/">перейти к покупкам</a>
+                        <?
+                        }
+                    }
+                    catch (Exception $e) {
+                        ?>
+                        <div class="tpl-block-message tpl-state-error">
+                            Не удалось получить информацию о выставленном счёте.<br>
+                            Пожалуйста, сообщите о том, что вам не удалось оплатить заказ,<br>
+                            когда с Вами свяжется сотрудник нашего магазина.
+                        </div>
+                        <?
+                    }
+                    ?>
+
+                </div>
+            </div>
+        </div>
+        <div class="tpl-block-order-actions">
+        </div>
+    </div>
+</div>
+<? } else { ?>
+    <div class="tpl-block-message tpl-state-error">
+        Не удалось получить информацию о заказе.
+    </div>
+<? } ?>
+<!-- /FormPrefix -->
+
+<!-- RecordTemplate --><!-- /RecordTemplate -->
+
+<!-- FormSuffix --><!-- /FormSuffix -->

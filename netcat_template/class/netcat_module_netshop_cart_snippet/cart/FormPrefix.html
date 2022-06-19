@@ -1,0 +1,5 @@
+<?= $f_AdminCommon; ?>
+<a class="cart-link" href="<?= nc_folder_path($current_catalogue['Netshop_Cart_Sub_ID']); ?>" title="<?= $hint; ?>"<?= $styles; ?>>
+    <span class="<?= $icon_class; ?>"><?= $icon; ?></span>
+    <span class="cart-counter tpl-text-alt nc-cart-items-count <?= $nc_cart_items_count === 0 ? 'hidden' : ''; ?>"><?= $nc_cart_items_count; ?></span>
+</a>

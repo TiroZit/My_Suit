@@ -1,0 +1,21 @@
+.order_filter {padding: 10px 0 }
+.order_row:nth-child(odd){ background-color: var(--tpl-color-background-accent); }
+.order_header { padding: 0 2% 0 3%;}
+.order_header div { display: inline-block; }
+.order_header_left { width: 70%; }
+.order_header_right { width: 29%; text-align:right; vertical-align:top; padding-top:10px;}
+.order_header_status_value, .order_body_price{ font-weight:bold; }
+.order_body { padding: 5px 2% 10px 3%; }
+.order_body_left { text-align: left; width: 70%; display: inline-block; }
+.order_body_right { text-align: right; width: 29%; display: inline-block; }
+
+@media (max-width: 550px) {
+    .order_header_left, .order_header_right, .order_body_left, .order_body_right{
+        display:block;
+        width:100%;
+        text-align:left;
+    }
+    .order_body_goods{
+        margin:10px 0;
+    }
+}

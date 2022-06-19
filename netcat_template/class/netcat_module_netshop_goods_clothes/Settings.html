@@ -1,0 +1,196 @@
+<?php
+
+if (!nc_module_check_by_keyword("netshop")) {
+    die(NETCAT_MODULE_NETSHOP_MODULEUNCHECKED);
+}
+$cc_settings = nc_get_visual_settings($cc_env['Sub_Class_ID']);
+
+$nc_core = nc_core::get_object();
+$netshop = nc_netshop::get_instance();
+$nc_input = $nc_core->input;
+$nc_user = $AUTH_USER_ID ? $nc_core->user->get_by_id($AUTH_USER_ID) : null;
+$netshop_cart_items = $netshop->cart->get_items();
+
+global $btn_in_compare_text, $btn_not_in_compare_text;
+$btn_in_compare_text = 'в сравнении';
+$btn_not_in_compare_text = 'сравнить';
+
+
+// Инициализация и применение фильтра
+$ignore_check = true;
+$query_where = "(a.`Checked` = 1 OR (a.`Checked` = 0 AND (" .
+    "SELECT `Message_ID` FROM `Message$classID` as `child` " .
+    " WHERE `child`.`Parent_Message_ID` = a.`Message_ID` AND `child`.`Checked` = 1 " .
+    " LIMIT 1" .
+    ")))";
+
+// Поля, которые отличают варианты друг от друга
+$variant_fields = json_decode(nc_array_value($cc_settings, 'variant_fields', '[]'), true) ?: array();
+
+// Инициализация и применение фильтра (кроме страницы объекта)
+if ($action !== 'full' && !empty($isMainContent)) {
+    // Поля фильтра можно выбрать в режиме редактирования в блоке фильтра
+    $filter_fields = json_decode(nc_array_value($cc_settings, 'filter_fields', '[]'), true) ?: array();
+
+    $netshop->filter->init_fields($filter_fields);
+    $netshop->filter->options('list_field', 'checkbox');
+    $netshop->filter->query_where($query_where);
+
+    // Инициализация формы фильтра (выводится в отдельном компоненте netcat_module_netshop_filter
+    // через макрофункцию %NETCAT_NETSHOP_FILTER_FORM%)
+    $netshop->filter->init_form_macro();
+}
+
+// Сортировка результатов
+$price_column = 'Price';
+$sort_by = (string)$nc_core->input->fetch_get('sortBy');
+$sorting_methods = array(
+    '' => array(
+        'query_order' => "",
+        'title' => 'по умолчанию',
+        'query_select' => '',
+    ),
+    'name' => array(
+        'query_order' => "`Name` ASC",
+        'title' => 'по алфавиту',
+        'query_select' => '',
+    ),
+    'priceAsc' => array(
+        'query_order' => "`__PriceRange` ASC",
+        'title' => 'по возрастанию цены',
+        'query_select' =>
+            "(IF(`Price` = 0 OR `$price_column` IS NULL," .
+            "(SELECT MIN(`$price_column`) FROM `Message$classID` AS pr WHERE pr.`Parent_Message_ID` = a.`Message_ID`), " .
+            "`Price`)) AS `__PriceRange`",
+    ),
+    'priceDesc' => array(
+        'query_order' => "`__PriceRange` DESC",
+        'title' => 'по убыванию  цены',
+        'query_select' =>
+            "(IF(`Price` = 0 OR `$price_column` IS NULL," .
+            "(SELECT MIN(`$price_column`) FROM `Message$classID` AS pr WHERE pr.`Parent_Message_ID` = a.`Message_ID`), " .
+            "`Price`)) AS `__PriceRange`",
+    ),
+);
+if (isset($sorting_methods[$sort_by])) {
+    $query_order = $sorting_methods[$sort_by]['query_order'];
+    $query_select .= $sorting_methods[$sort_by]['query_select'];
+}
+
+$size = $cc_settings['object_size'];
+if ($cc_settings['object_size'] === 'custom') {
+    $size = $cc_settings['custom_size'];
+}
+list($w, $h) = explode(":", str_replace(",", ".", $size));
+if ((float)$w > 0) {
+    $padding_top = str_replace(",", ".", ($h / $w) * 100) . "%";
+    $full_image_ratio = str_replace(",", ".", ($w / $h));
+} else {
+    $padding_top = '100%';
+    $full_image_ratio = 1;
+}
+$goods_item_styles = array();
+$goods_item_styles[] = "--tpl-object-item--image-padding-top: " . $padding_top;
+$goods_item_styles[] = "--tpl-object-item--image-fit: " . $cc_settings['image_format'];
+$goods_item_styles = " style='" . implode(";", $goods_item_styles) . "'";
+
+if (!function_exists('current_link')) {
+    function current_link($params, $val = null) {
+        if (!is_array($params)) {
+            $params = array($params => ($val == '' ? null : $val));
+        }
+        if ($get = nc_core('input')->fetch_get()) {
+            $params = array_merge($get, $params);
+        }
+        global $cc_array, $cc, $sub;
+        if (count($cc_array) === 1 || $cc_array[0] == $cc) {
+            return nc_folder_path($sub, null, $params);
+        } else {
+            return nc_infoblock_path($cc, 'index', 'html', null, $params);
+        }
+    }
+}
+
+if (!function_exists('nc_netshop_goods_scripts')) {
+    function nc_netshop_goods_scripts() {
+        global $btn_in_compare_text, $netshop;
+        global $btn_not_in_compare_text;
+        global $current_catalogue;
+        ob_start(); ?>
+
+        <script>
+            function nc_netshop_quick_order($this) {
+                var form = jQuery($this).closest('form');
+                jQuery.post(form.attr('action'), form.serialize() + "&json=1", function (response) {
+                    location.href = '<?= nc_folder_path($current_catalogue['Netshop_Cart_Sub_ID']); ?>';
+                }, 'json');
+                return false;
+            }
+
+            function nc_netshop_cart($this) {
+                var btn = jQuery($this), form = jQuery($this).closest('form');
+                jQuery.post(form.attr('action'), form.serialize() + "&json=1", function (response) {
+                    nc_event_dispatch('ncNetshopCartUpdate', {
+                        cart: response,
+                        form: form,
+                        modal: true
+                    });
+                    btn.html('В корзине');
+                }, 'json');
+                return false;
+            }
+
+            function nc_netshop_goodslist(type, action, itemid, classid, btn) {
+                var url = "<?=nc_module_path('netshop'); ?>actions/goodslist.php";
+                jQuery.get(url, {type: type, action: action, item_id: itemid, class_id: classid});
+                if (type === 'favorite') {
+                    if (action === 'add') {
+                        nc_event_dispatch('ncNetshopGoodsFavoriteAdded', {
+                            modal: true
+                        });
+                        jQuery(btn).addClass('active');
+                    } else {
+                        nc_event_dispatch('ncNetshopGoodsFavoriteRemoved', {
+                            modal: true
+                        });
+                        jQuery(btn).removeClass('active');
+                    }
+                }
+                if (type === 'compare') {
+                    if (action === 'add') {
+                        nc_event_dispatch('ncNetshopGoodsCompareAdd', {
+                            modal: true
+                        });
+                        jQuery(btn).addClass('active');
+                    } else {
+                        nc_event_dispatch('ncNetshopGoodsCompareRemove', {
+                            modal: true
+                        });
+                        jQuery(btn).removeClass('active');
+                    }
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                jQuery(document).on('click', '.quantity-button--less', function (event) {
+                    event.preventDefault();
+                    var $input = jQuery(this).next();
+                    var val = +$input.val(), min = +$input.attr('min'), step = +$input.attr('step');
+                    if (val - step >= min) {
+                        $input.val(val - step).change();
+                    }
+                });
+                jQuery(document).on('click', '.quantity-button--more', function (event) {
+                    event.preventDefault();
+                    var $input = jQuery(this).prev();
+                    var val = +$input.val(), max = +$input.attr('max'), step = +$input.attr('step');
+                    if (isNaN(max) || (val + step <= max)) {
+                        $input.val(val + step).change();
+                    }
+                });
+            });
+        </script>
+
+        <? return ob_get_clean();
+    }
+}

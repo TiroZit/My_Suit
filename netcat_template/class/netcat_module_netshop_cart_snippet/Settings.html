@@ -1,0 +1,5 @@
+<?php
+
+$nc_netshop = nc_netshop::get_instance();
+$nc_cart = $nc_netshop->cart;
+$nc_cart_items_count = $nc_cart->get_item_count(true);

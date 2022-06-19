@@ -1,0 +1,26 @@
+<?/* Служебная часть */for ($f_RowNum = 0; $f_RowNum < $rowCount; $f_RowNum++) {    if($fetch_row[$f_RowNum] instanceof Iterator) {        extract($fetch_row[$f_RowNum]->to_array(), EXTR_PREFIX_ALL, "f");    } else {        extract($fetch_row[$f_RowNum], EXTR_PREFIX_ALL, "f");    }    foreach($iteration_RecordTemplate[$f_RowNum] as $value) {        extract($value);    }    eval($cc_env["convert2txt"]);    ob_start();/* Конец служебной части */?>
+<?php
+$item = nc_netshop_item::by_id($f_Goods_Class_ID, $f_Goods_Message_ID);
+if ($item->get('URL') !== false) {
+    // запрет кэширования страницы сервером, если цена или скидки зависят от пользователя
+    if ($template_partial_loading && $item->price_depends_on_user_data()) {
+        header('X-Accel-Expires: 0');
+    }
+?>
+    <div class="goods-item nc-infoblock-object"<?= $goods_item_styles; ?>>
+        <?= $f_AdminButtons; ?>
+        <a href="<?= $item['URL']; ?>" class="goods-image">
+            <?php if ((string)$item['Image']) : ?>
+                <div class="image">
+                    <?= $item['Image']->as_img(array('alt' => $item['FullName'])); ?>
+                </div>
+            <?php endif; ?>
+        </a>
+        <a href="<?= $item['URL']; ?>" class="goods-info">
+            <span class="tpl-text-header4"><?= $item['Name']; ?></span>
+            <span class="tpl-text-default-paragraph"><?= $item['Type']; ?></span>
+            <span class="tpl-text-header6"><?= $item['ItemPriceF']; ?></span>
+        </a>
+    </div>
+<?php } ?>
+<?/* Служебная часть */    echo nc_finishing_RecordTemplate(ob_get_clean(), $inside_admin, $classID, $f_RowID, $parent_message, $cc, $cc_env["Class_Name"], $no_cache_marks);}/* Конец служебной части */?>

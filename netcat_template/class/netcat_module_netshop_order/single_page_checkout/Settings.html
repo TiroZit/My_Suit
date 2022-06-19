@@ -1,0 +1,46 @@
+<?php
+$input = $nc_core->input;
+$netshop = nc_netshop::get_instance();
+$cart = $netshop->cart;
+
+// Сбрасываем купон
+if ($coupon_clear = $input->fetch_post('coupon_clear')) {
+    $netshop->promotion->unregister_coupon_code($coupon_clear);
+    $result = array(
+        'TotalItemPrice' => $netshop->cart->get_totals(),
+        'TotalItemPriceF' => $netshop->format_price($netshop->cart->get_totals()),
+    );
+    echo json_encode($result);
+    exit;
+}
+
+// Активируем купон
+if ($coupon_add = $input->fetch_post('coupon_add')) {
+    $registered_coupons = array();
+    $notification = array();
+    $netshop->promotion->register_coupon_code($coupon_add);
+    foreach ($netshop->promotion->get_registered_coupons() as $coupon) {
+        /** @var nc_netshop_promotion_coupon $coupon */
+        /** @var nc_netshop_promotion_discount $deal */
+        $deal = $coupon->get_deal();
+        $registered_coupons[] = array(
+            'code' => $coupon->get('code'),
+            'amount' => $deal->get('amount'),
+            'amount_type' => $deal->get('amount_type') ,
+            'amount_text' => $deal->get_full_formatted_amount(true),
+        );
+    }
+    foreach ($netshop->promotion->get_coupon_notifications()->get_all() as $notice) {
+        $notification[$notice['coupon_code']] = $notice;
+    }
+    $result = array(
+        'coupons' => $registered_coupons,
+        'notifications' => $notification,
+        'TotalItemPrice' => $netshop->cart->get_totals(),
+        'TotalItemPriceF' => $netshop->format_price($netshop->cart->get_totals()),
+
+    );
+    echo json_encode($result);
+    exit;
+
+}

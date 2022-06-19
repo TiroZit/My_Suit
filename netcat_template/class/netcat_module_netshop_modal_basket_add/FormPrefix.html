@@ -1,0 +1,34 @@
+<?= $f_AdminCommon; ?>
+<?php if ($admin_mode) { ?>
+    <div class="nc-popup-admin-helper">
+        Модальное окно "Корзина"
+    </div>
+<?php } ?>
+<div class="popup-cart cart nc-popup" id="nc-popup-cart">
+    <div class="popup">
+        <div class="popup-content-wrap">
+            <div class="popup-content">
+                <div class="popup-content-inner js-popup-inner">
+                    <a class="popup-content-close js-popup-close" href="#"> </a>
+                    <div class="popup-content-text">
+                        <div class="popup-content-icon"><i class="fa fa-shopping-basket"></i> </div>
+
+                        <div class="popup-content-header tpl-text-header4">Товар добавлен в корзину</div>
+                        <div class="popup-content-caption tpl-text-default">Всего в корзине <span class="nc-cart-items-count"></span>
+                            <span class="nc-cart-items-count-text"></span></div>
+                        <div class="popup-content-notify tpl-text-alt"></div>
+                        <div class="popup-content-buttons">
+                            <button class="tpl-button-primary tpl-button-primary-big js-popup-close"> Продолжить
+                                покупки
+                            </button>
+                            <button class="tpl-button-secondary tpl-button-secondary-big "
+                                    onclick="window.location='<?= nc_folder_path($current_catalogue['Netshop_Cart_Sub_ID']); ?>'">Посмотреть корзину
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

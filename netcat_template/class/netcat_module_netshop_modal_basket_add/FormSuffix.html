@@ -1,0 +1,56 @@
+<script>
+    if (typeof pluralForm != 'function') {
+        /**
+         * Склонение русских слов
+         * @param {Number} itemQuantity  Количество товаров
+         * @param {String} one           «товар»
+         * @param {String} two           «товара»
+         * @param {String} many          «товаров»
+         * @returns {String}
+         */
+        function pluralForm(itemQuantity, one, two, many) {
+            itemQuantity = Math.abs(itemQuantity) % 100;
+            var underHundred = itemQuantity % 10,
+                result = many;
+
+            if (underHundred > 1 && underHundred < 5) { result = two; }
+            if (underHundred == 1) { result = one; }
+            if (itemQuantity > 10 && itemQuantity < 20) { result = many; }
+
+            return result;
+        }
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+        jQuery(document).on('ncNetshopCartUpdate', function (event) {
+            var data = event.originalEvent.detail;
+            var popupId = 'nc-popup-cart';
+            var $popup = jQuery('#' + popupId);
+            if (!$popup) {
+                return;
+            }
+            $popup.find(".popup-content-header,.popup-content-notify,.popup-content-caption").hide();
+            if (data.modal) {
+                var current_item = data.form.find("[name='items[]']").val();
+                $notify = $popup.find(".popup-content-notify").show();
+                $notify.html("");
+                if (data.cart.QuantityNotifications && data.cart.QuantityNotifications[current_item]) {
+                    // jQuery.each(data.cart.QuantityNotifications, function (key, value) {
+                        $notify.append(data.cart.QuantityNotifications[current_item].Message);
+                    // });
+                } else {
+                    $popup.find(".popup-content-header").show();
+                    $popup.find(".popup-content-caption").show();
+                    // // Обновим кол-во товаров в корзине
+                    var itemsCount = data.cart.TotalItemCount;
+                    $cartItemsCount = $popup.find('.nc-cart-items-count');
+                    $cartItemsCount.text(itemsCount);
+                    $cartItemsCountText = $popup.find('.nc-cart-items-count-text');
+                    $cartItemsCountText.text(pluralForm(itemsCount, 'товар', 'товара', 'товаров'));
+                    $cartItemsCount.show();
+                }
+                // Вызовем модальное окно
+                nc_popup_open(popupId);
+            }
+        });
+    });
+</script>

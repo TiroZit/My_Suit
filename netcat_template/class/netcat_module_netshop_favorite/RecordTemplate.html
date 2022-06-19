@@ -1,0 +1,38 @@
+<?/* Служебная часть */for ($f_RowNum = 0; $f_RowNum < $rowCount; $f_RowNum++) {    if($fetch_row[$f_RowNum] instanceof Iterator) {        extract($fetch_row[$f_RowNum]->to_array(), EXTR_PREFIX_ALL, "f");    } else {        extract($fetch_row[$f_RowNum], EXTR_PREFIX_ALL, "f");    }    foreach($iteration_RecordTemplate[$f_RowNum] as $value) {        extract($value);    }    eval($cc_env["convert2txt"]);    ob_start();/* Конец служебной части */?>
+<?php
+$item_parent_id = $f_item['Parent_Message_ID'] ?: $f_item['Message_ID'];
+$item_list_key = $f_item['Class_ID'] . ':' . $item_parent_id;
+$item_in_stock = (!$nc_core->get_settings('IgnoreStockUnitsValue', 'netshop') ? ($f_item['StockUnits'] > 0) : true);
+$in_cart = $nc_netshop_cart_items[$item_list_key]['Qty'] > 0;
+?>
+<div class="item"<?= $goods_item_styles; ?>>
+    <div class="item-image">
+        <?php if ((string)$f_item['Image']) : ?>
+            <div class="image">
+                <?= $f_item['Image']->resize(240, 240, nc_ImageTransform::RESIZE_TO_BEST_FIT)->as_img(array('alt' => $f_item['FullName'])); ?>
+            </div>
+        <?php endif; ?>
+    </div>
+    <div class="item-info">
+        <a href="<?= $f_item['URL']; ?>" class="tpl-text-header4"><?= $f_item['FullName']; ?></a>
+        <div class="tpl-text-default-paragraph"><?= $f_item['Type']; ?></div>
+        <div class="item-price tpl-text-header6"><?= $f_item['ItemPriceF']; ?></div>
+    </div>
+    <div class="item-actions">
+        <form class="item-add-to-cart" method="post" action="<?= $nc_netshop->get_add_to_cart_url(); ?>">
+            <input type="hidden" name="cart_mode" value="add"/>
+            <input type="hidden" name="items[]" value="<?= $f_item['Class_ID'] . ':' . $item_parent_id; ?>"/>
+            <input type="hidden" name="qty" value="1">
+            <button type="button" <?= !$item_in_stock ? "disabled" : ""; ?> class="tpl-button-primary" onclick="nc_netshop_cart(this); return false;"
+                    title="Добавить в корзину"><?= $in_cart ? "В корзине" : ($item_in_stock ? "В корзину" : "Нет в наличии"); ?></button>
+        </form>
+        <form class="item-remove-from-favorites" method="post">
+            <input type="hidden" name="class_id" value="<?= $f_item['Class_ID']; ?>">
+            <input type="hidden" name="item_id" value="<?= $item_parent_id; ?>">
+            <button type="submit" name="do" value="remove" class="tpl-button" title="Удалить из избранного">
+                <i class="fa fa-trash-alt"></i>
+            </button>
+        </form>
+    </div>
+</div>
+<?/* Служебная часть */    echo nc_finishing_RecordTemplate(ob_get_clean(), $inside_admin, $classID, $f_RowID, $parent_message, $cc, $cc_env["Class_Name"], $no_cache_marks);}/* Конец служебной части */?>

@@ -1,0 +1,16 @@
+/* <block22> */
+.tpl-block-22 .tpl-block-22-list {
+display: flex;
+flex-direction: row;
+flex-wrap: nowrap;
+align-items: center;
+justify-content: flex-start;
+min-height: 20px;
+}
+.tpl-block-22 .tpl-block-22-list > * {
+margin-left: 20px;
+}
+.tpl-block-22 .tpl-block-22-list > *:first-child {
+margin-left: 0;
+}
+/* </block22> */

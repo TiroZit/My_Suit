@@ -1,0 +1,255 @@
+<?=( $warnText ? "<div class='warnText'>$warnText</div>" : NULL )?>
+<form name='adminForm' id='adminForm' class='nc-form' enctype='multipart/form-data' method='post' action='<?= $SUB_FOLDER ?><?= $HTTP_ROOT_PATH ?>add.php'>
+<div id='nc_moderate_form'>
+<div class='nc_clear'></div>
+<input name='admin_mode' type='hidden' value='<?= $admin_mode ?>' />
+<?= $nc_core->token->get_input() ?>
+<input name='catalogue' type='hidden' value='<?= $catalogue ?>' />
+<input name='cc' type='hidden' value='<?= $cc ?>' />
+<input name='sub' type='hidden' value='<?= $sub ?>' /><input name='posting' type='hidden' value='1' />
+<input name='curPos' type='hidden' value='<?= $curPos ?>' />
+<input name='f_Parent_Message_ID' type='hidden' value='<?= $f_Parent_Message_ID ?>' />
+<?= nc_form_moderate('add', $admin_mode, 0, $systemTableID, $current_cc, (isset($f_Checked) ? $f_Checked  : null), $f_Priority , $f_Keyword, $f_ncTitle, $f_ncKeywords, $f_ncDescription ) ?>
+</div>
+<input type="hidden" name="f_Goods_Class_ID" value="">
+<input type="hidden" name="f_Goods_Message_ID" value="">
+
+<div class='nc-field'>
+    <span class="nc-field-caption">Товар:</span>
+    <input type='text' name='item_search' value='' autocomplete='off' style='width: 80% !important' placeholder='Введите название или артикул товара'>
+    <ul class='nc-goods'>
+        <li class="nc-items-row-template" style='display:none'>
+            <span class='nc-inline-block'><i class="nc-icon-s nc--remove" title="Удалить товар" style='margin-top:-3px'></i></span>
+            <span class="nc-goods-items-row-name">
+                <span class="nc-goods-items-row-article"></span>
+                <a href="#" class="nc-goods-items-row-full-name" tabindex="-1" target="_blank"></a>
+            </span>
+        </li>
+
+    </ul>
+</div>
+<script>
+
+    (function($) {
+        // добавление строки с информацией о товаре
+        function add_row(data) {
+            var form = document.getElementById('adminForm'),
+                row = $('.nc-items-row-template', form),
+                class_field = $('input[name="f_Goods_Class_ID"]', form),
+                message_field = $('input[name="f_Goods_Message_ID"]', form),
+                article = $('.nc-goods-items-row-article', row),
+                autocomplete_input = $(form.item_search);
+            if (data.Article) {
+                article.html(data.Article);
+            }
+
+            class_field.val( data.Class_ID );
+            message_field.val( data.Message_ID );
+
+            row.find('.nc-goods-items-row-full-name').prop('href', data.URL).html( data.FullName );
+            row.show();
+            autocomplete_input.val('').hide();
+            autocomplete_previous_value = '';
+        }
+
+        function remove_row( row ){
+            var
+                form = document.getElementById('adminForm'),
+                class_field = $('input[name="f_Goods_Class_ID"]', form),
+                message_field = $('input[name="f_Goods_Message_ID"]', form),
+                article = $('.nc-goods-items-row-article', row),
+                autocomplete_input = $(form.item_search);
+
+            article.html('');
+            class_field.val('');
+            message_field.val('');
+
+            row.find('.nc-goods-items-row-full-name').prop('href', '').html('');
+            row.hide();
+            autocomplete_input.show();
+        }
+
+        // добавление товаров: формирование запроса на сервер
+        function autocomplete_make_request(request, response) {
+            // если новое значение отличается только на несущественный символ,
+            // запрос не делаем
+            var filtered_term = request.term.replace(/[ -\/:-@\[-`{-~]+/g, '');
+            if (autocomplete_previous_value == filtered_term) {
+                return;
+            }
+            autocomplete_previous_value = filtered_term;
+
+            if (autocomplete_last_request) {
+                autocomplete_last_request.abort();
+            }
+
+            autocomplete_last_request = $.ajax({
+                url: NETCAT_PATH + "modules/netshop/admin/itemindex/search.php",
+                method: "post",
+                dataType: "json",
+                data: {
+                    site_id: site_id,
+                    terms: request.term,
+                    limit: 100
+                },
+                success: response
+            }).always(function() {
+                autocomplete_input.removeClass('nc--loading');
+            });
+
+            autocomplete_input.addClass('nc--loading');
+        }
+
+        // добавление товаров: отрисовка строки результата
+        function autocomplete_render_item(ul, item) {
+            ul.addClass("nc-goods-item-search-results");
+
+            var a = $('<a />'),
+                name_span = $('<span class="tpl-block-name" />');
+
+            if (item.Article) {
+                name_span.append(search_span('article', item.Article));
+            }
+
+            name_span.append(search_span('full-name', item.FullName));
+
+            a.append(name_span)
+                .append(search_span('item-price', item.ItemPriceF));
+
+            return $("<li>").append(a).appendTo(ul);
+        }
+
+        // добавление товаров: вспомогательная функция для генерации разметки в результатах
+        function search_span(class_name, html) {
+            return $('<span />', {
+                'class': 'tpl-property-' + class_name,
+                html: html
+            });
+        }
+
+        // добавление товаров: инициализация autocomplete (поиск товаров для добавления в заказ)
+        function autocomplete_init() {
+                autocomplete_input.autocomplete({
+                    minLength: 2,
+                    source: autocomplete_make_request,
+                    select: function(event, ui) {
+                        add_row(ui.item);
+                        return false;
+                    }
+                }).autocomplete('instance')._renderItem = autocomplete_render_item;
+                autocomplete_input.autocomplete('instance')._resizeMenu = function() {
+                    this.menu.element.outerWidth( autocomplete_input.outerWidth() );
+                }
+        }
+
+        var
+            form = document.getElementById('adminForm'),
+            row = $('.nc-items-row-template', form),
+            site_id = <?= $catalogue ?>,
+            autocomplete_input = $(form.item_search),
+            autocomplete_previous_value = '',
+            autocomplete_last_request;
+
+        row.find('.nc--remove').on(
+            'click',
+            function(){
+                remove_row( row );
+            }
+        );
+        // Добавление товара — нужен jQuery UI Autocomplete widget
+        if (!$.ui || !$.ui.autocomplete || !$.ui.menu) {
+            nc.load_script(NETCAT_PATH + "admin/js/jquery.ui.autocomplete.min.js")
+                .done(autocomplete_init)
+        }
+        else {
+            autocomplete_init();
+        }
+
+
+    })(jQuery || $nc);
+</script>
+
+
+
+<style>
+    .nc--remove{
+        cursor:pointer;
+    }
+    .nc-inline-block{
+        display:inline-block;
+        width:20px;
+        text-align:center;
+        vertical-align:middle;
+    }
+    .nc-goods{
+        list-style:none;
+        margin:0;
+        padding:0;
+    }
+    .nc-goods li{
+    }
+    .nc-goods-items-row-article {
+        color: #8d8d8d;
+        margin-right: 15px;
+        display:inline-block;
+        width:60px;
+    }
+    /* min Jquery CSS elements for autocomplete (base styles should be already loaded) */
+    .nc-goods-item-search-results {
+        z-index: 20000;
+        background-color: #fff;
+        border: 1px solid #1a87c2;
+        max-height: 200px;
+        overflow-y: scroll;
+        list-style:none;
+        padding:0;
+        width:auto;
+    }
+    .nc-goods-item-search-results li{
+        padding:5px 10px;
+        cursor:pointer;
+    }
+
+    .nc-goods-item-search-results a, .nc-goods-item-search-results a:hover {
+        color: black;
+    }
+
+    .nc-goods-item-search-results a > span {
+        display: inline-block;
+        vertical-align: top;
+        padding-right: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        box-sizing: border-box;
+    }
+
+    .nc-goods-item-search-results .tpl-block-name {
+        width: 70%;
+    }
+    .nc-goods-item-search-results .tpl-block-name
+    .nc-netshop-order-items .tpl-property-article,
+    .nc-goods-item-search-results .tpl-property-article {
+        color: #8d8d8d;
+        margin-right: 15px;
+    }
+    .nc-goods-item-search-results .tpl-property-stock-units {
+        text-align: center;
+        width: 15%;
+    }
+
+    .nc-goods-item-search-results .tpl-property-item-price {
+        text-align: right;
+        width: 15%;
+    }
+
+    .nc-goods-item-search-results .ui-state-focus {
+        background: #e7ecf0 !important;
+        border: none !important;
+    }
+</style>
+
+<? if (!$AUTH_USER_ID && $current_cc['UseCaptcha'] && $MODULE_VARS['captcha']) { ?><?= nc_captcha_formfield() ?><br/><br/><?= NETCAT_MODERATION_CAPTCHA ?> (*):<br/><input type='text' name='nc_captcha_code' size='10'><br/><br/><? } ?>
+<div class='nc-hint nc-hint-required-fields'><?= NETCAT_MODERATION_INFO_REQFIELDS ?></div>
+<?= nc_submit_button(NETCAT_MODERATION_BUTTON_ADD) ?>
+
+</form>

@@ -1,0 +1,56 @@
+/* <block31> */
+.tpl-container-31 {
+--tpl-color-foreground-main: #FFFFFF;
+--tpl-color-foreground-main-darkest: rgb(178,178,178);
+--tpl-color-foreground-main-darker: rgb(204,204,204);
+--tpl-color-foreground-main-dark: rgb(229,229,229);
+--tpl-color-foreground-main-light: rgb(255,255,255);
+--tpl-color-foreground-main-lighter: rgb(255,255,255);
+--tpl-color-foreground-main-lightest: rgb(255,255,255);
+--tpl-color-foreground-accent: #FFFFFF;
+--tpl-color-foreground-accent-darkest: rgb(178,178,178);
+--tpl-color-foreground-accent-darker: rgb(204,204,204);
+--tpl-color-foreground-accent-dark: rgb(229,229,229);
+--tpl-color-foreground-accent-light: rgb(255,255,255);
+--tpl-color-foreground-accent-lighter: rgb(255,255,255);
+--tpl-color-foreground-accent-lightest: rgb(255,255,255);
+--tpl-color-brand: #FFFFFF;
+--tpl-color-brand-darkest: rgb(178,178,178);
+--tpl-color-brand-darker: rgb(204,204,204);
+--tpl-color-brand-dark: rgb(229,229,229);
+--tpl-color-brand-light: rgb(255,255,255);
+--tpl-color-brand-lighter: rgb(255,255,255);
+--tpl-color-brand-lightest: rgb(255,255,255);
+--tpl-color-background-accent: #5109AD;
+--tpl-color-background-accent-darkest: rgb(13,1,29);
+--tpl-color-background-accent-darker: rgb(36,4,77);
+--tpl-color-background-accent-dark: rgb(59,6,125);
+--tpl-color-background-accent-light: rgb(104,11,222);
+--tpl-color-background-accent-lighter: rgb(130,41,243);
+--tpl-color-background-accent-lightest: rgb(158,90,246);
+--tpl-color-background-main: #5109AD;
+--tpl-color-background-main-darkest: rgb(13,1,29);
+--tpl-color-background-main-darker: rgb(36,4,77);
+--tpl-color-background-main-dark: rgb(59,6,125);
+--tpl-color-background-main-light: rgb(104,11,222);
+--tpl-color-background-main-lighter: rgb(130,41,243);
+--tpl-color-background-main-lightest: rgb(158,90,246);
+color: var(--tpl-color-foreground-main);
+background-color: var(--tpl-color-background-main);
+ }
+.tpl-container-31 { margin-top: 20px }
+.tpl-container-31 * { --tpl-mixin-margin-left: 0px; --tpl-mixin-margin-right: 0px; }
+@media (max-width: 1279.99px) {
+.tpl-container-31 > .tpl-block-list:not(.tpl-mixin-padding-pass-down) { padding: 36px 20px 36px 20px; }
+.tpl-container-31 > .tpl-block-list.tpl-mixin-padding-pass-down > .tpl-mixin-padding-target { padding: 36px 20px 36px 20px; }}
+@media (min-width: 1280px) {
+.tpl-container-31 > .tpl-block-list:not(.tpl-mixin-padding-pass-down) { padding: 36px 0 36px 0; }
+.tpl-container-31 > .tpl-block-list.tpl-mixin-padding-pass-down > .tpl-mixin-padding-target { padding: 36px 0 36px 0; }}
+.tpl-container-31 {
+max-width: calc(100% - var(--tpl-mixin-margin-left, 0px) - var(--tpl-mixin-margin-right, 0px)) !important;
+width: calc(100% - var(--tpl-mixin-margin-left, 0px) - var(--tpl-mixin-margin-right, 0px)) !important;
+margin-left: var(--tpl-mixin-margin-left, 0px) !important;
+padding-left: calc(var(--tpl-mixin-layout-child-indent-left, 0px) - var(--tpl-mixin-margin-left, 0px));
+padding-right: calc(100% - var(--tpl-mixin-layout-max-width, 100%) - var(--tpl-mixin-layout-child-indent-left, 0px) - var(--tpl-mixin-margin-left, 0px))
+}
+/* </block31> */

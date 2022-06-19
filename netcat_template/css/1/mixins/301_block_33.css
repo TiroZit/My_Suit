@@ -1,0 +1,4 @@
+/* <block33> */
+.tpl-container-33 > .tpl-block-list:not(.tpl-mixin-padding-pass-down) { padding: 20px 20px 20px 20px; }
+.tpl-container-33 > .tpl-block-list.tpl-mixin-padding-pass-down > .tpl-mixin-padding-target { padding: 20px 20px 20px 20px; }
+/* </block33> */

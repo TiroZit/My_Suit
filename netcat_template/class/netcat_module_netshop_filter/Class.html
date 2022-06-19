@@ -1,0 +1,69 @@
+<!-- FormPrefix --><?= $f_AdminCommon; ?>
+<?= nc_netshop_filter::insert_form_macro($cc) ?>
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+        var block_id = "#<?=$nc_block_id;?>";
+        jQuery(block_id + ' .nc_netshop_filter_label').on('click', function () {
+            jQuery(this).parents('.nc_netshop_filter_row').toggleClass('active');
+        });
+
+        jQuery(block_id + ' .nc_netshop_filter_row_checkbox .nc_netshop_filter_field div').on("click", function (e) {
+            e.stopPropagation();
+            var $element = jQuery(this).toggleClass('active');
+            var $checkbox = $element.find('input[type="checkbox"]');
+            if ($element.hasClass('active')) {
+                $checkbox.attr('checked', 'checked');
+            } else {
+                $checkbox.attr('checked', null);
+            }
+        });
+        jQuery(block_id + ' .nc_netshop_filter_row_checkbox').each(function () {
+            jQuery(this).find('.nc_netshop_filter_field input[type="checkbox"]').each(function () {
+                if (jQuery(this).attr('checked') === 'checked') {
+                    var $elem = jQuery(this).closest('div');
+                    $elem.addClass('active');
+                    $elem.parents('.nc_netshop_filter_row').addClass('active');
+                }
+            });
+        });
+        jQuery(block_id + ' .nc_netshop_filter_row_range').each(function () {
+            var $parent = jQuery(this);
+            var minInpVal = $parent.find('.nc_netshop_filter_field_min input').val().toString();
+            var maxInpVal = $parent.find('.nc_netshop_filter_field_max input').val().toString();
+            if ($parent.data('min').toString() !== minInpVal || $parent.data('max').toString() !== maxInpVal) {
+                $parent.addClass('active');
+            }
+        });
+        jQuery(block_id + ' .nc_netshop_filter_row_select').each(function () {
+            var $parent = jQuery(this);
+            var $select = $parent.find('.nc_netshop_filter_field select').first();
+            $select.find('option').each(function () {
+                var value = jQuery(this).val().toString();
+                if (value.length === 0) {
+                    jQuery(this).text('Не выбрано');
+                }
+                if (jQuery(this).attr('selected') === 'selected') {
+                    if (value.length !== 0) {
+                        $parent.addClass('active');
+                    }
+                }
+            });
+        });
+        jQuery(block_id + ' .nc_netshop_filter_row_multiple').each(function () {
+            var $parent = jQuery(this);
+            $parent.find('select').each(function () {
+                jQuery(this).find('option').first().text('Не выбрано');
+                jQuery(this).find('option').each(function () {
+                    var $option = jQuery(this);
+                    if ($option.val().toString().length > 0 && $option.attr('selected') === 'selected') {
+                        $parent.addClass('active');
+                    }
+                });
+            });
+        });
+    });
+</script><!-- /FormPrefix -->
+
+<!-- RecordTemplate --><!-- /RecordTemplate -->
+
+<!-- FormSuffix --><!-- /FormSuffix -->

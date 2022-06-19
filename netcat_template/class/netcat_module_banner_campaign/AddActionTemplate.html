@@ -1,0 +1,24 @@
+<?
+$campaign_zone_values = array();
+$campaign_banner_values = array();
+
+for ($i = 0; $i < count($zone); $i++) {
+	$campaign_zone_values[] = "('{$message}', '{$zone[$i]}')";
+}
+
+if (count($campaign_zone_values) > 0) {
+    $nc_core->db->query("INSERT INTO Banner_CampaignZone (Campaign_ID, Zone_ID) VALUES " . implode(", ", $campaign_zone_values));
+}
+
+for ($i = 0; $i < count($banner); $i++) {
+	$campaign_banner_values[] = "('{$message}', '{$banner[$i]}')";
+}
+
+if (count($campaign_banner_values) > 0) {
+    $nc_core->db->query("INSERT INTO Banner_CampaignBanner (Campaign_ID, Banner_ID) VALUES " . implode(", ", $campaign_banner_values));
+}
+
+
+echo "Рекламная кампания добавлена.<br>" . $goBack;
+
+?>

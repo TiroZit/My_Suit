@@ -1,0 +1,12 @@
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        jQuery(document).on('ncNetshopCartUpdate', function (event) {
+            let data = event.originalEvent.detail;
+            // Обновим кол-во товаров в корзине
+            let itemsCount = data.cart.TotalItemCount;
+            jQuery('#<?= $nc_block_id; ?> .nc-cart-items-count').each(function () {
+                jQuery(this).html(itemsCount).prop("title", "" + itemsCount + " товаров в корзине");
+            });
+        });
+    });
+</script>

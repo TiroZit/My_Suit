@@ -1,0 +1,4 @@
+.tpl-component-netcat-navigation-logo.tpl-template-logo-1 { height:100%; }
+.tpl-component-netcat-navigation-logo.tpl-template-logo-1 a { height:100%; display: inline-block; color: var(--tpl-color-foreground-accent); text-decoration: none; }
+.tpl-component-netcat-navigation-logo.tpl-template-logo-1 a img, .tpl-component-netcat-navigation-logo.tpl-template-logo-1 a svg { max-height: 100%; max-width: 100%; object-fit: contain; }
+.tpl-component-netcat-navigation-logo.tpl-template-logo-1 a svg path { fill: var(--tpl-color-foreground-accent); }

@@ -1,0 +1,275 @@
+<?php
+$nc_core = nc_core::get_object();
+$netshop = nc_netshop::get_instance();
+$cart = $netshop->cart;
+if (!$cart->get_item_count()) {
+    // корзина пуста! оформление заказа невозможно
+    echo "<div class='tpl-block-message tpl-state-error'>", NETCAT_MODULE_NETSHOP_ERROR_CART_EMPTY, "</div>\n";
+    return;
+}
+?>
+<script>
+var cc = <?=$cc?>;
+</script>
+<script src="<?= nc_component_path($cc_env['Real_Class_ID'] ?: $classID) . 'js/cart.js' ?>"></script>
+<div class="block-content">
+    <?php $items = $cart->get_items() ?>
+    <form method='post' action='<?= $SUB_FOLDER . $HTTP_ROOT_PATH ?>add.php' id="nc_netshop_add_order_form"
+          class="tpl-component-cart-page js-cart">
+        <input name='admin_mode' type='hidden' value='<?= $nc_core->admin_mode ?>'/>
+        <?= $nc_core->token->get_input() . "\n" ?>
+        <input name='catalogue' type='hidden' value='<?= $catalogue ?>'/>
+        <input name='cc' type='hidden' value='<?= $cc ?>'/>
+        <input name='sub' type='hidden' value='<?= $sub ?>'/>
+        <input name='posting' type='hidden' value='1'/>
+        <input name='curPos' type='hidden' value='0'/>
+        <input name='f_Parent_Message_ID' type='hidden' value='0'/>
+        <input name='current_page' type='hidden' value='<?= $current_page ?>'/>
+        <div class="cart-page-top">
+            <div class="cart-page-labels js-stage-labels">
+                <span class="cart-page-label active js-stage-label" data-stage="#stageCart"
+                      data-id="1">Ваша корзина</span>
+                <span class="cart-page-label js-stage-label" data-stage="#stageContacts" data-id="2">Контакты</span>
+                <span class="cart-page-label js-stage-label" data-stage="#stageDelivery" data-id="3">Доставка</span>
+                <span class="cart-page-label js-stage-label" data-stage="#stagePayment" data-id="4">Оплата</span>
+                <span class="cart-page-label js-stage-label" data-stage="#stageOk" data-id="5">Заказ принят</span>
+            </div>
+        </div>
+        <div data-action="<?= nc_modules('netshop')->get_add_to_cart_url(); ?>"
+             class="cart-page-stage cart-page-stage--cart active js-cart-stage js-stage-form" id="stageCart">
+            <input type="hidden" name="redirect_url" value="<?= $_SERVER["REQUEST_URI"]; ?>"/>
+            <input type='hidden' name='cart_mode' value=''>
+            <div class="cart-page-content">
+                <div class="cart-stage-top flex-container">
+                    <div class="cart-page-table js-cart-table">
+                        <div class="cart-page-header">
+                            <div class="cart-page-column cart-page-column--title">
+                                <div class="cart-stage-label">Товар</div>
+                            </div>
+                            <div class="cart-page-column cart-page-column--price">
+                                <div class="cart-stage-label">Цена</div>
+                            </div>
+                            <div class="cart-page-column cart-page-column--quantity">
+                                <div class="cart-stage-label">К-во</div>
+                            </div>
+                            <div class="cart-page-column cart-page-column--sum">
+                                <div class="cart-stage-label">Сумма</div>
+                            </div>
+                            <div class="cart-page-column cart-page-column--changeStatus"></div>
+                        </div>
+                        <?php foreach ($items as $item) { ?>
+                            <?php $product_link = nc_object_path($item['Class_ID'], ($item['Parent_Message_ID'] > 0 ? $item['Parent_Message_ID'] : $item['Message_ID'])); ?>
+                            <div class="cart-page-row js-cart-item"
+                                 data-item_id="<?= $item['Class_ID'] ?>:<?= $item['Message_ID'] ?>">
+                                <input class="js-cart-item-status" type="hidden" value="0" name="nameItemDeleted">
+                                <div class="cart-page-column cart-page-column--title">
+                                    <a href="<?= $product_link; ?>" class="cart-page-image"
+                                       style="background-image:url(<?= $item['Image']->resize(140, 140); ?>);"></a>
+                                    <div class="cart-page-info">
+                                        <div class="cart-page-name"><a href="<?= $product_link; ?>"><?= $item['Name'] ?></a></div>
+                                        <?php if (strlen($item['VariantName'])): ?>
+                                            <div class="cart-page-desc"><?= $item['VariantName']; ?></div>
+                                        <? endif; ?>
+                                    </div>
+                                </div>
+                                <div class="cart-page-column cart-page-column--price">
+                                    <input class="js-cart-item-price-input" type="hidden"
+                                           value="<?= $item['ItemPrice']; ?>" name="price">
+                                    <div class="cart-page-price"><?= $item['ItemPriceF']; ?></div>
+                                </div>
+                                <div class="cart-page-column cart-page-column--quantity">
+                                    <div class="product-quantity js-quantity">
+                                    <span class="product-quantity-inputs">
+                                      <div
+                                          class="product-quantity-button product-quantity-button--less js-quantity-btn js-quantity-btn--less"></div>
+                                      <input
+                                          class="product-quantity-input input js-quantity-input js-cart-item-quanity-input"
+                                          name="cart<?= $item['RowID'] ?>" type="number" value="<?= $item['Qty']; ?>"
+                                          max="<?= $item['StockUnits']; ?>" min="0" step="1">
+                                      <div
+                                          class="product-quantity-button product-quantity-button--more js-quantity-btn js-quantity-btn--more"></div>
+                                    </span>
+                                        <span
+                                            class="product-quantity-available"><? if ($item['StockUnits']) { ?>В наличии
+                                                <span><?= $item['StockUnits']; ?> <?= $item['Units']; ?></span><? } else { ?>Нет в наличии<? } ?> </span>
+                                    </div>
+                                </div>
+                                <div class="cart-page-column cart-page-column--sum">
+                                    <input class="js-cart-item-sum-input" type="hidden"
+                                           value="<?= $item['TotalPrice']; ?>" name="sum">
+                                    <div class="cart-page-price"><span
+                                            class="js-cart-item-sum"><?= $item['TotalPriceF']; ?></span></div>
+                                </div>
+                                <div class="cart-page-column cart-page-column--changeStatus">
+                                    <div data-name="cart<?= $item['RowID'] ?>"
+                                         class="cart-page-changeStatus js-cart-item-changeStatus-btn"></div>
+                                </div>
+                            </div>
+                        <? } ?>
+                    </div>
+                </div>
+                <div class="cart-stage-bottom">
+                    <div class="cart-stage-subscribe cart-subscribe">
+                        <label class="cart-subscribe-label js-coupon" data-action="<?= $subLink ?>">
+                            <span class="cart-subscribe-text"> Купоны на скидку</span>
+                            <input class="input input--cart input--typeOne cart-subscribe-input js-coupon-add-input"
+                                   type="text" placeholder="Введите код купона" name="coupon_add">
+                            <button class="cart-subscribe-button button button--primary button--typeTwo js-coupon-add"
+                                    type="button">Применить
+                            </button>
+                        </label>
+                        <? /* Список активных купонов + форма добавления купона */ ?>
+                        <? $coupons = $netshop->promotion->get_registered_coupons(); ?>
+
+                        <div
+                            class="tpl-block-cart-coupons-active js-coupons-active"<?= (!count($coupons) ? ' style="display:none"' : null) ?>>
+                            <h3>Применённые купоны</h3>
+                            <div class="tpl-block-cart-coupon template js-coupon-holder js-coupon-holder-template ">
+                                <span class="tpl-block-cart-coupon-code"></span>
+                                <button class="tpl-link-coupon-remove js-coupon-remove" name="coupon_clear" value=""
+                                        title="Удалить"></button>
+                            </div>
+                            <div class="tpl-block-cart-coupon-container js-coupon-container">
+                                <? foreach ($coupons as $i => $coupon): ?>
+                                    <?
+                                    /** @var nc_netshop_promotion_discount $deal */
+                                    $deal = $coupon->get_deal();
+                                    ?>
+                                    <div class="tpl-block-cart-coupon js-coupon-holder">
+                                        <span class="tpl-block-cart-coupon-code">
+                                            <?= $coupon['code'] ?>
+                                            (скидка <?= $deal->get_full_formatted_amount() ?>)</span>
+                                        <button class="tpl-link-coupon-remove js-coupon-remove" name="coupon_clear"
+                                                value="<?= $coupon['code'] ?>" title="Удалить"></button>
+                                    </div>
+                                <? endforeach ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cart-stage-sum cart-sum">
+                        <input class="js-cart-item-sumTotal-input" type="hidden" value="<?= $cart->get_totals() ?>"
+                               name="sumTotal">
+                        <span class="cart-sum-text">К оплате</span>
+                        <span class="cart-sum-number"> <span
+                                class="js-cart-item-sumTotal"><?= $netshop->format_price($cart->get_totals()); ?></span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="cart-stage-next cart-next">
+                <span class="cart-next-text">Укажите свои контактные данные на следующем этапе</span>
+                <button class="tpl-button-primary button--arrow js-cart-stage-btn" type="button"
+                        data-nextStage="#stageContacts">оформить заказ
+                </button>
+            </div>
+        </div>
+
+        <div class="cart-page-stage cart-page-stage--delivery js-cart-stage js-stage-form" id="stageContacts">
+            <div class="cart-page-content">
+                <div class="cart-stage-top flex-container">
+                    <div class="cart-stage-column">
+                        <?
+                        // Сделать выбранным по умолчанию город, в котором расположен магазин
+                        $selected_city = null;
+                        if (!isset($f_City)) {
+                            if (isset($_COOKIE['Order_City'])) {
+                                $selected_city = $_COOKIE['Order_City'];
+                            } else {
+                                $selected_city = $netshop->get_setting('City');
+                            }
+                        }
+                        ?>
+                        <?= nc_objects_list(
+                                $sub,
+                                $cc,
+                                array(
+                                    'nc_ctpl' => 'single_page_checkout_contacts',
+                                    'selected_city' => $selected_city
+                                )
+                            )->enable_async_loading();
+                        ?>
+                    </div>
+                </div>
+                <? if (!$AUTH_USER_ID) { ?>
+                    <div class="cart-stage-bottom">
+                        <div class="cart-stage-checkbox checkbox checkbox--primary cart-checkbox">
+                            <label class="checkbox-item cart-checkbox-item">
+                                <input class="checkbox-input cart-checkbox-input" type="checkbox" value="1"
+                                       name="f_SignUp" checked>
+                                <span class="checkbox-fake cart-checkbox-fake"></span>
+                                <span class="checkbox-label cart-checkbox-label">Зарегистрируйте меня, я хочу видеть состояние моего заказа и получать скидки при следующих покупках</span>
+                            </label>
+                        </div>
+                    </div>
+                <? } ?>
+                <div class="cart-stage-next cart-next"><span class="cart-next-text">Выберите способ доставки и укажите адрес на следующем этапе</span>
+                    <button class="tpl-button-primary button--arrow js-cart-stage-btn" type="button"
+                            data-nextStage="#stageDelivery"
+                            onclick="nc_event_dispatch('ncNetshopCartDeliveryNeedToUpdate');">перейти к доставке
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="cart-page-stage cart-page-stage--delivery js-cart-stage js-stage-form" id="stageDelivery">
+            <div class="cart-page-content">
+                <div class="cart-stage-top flex-container">
+                    <div class="cart-stage-column">
+                        <?= nc_objects_list(
+                                $sub,
+                                $cc,
+                                array(
+                                    'nc_ctpl' => 'single_page_checkout_delivery',
+                                    'f_City' => $selected_city,
+                                )
+                            )->enable_async_loading();
+                        ?>
+
+                        <label class="cart-input-label cart-input-label--comment"><span class="cart-input-text">Комментарий </span>
+                            <input class="input input--cart cart-input-input" placeholder="Примечание о доставке"
+                                   name="f_Comments">
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="cart-stage-next cart-next"><span class="cart-next-text">Выберите способ оплаты и оплатите заказ на следующем этапе</span>
+                <button class="tpl-button-primary button--arrow js-cart-stage-btn" type="button"
+                        data-nextStage="#stagePayment" onclick="nc_event_dispatch('ncNetshopCartPaymentNeedToUpdate');">
+                    перейти к оплате
+                </button>
+            </div>
+        </div>
+        <div class="cart-page-stage cart-page-stage--payment js-cart-stage js-stage-form" id="stagePayment">
+
+            <div class="cart-page-content">
+                <div class="cart-stage-top flex-container">
+                    <div class="cart-stage-column">
+
+                        <?= nc_objects_list(
+                                $sub,
+                                $cc,
+                                array('nc_ctpl' => 'single_page_checkout_payment')
+                            )->enable_async_loading();
+                        ?>
+
+                    </div>
+                </div>
+            </div>
+            <div class="cart-stage-next cart-next"><span class="cart-next-text">Внимание! Вы будете переадресованы на сайт выбранной платёжной системы</span>
+                <button class="tpl-button-primary button--arrow js-cart-submit" type="submit" data-nextStage="#stageOk">
+                    Оплатить заказ
+                </button>
+            </div>
+        </div>
+        <div class="cart-page-stage cart-page-stage--ok js-cart-stage js-stage-form" id="stageOk">
+            <div class="cart-page-content">
+                <div class="cart-stage-top">
+                    <div class="cart-stage-header">Спасибо за Ваш заказ!</div>
+                    <div class="cart-stage-postfix">Детали заказа и информация о доставке придут на почту <span></span>
+                        в течение 5 минут
+                    </div>
+                    <a class="button button--primary button--arrow cart-next-button" href="#">перейти на главную</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

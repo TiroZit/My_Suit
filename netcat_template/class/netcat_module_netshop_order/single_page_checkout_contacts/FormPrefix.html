@@ -1,0 +1,46 @@
+
+<?
+$contact_name = null;
+if (!isset($f_ContactName)) {
+    if (isset($current_user['Name']) || isset($current_user['Login'])) {
+        $contact_name = $current_user['Name'] ? $current_user['Name'] : $current_user['Login'];
+    } else {
+        if (isset($_COOKIE['Order_ContactName'])) {
+            $contact_name = $_COOKIE['Order_ContactName'];
+        }
+    }
+}
+
+$contact_email = null;
+if (!isset($f_Email)) {
+    if (isset($current_user['Email'])) {
+        $contact_email = $current_user['Email'];
+    } else {
+        if (isset($_COOKIE['Order_Email'])) {
+            $contact_email = $_COOKIE['Order_Email'];
+        }
+    }
+}
+
+$contact_phone = null;
+if (!isset($f_Phone)) {
+    if (isset($_COOKIE['Order_Phone'])) {
+        $contact_phone = $_COOKIE['Order_Phone'];
+    }
+}
+
+?>
+<label class="cart-input-label"><span class="cart-input-text">ФИО</span>
+    <input class="input input--cart cart-input-input js-input-name" placeholder="Как к вам обращаться" type="text" required="required" name="f_ContactName" value="<?= $contact_name; ?>">
+</label>
+<label class="cart-input-label"><span class="cart-input-text">Эл. почта</span>
+    <input class="input input--cart cart-input-input js-input-email" placeholder="Адрес электронной почты" type="email" required="required" name="f_Email" value="<?= $contact_email; ?>">
+</label>
+<label class="cart-input-label"><span class="cart-input-text">Телефон <span class="cart-input-additional">– необязательно</span></span>
+    <input class="input input--cart cart-input-input js-input-phone" placeholder="+7" type="text" <input name="f_Phone" value="<?= $contact_phone; ?>">
+</label>
+<label class="cart-input-label"><span class="cart-input-text">Город </span>
+    <?= nc_string_field("City", "maxlength='255' size='50' class='input input--cart cart-input-input js-input-city' required='required'", $classID, 0, $selected_city); ?>
+    <?= $netshop->location->get_suggest_script(); ?>
+</label>
+

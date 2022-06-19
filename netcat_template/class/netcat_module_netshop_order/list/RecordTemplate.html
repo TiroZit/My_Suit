@@ -1,0 +1,80 @@
+<?/* Служебная часть */
+for ($f_RowNum = 0; $f_RowNum < $rowCount; $f_RowNum++) {
+    if($fetch_row[$f_RowNum] instanceof Iterator) {
+        extract($fetch_row[$f_RowNum]->to_array(), EXTR_PREFIX_ALL, "f");
+    } else {
+        extract($fetch_row[$f_RowNum], EXTR_PREFIX_ALL, "f");
+    }
+    foreach($iteration_RecordTemplate[$f_RowNum] as $value) {
+        extract($value);
+    }
+    eval($cc_env["convert2txt"]);
+    ob_start();
+/* Конец служебной части */?>
+
+<? if ($inside_admin) { ?>
+                    <?php
+                    $order = new nc_netshop_order($res[$f_RowNum]);
+                    $order->set_catalogue_id($catalogue);
+                    ?>
+                    <tr>
+                        <td><?= $f_Created_day; ?>.<?= $f_Created_month; ?>.<?= $f_Created_year; ?></td>
+                        <td>
+                            <a href="<?= $f_AdminButtons_change; ?>" title="<?= NETCAT_MODERATION_CHANGE; ?>" onclick="parent.nc_form(this.href); return false;"><?= $f_RowID; ?></a>
+                        </td>
+                        <td><?= $f_ContactName; ?></td>
+                        <td><?= implode(',<br>', array($f_Email, $f_Phone)); ?></td>
+                        <td>
+                            <? foreach ($order->get_items() as $item) { ?>
+                                <?= $item['FullName'] ?> - <?= $item['Qty'] ?> <?= $item['Units'] ?>
+                                <br>
+                            <? } ?>
+                        </td>
+                        <td class="tpl-property-total-price"><?= $order['TotalPriceF']; ?></td>
+                        <td><?= $order['DeliveryMethodName']; ?></td>
+                        <td>
+                            <input type="hidden" name="Checked[<?= $f_RowID; ?>]" value="<?= $f_Checked; ?>"/>
+                            <select name="Status[<?= $f_RowID; ?>]" data-nc-original="<?= $f_Status_id; ?>">
+                                <option value="0"><?= NETCAT_MODULE_NETSHOP_ORDER_NEW; ?></option>
+                                <? foreach ($statuses as $status) { ?>
+                                    <option value="<?= $status['ShopOrderStatus_ID']; ?>" <?= $f_Status_id == $status['ShopOrderStatus_ID'] ? 'selected="selected"' : ''; ?>><?= $status['ShopOrderStatus_Name']; ?></option>
+                                <? } ?>
+                            </select>
+                        </td>
+                    </tr>
+                <? } else { ?>
+                <?
+                $netshop = nc_netshop::get_instance();
+                $order = $netshop->load_order($f_RowID);
+                ?>
+                <div class='order_row'>
+                    <div class='order_header'>
+                        <div class='order_header_left'>
+                            <div class='tpl-text-header4'><a href='<?= $fullLink ?>'>Заказ №<?= $f_RowID ?></a></div>
+                            <div class='tpl-text-header6'>
+                                от <?= $f_Created_day . ' ' . $months[(int)$f_Created_month] . ' ' . $f_Created_year; ?> года
+                            </div>
+                        </div>
+                        <div class='order_header_right'>
+                            <span class='order_header_status'>Статус заказа:</span> <span class='order_header_status_value'><?= ($f_Status ?: "Новый") ?></span>
+                        </div>
+                    </div>
+                    <?= $f_AdminButtons ?>
+                    <div class='order_body'>
+                        <div class='order_body_left order_body_goods'><?
+                            $result_tmp = array();
+
+                            foreach ($order->get_items() as $position) {
+                                $result_tmp[] = $position['URL'] ? "<a href='" . $position['URL'] . "'>" . $position['Name'] . "</a>" : $position['Name'] . ($position['Qty'] > 1 ? " ({$position['Qty']})" : "");
+                            }
+                            echo join(', ', $result_tmp);
+                            ?></div>
+                        <div class='order_body_right'><span class='order_body_price'><?= $netshop->format_price($order->get_totals()) ?></span></div>
+                    </div>
+                </div>
+            <? } ?>
+
+<?/* Служебная часть */
+    echo nc_finishing_RecordTemplate(ob_get_clean(), $inside_admin, $classID, $f_RowID, $parent_message, $cc, $cc_env["Class_Name"], $no_cache_marks);
+}
+/* Конец служебной части */?>

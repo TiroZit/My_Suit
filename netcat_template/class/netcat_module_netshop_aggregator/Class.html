@@ -1,0 +1,30 @@
+<!-- FormPrefix --><?= $f_AdminCommon; ?><!-- /FormPrefix -->
+
+<!-- RecordTemplate --><?php
+$item = nc_netshop_item::by_id($f_Goods_Class_ID, $f_Goods_Message_ID);
+if ($item->get('URL') !== false) {
+    // запрет кэширования страницы сервером, если цена или скидки зависят от пользователя
+    if ($template_partial_loading && $item->price_depends_on_user_data()) {
+        header('X-Accel-Expires: 0');
+    }
+?>
+    <div class="goods-item nc-infoblock-object"<?= $goods_item_styles; ?>>
+        <?= $f_AdminButtons; ?>
+        <a href="<?= $item['URL']; ?>" class="goods-image">
+            <?php if ((string)$item['Image']) : ?>
+                <div class="image">
+                    <?= $item['Image']->as_img(array('alt' => $item['FullName'])); ?>
+                </div>
+            <?php endif; ?>
+        </a>
+        <a href="<?= $item['URL']; ?>" class="goods-info">
+            <span class="tpl-text-header4"><?= $item['Name']; ?></span>
+            <span class="tpl-text-default-paragraph"><?= $item['Type']; ?></span>
+            <span class="tpl-text-header6"><?= $item['ItemPriceF']; ?></span>
+        </a>
+    </div>
+<?php } ?><!-- /RecordTemplate -->
+
+<!-- FormSuffix --><?php if ($totRows > $recNum): ?>
+    <?= nc_browse_messages($cc_env, 10); ?>
+<?php endif; ?><!-- /FormSuffix -->

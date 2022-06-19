@@ -1,0 +1,438 @@
+
+
+    <div class="radio cart-radio">
+
+        <div class="cart-input-text cart-payment-text">Выберите способ доставки</div>
+
+        <?
+        $all_delivery_methods = $netshop->delivery->get_enabled_methods();
+        $all_payment_methods = $netshop->payment->get_enabled_methods();
+
+        $params = array(
+            'f_City' => $f_City,
+            'f_Address' => $f_Address,
+            'f_Zip' => $f_Zip,
+        );
+
+        // объекты, необходимые для дальнейших расчётов для способов доставки и оплаты:
+        $order = nc_netshop_order::from_post_data($params, $netshop);
+        $context = $netshop->get_condition_context();
+        $context->set_order($order);
+
+        // Загружать данные о стоимости и сроках доставки для способов с
+        // автоматизированным расчётом через AJAX (по умолчанию — true):
+        $use_ajax_to_load_delivery_estimate =
+            isset($cc_settings['delivery_ajax_loading']) ? $cc_settings['delivery_ajax_loading'] : true;
+
+        // Показывать недоступные методы доставки в списке способов доставки:
+        $show_unavailable_delivery_methods =
+            isset($cc_settings['show_all_delivery_methods']) ? $cc_settings['show_all_delivery_methods'] : false;
+
+
+        $available_delivery_methods = $all_delivery_methods->matching($context);
+        $methods_to_show = $show_unavailable_delivery_methods
+            ? $all_delivery_methods->with_variants($order)
+            : $available_delivery_methods;
+
+        $num_methods_to_show = count($methods_to_show);
+
+        global $method_ids_to_load_with_ajax, $is_show_address;
+        $method_ids_to_load_with_ajax = array();
+        $is_show_address = false;
+
+
+        // --- НАЧАЛО ШАБЛОНА ВЫВОДА СПОСОБА ДОСТАВКИ ---
+        $print_delivery_method =  function (nc_netshop_delivery_method $method, $options_block = '')
+        use (
+            $context,
+            $use_ajax_to_load_delivery_estimate,
+            $num_methods_to_show,
+            $show_unavailable_delivery_methods
+        )
+        {
+            static $is_first = true; // флаг для пред-выбора первого элемента
+            global $method_ids_to_load_with_ajax, $delivery_variant_id, $is_show_address;
+
+            $order = $context->get_order();
+            $is_available = !$show_unavailable_delivery_methods || $method->evaluate_conditions($context);
+            $method_name = $method->get('name');
+            $method_id = $method->get_id();
+            $method_description = $method->get('description');
+            $method_type = $method->get('delivery_type');
+            if ($num_methods_to_show > 1) {
+                // Решаем, должен ли текущий пункт быть выбранным:
+                if ($is_available) {
+                    // checked, если уже был указан метод доставки (возврат со страницы
+                    // подтверждения), иначе — если это первый метод в списке:
+                    $is_checked = isset($delivery_variant_id) ? $delivery_variant_id == $method_id : $is_first;
+                } else {
+                    // недоступные методы никогда не являются выбранными
+                    $is_checked = false;
+                }
+            }else{
+                $is_checked = true;
+            }
+            // если выбранный метод это доставка курьером или по почте, то надо показывать форму для ввода адреса
+            if(
+                    $is_checked && (
+                        $method_type == nc_netshop_delivery::DELIVERY_TYPE_POST ||
+                        $method_type == nc_netshop_delivery::DELIVERY_TYPE_COURIER
+                    )
+            ){
+                $is_show_address = true;
+            }
+        ?>
+            <div class="tpl-block-order-delivery-method">
+            <label class="radio-item cart-radio-item">
+                <? if ($num_methods_to_show > 1) { ?>
+                <input class="radio-input cart-radio-input tpl-block-order-delivery-method-radio" type="radio" name="delivery_variant_id" value="<?=$method_id?>" <?=($is_first || $is_checked ? 'checked' : NULL)?>>
+                <span class="radio-fake cart-radio-fake"></span>
+                <? }else if($is_available){ ?>
+                    <input type='hidden' name='delivery_variant_id' value='<?=$method_id?>'/>
+                <?}?>
+                <span class="radio-label cart-radio-label">
+                    <div class="cart-radio-type"><?=$method_name?></div>
+                    <div class="cart-radio-caption">
+                        <?=($method_description ? $method_description . ',': NULL)?>
+                        <?
+                        // --- Оценка стоимости и времени доставки ---
+                        // Для методов доставки, вычисляющих стоимость и сроки на основании данных
+                        // от внешних служб, загрузка информации производится через AJAX.
+                        // Это сделано для того, чтобы не замедлять отображение страницы при
+                        // большом количестве таких вариантов доставки и/или медленном ответе
+                        // внешних служб.
+
+                        $dates_estimate = "";
+                        $price_estimate = "";
+                        $show_dates_estimate = true;
+                        $estimate_error = "";
+
+                        // Сбор данных
+                        if ($use_ajax_to_load_delivery_estimate && $method->get('handler_id')) {
+                            // "(данные загружаются)"
+                            $dates_estimate = NETCAT_MODULE_NETSHOP_CHECKOUT_DELIVERY_ESTIMATE_LOADING;
+                            $method_ids_to_load_with_ajax[] = $method_id;
+                        } else {
+                            // расчёт сроков и стоимости производятся на нашем сервере
+                            $estimate = $method->get_estimate($order);
+
+                            if ($estimate->has_error()) {
+                                // при расчёте стоимости возникла ошибка
+                                $estimate_error = $estimate->get('error');
+                                $price_estimate = "";
+                            } else {
+                                // значение для блока «Стоимость доставки»
+                                $price_estimate = $estimate->get_formatted_price_and_discount();
+
+                                // значение для блока «Ожидаемые даты доставки»:
+                                $dates_estimate = $estimate->get_dates_string();
+                                // показывать блок с датами доставки только если есть оценка сроков:
+                                $show_dates_estimate = strlen($estimate->get('min_days')) > 0;
+
+                            } // конец блока «произведён расчёт на нашем сервере (без ошибок)»
+                        }
+
+                        // Сбор данных окончен. Выводим оценку сроков.
+
+                        if ($estimate_error) {
+                            echo "<div class='tpl-state-error'>",
+                                // Не удалось рассчитать стоимость доставки: $estimate_error
+                                NETCAT_MODULE_NETSHOP_CHECKOUT_DELIVERY_ESTIMATE_ERROR . ": " . $estimate_error .
+                                "</div>\n";
+                        } else {
+
+                            // Вывод сроков доставки:
+                            if ($show_dates_estimate) {
+                                echo "<span class='tpl-property-delivery-estimate-dates' id='nc_netshop_dm_{$method_id}_dates'>",
+                                $dates_estimate,
+                                "</span> – ";
+                            }
+                            // Вывод стоимости доставки:
+                            echo "<span id='nc_netshop_dm_{$method_id}_price'>" . $price_estimate . "</span>";
+                        }
+                        ?>
+                    </div>
+                </span>
+            </label>
+            <? if ($options_block): ?>
+            <div class="tpl-block-order-delivery-method-options"
+                 style="display: none"><?= $options_block ?></div>
+            <? endif; ?>
+            </div>
+        <?
+            if ($is_available) {
+                $is_first = false;
+            }
+        };
+        // --- КОНЕЦ ШАБЛОНА ВЫВОДА СПОСОБА ДОСТАВКИ ---
+        ?>
+        <?
+
+        // 1) ДОСТАВКА ДО ПУНКТА САМОВЫВОЗА
+        $pickup_delivery_methods = $methods_to_show->where('delivery_type', nc_netshop_delivery::DELIVERY_TYPE_PICKUP);
+        if (count($pickup_delivery_methods)) {
+            // «Доставка до пункта выдачи»
+            echo "<h3 class='tpl-block-order-delivery-type-header'>", NETCAT_MODULE_NETSHOP_DELIVERY_TYPE_PICKUP, "</h3>\n";
+            echo "<div class='tpl-block-order-delivery-pickup'>\n";
+            // название города
+            $city = $order->get_location_name();
+            // --- КАРТА ---
+            if ($pickup_delivery_methods->any('has_delivery_points_with_coordinates', true)) {
+                // Готовим данные для карты
+                $map_settings = array(
+                    'balloon_select_point_button_text' => NETCAT_MODULE_NETSHOP_DELIVERY_POINT_SELECT_BUTTON,
+                    'balloon_price_prefix' => NETCAT_MODULE_NETSHOP_CHECKOUT_DELIVERY_ESTIMATE_PRICE,
+                    'delivery_methods' => array(),
+                );
+
+                // На карте может быть показан адрес, введённый на предыдущем этапе
+                if ($f_Address) {
+                    $map_settings['home_address'] = trim("$f_Zip $city $f_Address");
+                } else {
+                    $map_settings['home_address'] = '';
+                }
+
+                /** @var nc_netshop_delivery_method $method */
+                foreach ($pickup_delivery_methods as $method) {
+                    $map_settings['delivery_methods'][] = array(
+                        'id' => $method->get_id(),
+                        'name' => $method->get('name'),
+                        'price' => $netshop->format_price($method->get_estimate($order)->get('price')),
+                        'points' => $method->get_delivery_points($city)->to_array(true),
+                    );
+                }
+
+                // Подключение и инициализация скриптов
+                ?>
+                <div class="tpl-block-order-delivery-pickup-map" id="nc_netshop_dm_pickup_map" style="height:300px"></div>
+
+                <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script>
+                <script src="<?= nc_component_path($classID) . 'js/yandex_map.js' ?>"></script>
+                <script>
+                    ymaps.ready(function() {
+                        var options = <?= nc_array_json($map_settings) ?>;
+                        // Выбор точки доставки в списке при выборе его на карте
+                        options.map_point_selection_callback = function (delivery_point_id) {
+                            var delivery_point_radio = $('.tpl-block-order-delivery-point-radio[value="' + delivery_point_id + '"]'),
+                                method_div = delivery_point_radio.closest('.tpl-block-order-delivery-method'),
+                                options_div = method_div.find('.tpl-block-order-delivery-method-options'),
+                                w = $(window),
+                                window_scroll_top = w.scrollTop();
+
+                            // выбираем службу доставки, раскрываем список пунктов
+                            method_div.find('.tpl-block-order-delivery-method-radio').click();
+                            // выбираем пункт
+                            delivery_point_radio.click();
+                            // проверяем, чтобы выбранный пункт было видно
+                            if (options_div.length && options_div.get(0).scrollHeight > options_div.height()) {
+                                options_div.scrollTop(0);
+                                options_div.scrollTop(delivery_point_radio.offsetParent().position().top);
+                            }
+
+                            w.scrollTop(window_scroll_top); // против прыжка скролла
+                        };
+
+                        // Инициализация карты
+                        var map = new nc_netshop_delivery_points_yandex_map(options);
+
+                        // Снятие отметки при выборе другого способа доставки
+                        $(document).on('click', '.tpl-block-order-delivery-method-radio', function (event) {
+                            if ($(this).closest('.tpl-block-order-delivery-pickup').length === 0) {
+                                map.deselect_current_point();
+                            }
+                        });
+
+                        // Выбор точки доставке на карте при выбор его в списке
+                        $(document).on('click', '.tpl-block-order-delivery-point-radio', function () {
+                            map.select_point_by_id(this.value);
+                        });
+
+                    });
+                </script>
+                <?
+            }
+
+            // Список пунктов самовывоза
+            /** @var nc_netshop_delivery_method $method */
+            foreach ($pickup_delivery_methods as $method) {
+                // Список для выбора пунктов доставки
+                $delivery_points = $method->get_delivery_points($city)->sort_by_property_value('address');
+                $delivery_points_div = '';
+                if (count($delivery_points)) {
+                    $delivery_points_div = "<div class='tpl-block-order-delivery-points'>\n";
+                    /** @var nc_netshop_delivery_point $delivery_point */
+                    foreach ($delivery_points as $delivery_point) {
+                        $this_delivery_point_id = $delivery_point->get_id();
+
+                        $delivery_points_div .=
+                            "<div class='tpl-block-order-delivery-point radio cart-radio'>\n<label class='radio-item cart-radio-item'>\n" .
+                            "<input type='radio' name='delivery_point_id'" .
+                            " class='tpl-block-order-delivery-point-radio radio-input cart-radio-input' " .
+                            ($this_delivery_point_id == $delivery_point_id ? " checked" : "") .
+                            " value='{$this_delivery_point_id}'>" .
+                            '<span class="radio-fake cart-radio-fake"></span>' .
+
+                            "<span class='radio-label cart-radio-label tpl-property-delivery-point-address'>"
+                            . "<span class='cart-radio-type'>" . $delivery_point->get('address') . "</span>"
+                            . "<span class='cart-radio-caption tpl-property-delivery-point-schedule'>" . $delivery_point->get_schedule()->get_compact_schedule_string() . "</span>" .
+                            "</span>\n" .
+
+                            "</label>\n</div>\n";
+                    }
+                    $delivery_points_div .= "</div>\n";
+                }
+
+                $print_delivery_method($method, $delivery_points_div);
+            }
+            echo "</div>\n";
+        }
+        unset($pickup_delivery_methods_delivery_methods);
+
+        // 2) ДОСТАВКА КУРЬЕРОМ
+        $courier_delivery_methods = $methods_to_show->where('delivery_type', nc_netshop_delivery::DELIVERY_TYPE_COURIER);
+        if (count($courier_delivery_methods)) {
+            // «Доставка курьером по указанному адресу»
+            echo "<h3 class='tpl-block-order-delivery-type-header'>", NETCAT_MODULE_NETSHOP_DELIVERY_TYPE_COURIER, "</h3>\n";
+            echo "<div class='tpl-block-order-delivery-courier'>\n";
+            /** @var nc_netshop_delivery_method $method */
+            foreach ($courier_delivery_methods as $method) {
+                $print_delivery_method($method);
+            }
+            echo "</div>\n";
+        }
+        unset($courier_delivery_methods);
+
+        // 3) ДОСТАВКА В ПОЧТОВОЕ ОТДЕЛЕНИЕ
+        $post_delivery_methods = $methods_to_show->where('delivery_type', nc_netshop_delivery::DELIVERY_TYPE_POST);
+        if (count($post_delivery_methods)) {
+            // «Доставка в почтовое отделение»
+            echo "<h3 class='tpl-block-order-delivery-type-header'>", NETCAT_MODULE_NETSHOP_DELIVERY_TYPE_POST, "</h3>\n";
+            echo "<div class='tpl-block-order-delivery-post'>\n";
+            /** @var nc_netshop_delivery_method $method */
+            foreach ($post_delivery_methods as $method) {
+                $print_delivery_method($method);
+            }
+            echo "</div>\n";
+        }
+        unset($post_delivery_methods_delivery_methods);
+
+        // показ дополнительных параметров доставки (выбор точки самовывоза) при выборе способа доставки
+        // (требуется jQuery!)
+        ?>
+        <script>
+            ymaps.ready(function() {
+                var method_radios = $('.tpl-block-order-delivery-method-radio'),
+                    all_options = $('.tpl-block-order-delivery-method-options');
+
+                method_radios.click(function() {
+                    var method_radio = $(this),
+                        w = $(window),
+                        offset_from_viewport = method_radio.offset().top - w.scrollTop(),
+                        method_options = method_radio.closest('.tpl-block-order-delivery-method').find('.tpl-block-order-delivery-method-options');
+                    if (method_options.is(':visible')) {
+                        return;
+                    }
+                    // показываем опции только для выбранного способа доставки
+                    all_options.hide();
+                    method_options.slideDown();
+                    // корректируем положение прокрутки, чтобы текст не прыгал сильно на странице
+                    // из-за разной высоты блоков
+                    w.scrollTop(method_radio.offset().top - offset_from_viewport);
+                    // предвыбираем первую радиокнопку в списке (если ещё нет выбранной)
+                    var point_radios = method_options.find(':radio');
+                    if (point_radios.filter(':checked').length === 0) {
+                        point_radios.first().click();
+                    }
+                    method_options.scrollTop(0);
+                });
+                // раскрываем опции для уже выбранного способа
+                method_radios.filter(':checked').click();
+            });
+        </script>
+        <?
+        // загрузка оценки доставки через AJAX (требуется jQuery):
+        if ($method_ids_to_load_with_ajax) {
+        ?>
+        <script>
+            $( function() {
+                var ids = <?=json_encode($method_ids_to_load_with_ajax) ?>,
+                    form_data = $('#nc_netshop_add_order_form').serializeArray(),
+                    // Функция, загружающая данные для указанного метода доставки
+                    request_data = function (method_id) {
+                        $.ajax({
+                            url: '<?= nc_module_path('netshop') . 'actions/delivery.php' ?>',
+                            type: 'post',
+                            dataType: 'json',
+                            data: {
+                                action: 'calculate_delivery',
+                                form_data: form_data,
+                                delivery_method_id: method_id
+                            }
+                        })
+                            .done(function (estimate) {
+                                if (!estimate || typeof estimate != 'object' || $.isEmptyObject(estimate)) {
+                                    // получен ответ неправильного формата
+                                    show_error(method_id, '<?=htmlspecialchars(NETCAT_MODULE_NETSHOP_CHECKOUT_DELIVERY_ESTIMATE_ERROR_NO_RESPONSE,
+                                        ENT_QUOTES) ?>');
+                                }
+                                else if (estimate.error) {
+                                    // ошибка при вычислении сроков и стоимости доставки
+                                    show_error(method_id, estimate.error);
+                                }
+                                else {
+                                    // все ok, выводим полученные данные
+                                    $('#nc_netshop_dm_' + method_id + '_price').html(estimate.formatted_price_and_discount);
+                                    var dates_span_html = "<span>" + (estimate.dates_string || '') + "</span>";
+                                    $('#nc_netshop_dm_' + method_id + '_dates').html(dates_span_html);
+                                }
+                            })
+                            .fail(function () {
+                                show_error(method_id, '<?=htmlspecialchars(NETCAT_MODULE_NETSHOP_CHECKOUT_DELIVERY_ESTIMATE_ERROR_NO_RESPONSE,
+                                    ENT_QUOTES) ?>');
+                            });
+                    }, // конец функции request_data
+
+                    // Отображение ошибки, возникшей при получении или вычислении данных
+                    show_error = function (method_id, error_message) {
+                        // "неизвестно. Не удалось вычислить стоимость и сроки доставки: [error_message]"
+                        $('#nc_netshop_dm_' + method_id + '_dates').addClass('tpl-state-error').html(
+                            '<?=htmlspecialchars(NETCAT_MODULE_NETSHOP_CHECKOUT_DELIVERY_ESTIMATE_ERROR,
+                                ENT_QUOTES) ?>' +
+                            ': ' + error_message
+                        );
+
+                    };
+
+                // Инициировать загрузку данных:
+                for (var i = 0, last = ids.length; i < last; i++) {
+                    // Запрос данных вынесен в отдельную функцию для сохранения
+                    // ID метода доставки для обработчика события fail
+                    request_data(ids[i]);
+                }
+            },false);
+
+
+        </script>
+        <?
+        } // "if $method_ids_to_load_with_ajax"
+        ?>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        $(document).on('click','.tpl-block-order-delivery-pickup input', function(){
+            $('.tpl-block-order-delivery-address').hide();
+        })
+        $(document).on('click','.tpl-block-order-delivery-courier input, .tpl-block-order-delivery-post input', function(){
+            $('.tpl-block-order-delivery-address').show();
+        })
+    })
+    </script>
+    <div class="tpl-block-order-delivery-address"<?=(!$is_show_address ? ' style="display:none"' : NULL)?>>
+        <label class="cart-input-label"><span class="cart-input-text">Адрес доставки</span>
+            <input class="input input--cart cart-input-input" type="text" <input name="f_Address" data-required="required" value="<?= $address; ?>">
+        </label>
+        <label class="cart-input-label"><span class="cart-input-text">Индекс</span>
+            <input class="input input--cart cart-input-input" type="text" <input name="f_Zip" data-required="required" value="<?= $zip; ?>">
+        </label>
+    </div>

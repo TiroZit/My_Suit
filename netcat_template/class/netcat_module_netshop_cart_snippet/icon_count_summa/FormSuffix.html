@@ -1,0 +1,60 @@
+<script>
+    if (typeof pluralForm != 'function') {
+        /**
+         * Склонение русских слов
+         * @param {Number} itemQuantity  Количество товаров
+         * @param {String} one           «товар»
+         * @param {String} two           «товара»
+         * @param {String} many          «товаров»
+         * @returns {String}
+         */
+        function pluralForm(itemQuantity, one, two, many) {
+            itemQuantity = Math.abs(itemQuantity) % 100;
+            let underHundred = itemQuantity % 10,
+                result = many;
+
+            if (underHundred > 1 && underHundred < 5) {
+                result = two;
+            }
+            if (underHundred === 1) {
+                result = one;
+            }
+            if (itemQuantity > 10 && itemQuantity < 20) {
+                result = many;
+            }
+
+            return result;
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        jQuery(document).on('ncNetshopCartUpdate', function (event) {
+            let data = event.originalEvent.detail;
+            let itemsCount = 0;
+            // Обновим кол-во товаров в корзине
+            <?php if($cc_settings['countAll'] === 'on') { ?>
+                itemsCount = data.cart.TotalItemCount;
+            <?php } else { ?>
+                itemsCount = data.cart.TotalCount;
+            <?php } ?>
+            let itemsSumma = data.cart.TotalItemPriceF;
+            if (itemsCount > 0) {
+                jQuery('#<?= $nc_block_id; ?> a').removeClass('disabled');
+                jQuery('#<?= $nc_block_id; ?> .cart-count').each(function () {
+                    jQuery(this).html("в корзине " + itemsCount + " " + pluralForm(itemsCount, 'товар', 'товара', 'товаров') + "");
+                });
+                jQuery('#<?= $nc_block_id; ?> .cart-summa').each(function () {
+                    jQuery(this).html("на сумму  " + itemsSumma + "");
+                });
+            } else {
+                jQuery('#<?= $nc_block_id; ?> a').addClass('disabled');
+                jQuery('#<?= $nc_block_id; ?> .cart-count').each(function () {
+                    jQuery(this).html("в корзине ничего нет");
+                });
+                jQuery('#<?= $nc_block_id; ?> .cart-summa').each(function () {
+                    jQuery(this).html(" ");
+                });
+            }
+        });
+    });
+</script>

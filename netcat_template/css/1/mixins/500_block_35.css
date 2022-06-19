@@ -1,0 +1,7 @@
+/* <block35> */
+.tpl-container-35 {
+max-width: calc(100% - var(--tpl-mixin-margin-left, 0px) - var(--tpl-mixin-margin-right, 0px)) !important;
+width: calc(100% - var(--tpl-mixin-margin-left, 0px) - var(--tpl-mixin-margin-right, 0px)) !important;
+margin-left: var(--tpl-mixin-margin-left, 0px) !important
+}
+/* </block35> */

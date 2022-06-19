@@ -1,0 +1,296 @@
+<?php
+
+/** @var int $cc ID инфоблока, для которого производится установка значений пользовательских настроек */
+/** @var string $custom_settings_html HTML с полями пользовательских настроек шаблона компонента */
+$nc_core = nc_core::get_object();
+$infoblock_data = $nc_core->sub_class->get_by_id($cc);
+$infoblock_settings = $nc_core->sub_class->get_by_id($infoblock_id, 'Sub_Class_Settings');
+
+$goods_component = $nc_core->get_component($infoblock_data['Class_ID']);
+
+// Этот диалог предназначен для показа двух типов форм:
+// 1) обычные настройки инфоблока, если такие есть;
+// 2) настройки фильтра — если передан параметр filter_settings = 1
+$is_changing_filter_settings = (bool)$nc_core->input->fetch_post_get('filter_settings');
+
+?>
+<?php if ($is_changing_filter_settings): // меняем настройки фильтра — ?filter_settings=1 ?>
+    <input type="hidden" name="custom_settings[filter_fields]" value="<?=
+    htmlspecialchars(nc_array_value($infoblock_settings, 'filter_fields', '[]'))
+    ?>">
+    <table class="nc-netshop-component-fields nc-table nc--borderless nc--wide nc--hovered">
+        <thead>
+        <tr class="nc-bg-lighten">
+            <th class="nc--compact">&nbsp;</th>
+            <th style="width: 50%">Поле</th>
+            <th>Отображение</th>
+            <th class="nc--compact">&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+        <tr class="nc-netshop-component-fields-template" style="display: none">
+            <td><i class="nc-icon nc--move" style="cursor: move"></i></td>
+            <td class="nc-netshop-component-fields-description"></td>
+            <td>
+                <select style="max-width: 100%" data-property="type">
+                    <option value="">по умолчанию</option>
+                    <option value="range">диапазон значений</option>
+                    <option value="checkbox">чекбоксы</option>
+                    <option value="multiple">выпадающий список с множественным выбором</option>
+                    <option value="list">выпадающий список с единственным выбором</option>
+                </select>
+            </td>
+            <td><a href="#"><i class="nc-icon nc--remove"></i></a></td>
+        </tr>
+        </tfoot>
+    </table>
+    <!-- Добавление поля в фильтр -->
+    <table class="nc-netshop-component-fields-add nc-table nc--borderless nc--wide">
+        <tr>
+            <td style="width: 1px; height: 56px">
+                <i class="nc-icon nc--plus"></i>
+                <i class="nc-icon nc--plus" style="display: none"></i>
+            </td>
+            <td colspan="3">
+                <a href="#" class="nc-netshop-component-fields-add-link">Добавить поле...</a>
+                <select style="width: 100%; display: none" class="nc-netshop-component-fields-add-select">
+                    <option value="">-- выберите поле --
+                        <?php
+                        $field_types = array(
+                            NC_FIELDTYPE_STRING,
+                            NC_FIELDTYPE_INT,
+                            NC_FIELDTYPE_SELECT,
+                            NC_FIELDTYPE_BOOLEAN,
+                            NC_FIELDTYPE_FLOAT,
+                            NC_FIELDTYPE_MULTISELECT,
+                        );
+                        foreach ($goods_component->get_fields($field_types) as $field) {
+                            if ($field['edit_type'] != NC_FIELD_PERMISSION_EVERYONE) {
+                                continue;
+                            }
+                            echo "<option value=\"$field[name]\">$field[description]";
+                        }
+                        ?>
+                </select>
+            </td>
+            <td style="width: 1px">
+                <a href="#" style="display: none"><i class="nc-icon nc--remove"></i></a>
+            </td>
+        </tr>
+    </table>
+
+    <script>
+        (function () {
+            // Прячем вкладки (с миксинами и т. п. — мы ведь по факту настраиваем блок товаров, а не фильтр)
+            var dialog = nc.ui.modal_dialog.get_current_dialog();
+            dialog.hide_header_tabs();
+            dialog.set_option('width', 800);
+        })($nc);
+    </script>
+
+<?php else: // все прочие настройки инфоблока, которые отображаются в стандартной форме + поля для вариантов ?>
+    <?= $custom_settings_html ?>
+
+    <div class="nc-field">
+        <div class="nc-field-caption nc-margin-bottom-small">Поля, отличающие варианты товаров:</div>
+        <input type="hidden" name="custom_settings[variant_fields]" value="<?=
+        htmlspecialchars(nc_array_value($infoblock_settings, 'variant_fields', '[]'))
+        ?>">
+
+        <table class="nc-netshop-component-fields nc-table nc--borderless nc--wide nc--hovered">
+            <thead>
+            <tr class="nc-bg-lighten">
+                <th class="nc--compact">&nbsp;</th>
+                <th style="width: 30%">Поле</th>
+                <th style="width: 30%">Подпись</th>
+                <th style="width: 40%">Подсказка</th>
+                <th class="nc--compact">&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+            <tr class="nc-netshop-component-fields-template nc-netshop-component-variant-field" style="display: none">
+                <td><i class="nc-icon nc--move" style="cursor: move"></i></td>
+                <td class="nc-netshop-component-fields-description"></td>
+                <td><input type="text" class="nc--wide" data-property="caption"></td>
+                <td><input type="text" class="nc--wide" data-property="placeholder"></td>
+                <td><a href="#"><i class="nc-icon nc--remove"></i></a></td>
+            </tr>
+            </tfoot>
+        </table>
+        <!-- Добавление поля, отличающего варианты -->
+        <table class="nc-netshop-component-fields-add nc-table nc--borderless nc--wide">
+            <tr>
+                <td style="width: 1px; height: 56px">
+                    <i class="nc-icon nc--plus"></i>
+                    <i class="nc-icon nc--plus" style="display: none"></i>
+                </td>
+                <td colspan="3">
+                    <a href="#" class="nc-netshop-component-fields-add-link">Добавить поле...</a>
+                    <select style="width: 100%; display: none" class="nc-netshop-component-fields-add-select">
+                        <option value="">-- выберите поле --
+                            <?php
+                            $field_types = array(
+                                NC_FIELDTYPE_STRING,
+                                NC_FIELDTYPE_INT,
+                                NC_FIELDTYPE_SELECT,
+                                NC_FIELDTYPE_BOOLEAN,
+                                NC_FIELDTYPE_FLOAT,
+                            );
+                            foreach ($goods_component->get_fields($field_types) as $field) {
+                                if ($field['edit_type'] != NC_FIELD_PERMISSION_EVERYONE) {
+                                    continue;
+                                }
+                                echo "<option value=\"$field[name]\">$field[description]";
+                            }
+                            ?>
+                    </select>
+                </td>
+                <td style="width: 1px">
+                    <a href="#" style="display: none"><i class="nc-icon nc--remove"></i></a>
+                </td>
+            </tr>
+        </table>
+    </div>
+<?php endif; ?>
+
+<script>
+    (function ($) {
+        // Скрипт расчитан на то, что в диалоге есть что-то одно: или variant_fields,
+        // или filter_fields
+        var dialog = nc.ui.modal_dialog.get_current_dialog(),
+            target_input = dialog.find('input[name="custom_settings[variant_fields]"], input[name="custom_settings[filter_fields]"]'),
+            fields_table = dialog.find('table.nc-netshop-component-fields'),
+            template_row = fields_table.find('.nc-netshop-component-fields-template'),
+            new_field_table = dialog.find('.nc-netshop-component-fields-add'),
+            new_field_select = new_field_table.find('.nc-netshop-component-fields-add-select');
+        event_ns = '.nc-netshop-component';
+
+        // инициализация событий в таблице с полями фильтра после изменений в ней
+        function init_event_listeners() {
+            // Изменения в параметрах полей
+            fields_table.find('input, select')
+                .off('change' + event_ns)
+                .on('change' + event_ns, update_settings);
+
+            // Удаление поля фильтра
+            fields_table.find('.nc-icon.nc--remove')
+                .off('click' + event_ns)
+                .on('click' + event_ns, function () {
+                    $(this).closest('tr').remove();
+                    update_settings();
+                    return false;
+                });
+
+            fields_table.tableDnDUpdate();
+        }
+
+        // Перетаскивание полей фильтра
+        fields_table.tableDnD({
+            onDrop: update_settings,
+            dragHandle: '.nc-icon.nc--move',
+            onDragClass: 'nc--dragged'
+        });
+
+        // Переключение строки для добавления поля между ссылкой и селектом
+        function toggle_add_row() {
+            new_field_table.find('td > *').toggle();
+            new_field_table.find('select:visible').focus();
+            return false;
+        }
+
+        new_field_table.find('.nc-netshop-component-fields-add-link').click(toggle_add_row);
+        new_field_table.find('.nc-icon.nc--remove').click(toggle_add_row);
+
+
+        // Добавление строки
+        function add_row(name, params) {
+            var new_row = template_row.clone()
+                .removeClass('nc-netshop-component-fields-template')
+                .appendTo(fields_table.find('tbody'))
+                .show();
+            // для срабатывания события onDrop в tableDnD нужны id у <tr>
+            new_row.attr('id', 'nc_netshop_filter_field_' + name);
+            var description = new_field_select.find('option[value=' + name + ']').html();
+            new_row.data('name', name);
+            new_row.find('.nc-netshop-component-fields-description').html(description);
+            $.each(params, function (key, value) {
+                new_row.find('[data-property="' + key + '"]').val(value || '');
+            });
+
+            if (new_row.is('.nc-netshop-component-variant-field')) {
+                set_variant_field_defaults(new_row, params, description)
+            }
+
+            return false;
+        }
+
+        function set_variant_field_defaults(row, params, field_description) {
+            if (!('caption' in params)) {
+                row.find('[data-property="caption"]').val(field_description);
+            }
+            if (!('placeholder' in params)) {
+                row.find('[data-property="placeholder"]').val(
+                    'выберите ' +
+                    field_description.charAt(0).toLowerCase() + field_description.slice(1)
+                );
+            }
+        }
+
+        // Добавление строки при выборе поля в селекте
+        new_field_select.on('click blur', function () {
+            var select = $(this);
+            if (!select.val()) {
+                return;
+            }
+            var option = select.find('option:selected');
+            add_row(option.attr('value'), {});
+            init_event_listeners();
+            update_settings();
+            toggle_add_row();
+            select.val('');
+        });
+
+        // Обновление настроек в поле custom_settings[filter_settings] (JSON-строка)
+        function update_settings() {
+            var fields = {};
+            fields_table.find('tbody tr').each(function () {
+                var row = $(this),
+                    field_name = row.data('name');
+                fields[field_name] = {};
+                row.find('input, select').each(function () {
+                    var input = $(this);
+                    fields[field_name][input.data('property')] = input.val();
+                });
+            });
+            target_input.val(JSON.stringify(fields));
+        }
+
+        // После отправки данных нужно перезагрузить инфоблок с фильтром (если есть)
+        dialog.set_option('on_submit_response', function () {
+            window.nc_partial_load && nc_partial_load('<?= "$cc {$nc_core->input->fetch_get_post('filter_infoblock_id')}" ?>');
+            dialog.destroy();
+        });
+
+        // Инициализация формы (добавление выбранных в настройках полей)
+        var fields = [];
+        try {
+            fields = JSON.parse(target_input.val());
+        } catch (e) {
+        }
+
+        if ($.isEmptyObject(fields)) {
+            toggle_add_row();
+        } else {
+            for (var i in fields) {
+                add_row(i, fields[i]);
+            }
+        }
+
+        // Слушатели событий для сгенерированных строк таблицы с полями фильтра
+        init_event_listeners();
+    })($nc);
+</script>

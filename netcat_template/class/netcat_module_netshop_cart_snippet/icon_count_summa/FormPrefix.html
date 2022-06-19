@@ -1,0 +1,41 @@
+<?= $f_AdminCommon; ?>
+<style>
+    <?php if ($cc_settings['iconColor'] !== 'inherit') { ?>
+    #<?= $nc_block_id; ?> .tpl-icon path {fill:var(--tpl-color-<?= $cc_settings['iconColor']; ?>);}
+    <?php } ?>
+    <?php if ($cc_settings['iconDecor'] !== 'none' && $cc_settings['iconDecorColor'] !== 'inherit') { ?>
+    #<?= $nc_block_id; ?> .tpl-icon[class*='icon-decor-'] { border: 1px solid var(--tpl-color-<?= $cc_settings['iconDecorColor']; ?>); }
+    #<?= $nc_block_id; ?> .tpl-icon[class*='icon-decor-'][class*='-fill'] { background-color: var(--tpl-color-<?= $cc_settings['iconDecorColor']; ?>); }
+    <?php } ?>
+    #<?= $nc_block_id; ?> {--tpl-icon-space: <?= str_replace(",", ".", ($cc_settings['textSpace']/100)); ?>em;}
+</style>
+<?php
+$icon_class = array();
+$icon_class[] = "tpl-icon";
+$icon_class[] = "tpl-text-" . $cc_settings['iconSize'];
+$icon_class[] = $cc_settings['iconDecor'] !== 'none' ? "icon-decor-" . $cc_settings['iconDecor'] : "";
+
+$icon = nc_get_svg_for_embedding(nc_core()->DOCUMENT_ROOT . nc_core()->HTTP_TEMPLATE_PATH . 'icon/font_awesome/shopping-basket.svg');
+$_icon = "<span class='" . implode(" ", $icon_class) . "'>" . $icon . "</span>";
+$_count = "";
+$nc_cart_items_count = $nc_cart->get_item_count($cc_settings['countAll'] === 'on' ? true : false);
+$nc_cart_items_summa = $nc_netshop->format_price($nc_cart->get_totals());
+
+if ($nc_cart_items_count > 0) {
+    $_count = $nc_cart_items_count . " " . $nc_core->lang->get_numerical_inclination($nc_cart_items_count,
+            array('товар', 'товара', 'товаров'));
+} else {
+    $_count = "ничего нет";
+}
+$_count = "<span class='cart-count'>в корзине $_count</span>";
+
+$_summa = "";
+if ($nc_cart_items_count > 0) {
+    $_summa = "на сумму $nc_cart_items_summa";
+}
+$_summa = "<span class='cart-summa'>$_summa</span>";
+?>
+<a href="<?= nc_folder_path($current_catalogue['Netshop_Cart_Sub_ID']); ?>"
+   class="cart-row display-<?= $cc_settings['showAs']; ?> <?= $nc_cart_items_count == 0 ? "disabled" : ""; ?>">
+    <?= $_icon . "<span>" . $_count . ' ' . $_summa . "</span>"; ?>
+</a>

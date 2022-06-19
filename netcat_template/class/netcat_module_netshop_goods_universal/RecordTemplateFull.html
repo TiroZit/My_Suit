@@ -1,0 +1,220 @@
+<?php
+
+$item = new nc_netshop_item($resMsg);
+$item_parent_id = $item['Parent_Message_ID'] ?: $item['Message_ID'];
+$item_list_key = $item['Class_ID'] . ':' . $item_parent_id;
+$item_in_stock = (!$nc_core->get_settings('IgnoreStockUnitsValue', 'netshop') ? ($item['StockUnits'] > 0) : true);
+$in_cart = $netshop_cart_items[$item_list_key]['Qty'] > 0;
+$is_in_compare_list = !$template_partial_loading && $netshop->goodslist_compare->check($item_parent_id, $item['Class_ID']);
+$is_in_fav_list = !$template_partial_loading && $netshop->goodslist_favorite->check($item_parent_id, $item['Class_ID']);
+
+$compare_url = !$is_in_compare_list ?
+    $netshop->goodslist_compare->get_add_action_url($item['Message_ID'], $item['Class_ID']) :
+    $netshop->goodslist_compare->get_remove_action_url($item['Message_ID'], $item['Class_ID']);
+
+$favorite_url = !$is_in_fav_list ?
+    $netshop->goodslist_favorite->get_add_action_url($item['Message_ID'], $item['Class_ID']) :
+    $netshop->goodslist_favorite->get_remove_action_url($item['Message_ID'], $item['Class_ID']);
+
+$template_partial_loading = nc_array_value($GLOBALS['template_settings'], 'enable_partial_loading');
+
+// запрет кэширования страницы сервером, если цена или скидки зависят от пользователя
+if ($template_partial_loading && $item->price_depends_on_user_data()) {
+    header('X-Accel-Expires: 0');
+}
+
+// Подключение скрипта загрузки информации о вариантах (расположено вне .tpl-variable-part)
+$selectors = new nc_netshop_item_variant_selector($item, array_keys($variant_fields));
+echo $selectors->init(array(
+    'updated_regions' => '.object-info, .object-character, .object-images, .tpl-block-admin',
+    'on_update' => 'jQuery(".fotorama").fotorama();',
+));
+
+$properties = array();
+if ($item['Vendor']) {
+    $properties['Производитель'] = $item['Vendor'];
+}
+if ($item['Weight']) {
+    $properties['Вес'] = $item['Weight'];
+}
+
+$property_fields = $nc_core->get_component($classID)->get_fields_by_name_prefix('Property_');
+foreach ($property_fields as $f) {
+    $property_value = $item[$f['name']];
+    if (is_scalar($property_value) && !strlen($property_value)) {
+        continue;
+    }
+    if (is_array($property_value)) {
+        $property_value = join(', ', $property_value);
+    }
+    if ($f['type'] == NC_FIELDTYPE_BOOLEAN) {
+        $property_value = $property_value ? 'да' : 'нет';
+    }
+    if ($property_value) {
+        $properties[$f['description']] = $property_value;
+    }
+}
+
+?>
+<article data-page-type="goods full" data-component-id="<?= $item['Class_ID']; ?>"
+         data-message-id="<?= $item_parent_id; ?>">
+
+<? if ($admin_mode): // блок с элементами интерфейса управления ?>
+    <div class="tpl-block-admin">
+        <?= $f_AdminButtons ?>
+        <? if ($variant_fields) { echo nc_netshop_item_variant_admin_table($item); } ?>
+    </div>
+<? endif; ?>
+    
+    <?php $img_list = array(); ?>
+    <?php
+    if ($item['Image']) {
+        $img_list[] = $item['Image'];
+    }
+    foreach ($item['Slider']->records as $record) {
+        $img_list[] = $record['Path'];
+    }
+    ?>
+    <div class="object-full">
+        <div class="object-images">
+            <div class="fotorama"
+                 data-nav="thumbs"
+                 data-width="100%"
+                 data-maxheight="400px"
+                 data-maxwidth="400px"
+                 data-ratio="<?= str_replace(':', '/', $full_image_ratio); ?>"
+                 data-fit="<?= $cc_settings['image_format']; ?>"
+                 data-allowfullscreen="true">
+                <?php foreach ($img_list as $image) { ?>
+                    <img src="<?= $image; ?>"/>
+                <?php } ?>
+            </div>
+        </div>
+
+        <div class="object-info">
+            <h1 class="tpl-text-header2"><?= $item['Name']; ?></h1>
+
+            <div class="tpl-text-default-paragraph"><?= ($item['Description'] ? $item['Description'] : $item['Type']); ?></div>
+
+            <div class="object-price">
+                <?php if ($item['ItemDiscount']) { ?>
+                    <s class="price-old tpl-text-default-paragraph"><?= $item['OriginalPrice'] || $item['Parent_Message_ID'] ? $item['OriginalPriceF'] : $item['OriginalPriceRange']; ?></s>
+                <?php } ?>
+                <span class="price-regular tpl-text-alt-biggest-paragraph"><?= $item['ItemPrice'] || $item['Parent_Message_ID'] ? $item['ItemPriceF'] : $item['ItemPriceRange']; ?></span>
+                <?php if ($item['ItemDiscount']) { ?>
+                    <span class="price-savings tpl-text-alt-small-paragraph">Вы сэкономите <?= $item['ItemDiscountF']; ?></span>
+                <?php } ?>
+            </div>
+
+            <form action="<?= $netshop->get_add_to_cart_url() ?>" method="post" class="object-actions">
+                <input type="hidden" name="redirect_url" value="<?= $_SERVER["REQUEST_URI"] ?>"/>
+                <input type="hidden" name="cart_mode" value="add"/>
+                <input type="hidden" name="items[]" value="<?= $item['Class_ID'] . ':' . $item['Message_ID'] ?>"/>
+                <input type="hidden" name="item_id" value="<?= $item['Message_ID']; ?>"/>
+                <input type="hidden" name="class_id" value="<?= $item['Class_ID']; ?>"/>
+
+                <?php if ($variant_fields && count($item['_Variants']) > 1): ?>
+                    <table class="product-variants">
+                        <?php foreach ($variant_fields as $variant_field_name => $variant_field_options): ?>
+                            <tr class="variant">
+                                <td class="variant-text tpl-text-alt"><?= $variant_field_options['caption'] ?></td>
+                                <td class="variant-select select">
+                                    <?php
+                                    $select_html = $selectors->by_template($variant_field_name, array(
+                                        'prefix' => "<select name='cart-select' class='cart-select js-input-city' data-custom-class='cart-select'>",
+                                        'first' => "<option>" . htmlspecialchars($variant_field_options['placeholder']) . "</option>",
+                                        'active' => "<option value='%URL'>%NAME</option>",
+                                        'active_link' => "<option value='%URL' selected>%NAME</option>",
+                                        'unactive' => "<option value='%URL'>%NAME</option>",
+                                        'suffix' => "</select>",
+                                    ));
+                                    ?>
+                                    <?= $select_html; ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+                <?php endif; ?>
+
+                <div class="product-cart">
+                    <?php if ($cc_settings['show_instock'] !== 'on') { ?>
+                        <div class="product-available">
+                            <?php if ($item['StockUnits']) { ?>
+                                <i>В наличии <?= $item['StockUnits']; ?><?= $item['Units']; ?>.</i>
+                            <?php } ?>
+                        </div>
+                    <?php } ?>
+                    <div class="product-quantity">
+                        <?php if ($item_in_stock) { ?>
+                            <div class="quantity-title">К-во</div>
+                            <div class="quantity">
+                                <button type="button" class="quantity-button quantity-button--less"></button>
+                                <input type="number" class="quantity-input" name="qty" value="1" min="1" step="1"
+                                       max="<?= $item['StockUnits']; ?>"/>
+                                <button type="button" class="quantity-button quantity-button--more"></button>
+                            </div>
+                        <?php } ?>
+                    </div>
+                    <div class="product-button">
+                        <button type="submit" <?= !$item_in_stock || !$item['Checked'] ? "disabled" : ""; ?>
+                                class="tpl-button-primary addBasket" onclick="nc_netshop_cart(this); return false;">
+                            <?= $in_cart ? "В корзине" : ($item_in_stock ? "В корзину" : "Нет в наличии"); ?>
+                        </button>
+                    </div>
+                </div>
+                <div class="product-link">
+
+                    <a href="<?= $favorite_url; ?>" class="addFavorite"
+                       title="<?= $is_in_fav_list ? "Товар в избранном" : "Добавить в избранное"; ?>"
+                       onclick="nc_netshop_goodslist('favorite', '<?= $is_in_fav_list ? "remove" : "add"; ?>', <?= $item_parent_id; ?>, <?= $item['Class_ID']; ?>, this ); return false;">
+                        <i class="<?= $is_in_fav_list ? "fas" : "far"; ?> fa-star"></i>
+                    </a>
+
+                    <?php if ($item_in_stock) { ?><!-- quick buy button -->
+                    <a href="#" class="tpl-text-alt-small quickbuy"
+                       onclick="<?= $item_in_stock ? 'nc_netshop_quick_order(this);return false;' : 'return false;'; ?>">
+                        <?php if ($item_in_stock): ?><i class="fas fa-shopping-basket"></i><?php endif; ?>
+                        <?= $item_in_stock ? 'купить сейчас' : 'нет в наличии'; ?>
+                    </a>
+                    <?php } ?>
+                    <!-- compare button -->
+                    <a href="<?= $compare_url; ?>"
+                       class="tpl-text-alt-small <?= $is_in_compare_list ? 'active' : ''; ?> compare"
+                       onclick="nc_netshop_goodslist('compare', '<?= $is_in_compare_list ? "remove" : "add"; ?>', <?= $item_parent_id; ?>, <?= $item['Class_ID']; ?>, this ); return false;">
+                        <i class="far fa-copy"></i>
+                        <?= $is_in_compare_list ? $btn_in_compare_text : $btn_not_in_compare_text; ?>
+                    </a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <?php if ($item['Details']): ?>
+        <div class="object-detail">
+
+            <div class="product-description" id="product-info">
+                <?php if ($item['DescriptionTitle']): ?>
+                    <div class="description-header tpl-text-header2"><?= $item['DescriptionTitle']; ?></div>
+                <?php endif; ?>
+                <div class="tpl-text-default-paragraph"><?= $item['Details']; ?></div>
+            </div>
+
+        </div>
+    <?php endif; ?>
+    <?php if ($properties) { ?>
+        <div class="object-character">
+            <div class="product-characters" id="product-character">
+                <div class="characters-header tpl-text-header4">Характеристики</div>
+                <table class="product-characters-table">
+                    <?php foreach ($properties as $property_name => $property_value) { ?>
+                        <tr class="row">
+                            <td class="feature tpl-text-alt-paragraph"><?= $property_name; ?></td>
+                            <td class="value tpl-text-default-paragraph"><?= $property_value; ?></td>
+                        </tr>
+                    <?php } ?>
+                </table>
+            </div>
+        </div>
+    <?php } ?>
+</article>
+<?= nc_netshop_goods_scripts(); ?>

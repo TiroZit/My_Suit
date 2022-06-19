@@ -1,0 +1,15 @@
+/* <block32> */
+.tpl-container-32 .tpl-container-32-list {
+display: flex;
+flex-direction: row;
+flex-wrap: nowrap;
+align-items: flex-start;
+justify-content: flex-start;
+}
+.tpl-container-32 .tpl-container-32-list > * {
+margin-left: 20px;
+}
+.tpl-container-32 .tpl-container-32-list > *:first-child {
+margin-left: 0;
+}
+/* </block32> */

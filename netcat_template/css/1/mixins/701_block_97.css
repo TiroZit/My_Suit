@@ -1,0 +1,20 @@
+/* <block97> */
+.tpl-block-97[data-nc-b2~="600"] .tpl-block-97-list { display: flex; flex-direction: row; flex-wrap: wrap; }
+.tpl-block-97[data-nc-b2~="600"] .tpl-block-97-list > * {
+    width: 50.0000%;
+    margin: 0 0 0;
+    align-self: flex-start;
+}
+.tpl-block-97[data-nc-b2~="600"] .tpl-block-97-list > *:nth-child(2n) { margin-right: 0 }
+.tpl-block-97[data-nc-b2~="600"] .tpl-block-97-list > *:nth-child(2n+1) { margin-left: 0 }
+.tpl-block-97[data-nc-b2~="600"] .tpl-block-97-list > *:nth-child(-n+2) { margin-top: 0; }
+.tpl-block-97[data-nc-b1~="600"] .tpl-block-97-list { display: flex; flex-direction: row; flex-wrap: wrap; }
+.tpl-block-97[data-nc-b1~="600"] .tpl-block-97-list > * {
+    width: 25.0000%;
+    margin: 0 0 0;
+    align-self: flex-start;
+}
+.tpl-block-97[data-nc-b1~="600"] .tpl-block-97-list > *:nth-child(4n) { margin-right: 0 }
+.tpl-block-97[data-nc-b1~="600"] .tpl-block-97-list > *:nth-child(4n+1) { margin-left: 0 }
+.tpl-block-97[data-nc-b1~="600"] .tpl-block-97-list > *:nth-child(-n+4) { margin-top: 0; }
+/* </block97> */

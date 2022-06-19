@@ -1,0 +1,145 @@
+.nc_netshop_filter_fieldset {
+    margin-left: 20px;
+}
+
+.nc_netshop_filter_label {
+    user-select: none;
+    font-size: 12px;
+    line-height: 20px;
+    color: var(--tpl-color-foreground-main-light);
+    font-weight: 700;
+    position: relative;
+    text-transform: uppercase;
+    margin: 26px 0 0;
+    max-width: 300px;
+}
+
+.nc_netshop_filter_label:hover,
+.nc_netshop_filter_label label:hover {
+    cursor: pointer;
+}
+
+.nc_netshop_filter_label:before {
+    position: absolute;
+    content: '\33';
+    font-family: 'ElegantIcons';
+    font-size: 18px;
+    font-weight: 400;
+    left: -24px;
+    top: -1px;
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transform-origin: top left;
+    transform-origin: top left;
+    color: var(--tpl-color-brand);
+}
+
+.nc_netshop_filter_field {
+    display: none;
+    font-size: 14px;
+    line-height: 22px;
+    color: var(--tpl-color-foreground-main-light);
+    text-transform: none;
+    font-weight: 400;
+    padding: 4px 0;
+    background-color: transparent;
+    width: 100%;
+    position: relative;
+    cursor: pointer;
+}
+
+.nc_netshop_filter_row.active .nc_netshop_filter_label label {
+    color: var(--tpl-color-brand);
+}
+
+.nc_netshop_filter_row.active .nc_netshop_filter_field {
+    display: block;
+}
+
+.nc_netshop_filter_row.active .nc_netshop_filter_label:before {
+    left: -5px;
+    top: 20px;
+    -webkit-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+}
+
+input[type="text"],input[type="text"]:hover,input[type="text"]:focus {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0;
+    -webkit-box-shadow: 0;
+    box-shadow: 0;
+    -webkit-appearance: none;
+    width: 97px;
+    height: 40px;
+    background-color: var(--tpl-color-background-main-light);
+    line-height: 18px;
+    padding: 10px 18px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--tpl-color-foreground-main-light);
+    text-transform: none;
+    border: 1px solid var(--tpl-color-background-accent);
+    border-radius: 2px;
+}
+
+.nc_netshop_filter_row_range .nc_netshop_filter_field {
+    vertical-align: middle;
+    line-height: 38px;
+}
+
+.nc_netshop_filter_actions {
+    margin-top: 10px;
+}
+
+.nc_netshop_filter_field_min input[type="text"] {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.nc_netshop_filter_field_max input[type="text"] {
+    margin-left: 5px;
+}
+
+.nc_netshop_filter_row_checkbox .nc_netshop_filter_field input {
+    display: none;
+}
+
+.nc_netshop_filter_row_checkbox .nc_netshop_filter_field div {
+    position: relative;
+    user-select: none;
+    padding: 5px 10px;
+    max-width: 250px;
+    margin-bottom: 5px;
+}
+
+.nc_netshop_filter_row_checkbox .nc_netshop_filter_field div > * {
+    pointer-events: none;
+}
+
+.nc_netshop_filter_row_checkbox .nc_netshop_filter_field div.active {
+    background-color: rgba(128, 128, 128, 0.2);
+}
+
+.nc_netshop_filter_row_checkbox .nc_netshop_filter_field div:hover,
+.nc_netshop_filter_row_checkbox .nc_netshop_filter_field div > *:hover {
+    cursor: pointer;
+}
+
+.nc_netshop_filter_row_checkbox .nc_netshop_filter_field div.active:after {
+    content: "\4d";
+    position: absolute;
+    top: 5px;
+    right: 7px;
+    font-family: 'ElegantIcons';
+    color: var(--tpl-color-foreground-accent-dark);
+}
+
+.nc_netshop_filter_row_checkbox .nc_netshop_filter_field label {
+    margin: 0;
+}
+
+select {
+    width: 100%;
+    max-width: 100%;
+}

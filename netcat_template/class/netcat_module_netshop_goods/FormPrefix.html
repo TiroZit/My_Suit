@@ -1,0 +1,48 @@
+<?= $f_AdminCommon; ?>
+<?php if ($curPos < $recNum): ?>
+    <meta name='subdivision' data-page-type="goods index" data-subdivision-id="<?= $sub; ?>"
+          data-subdivision-name="<?= $current_sub['Subdivision_Name']; ?>"/>
+<?php endif; ?>
+
+<div class="catalogue-prefix" id="catalogue-prefix-<?= $nc_block_id; ?>">
+    <?php if ($sorting_methods): ?>
+        <div class="product-sorting">
+            <label class="title">сортировать</label>
+            <select name="productSort">
+                <?php $sb = $nc_core->input->fetch_get('sortBy') ?>
+                <?php $is_first = true; ?>
+                <?php foreach ($sorting_methods as $key => $row) { ?>
+                    <option value="<?= current_link('sortBy', $key) ?>"
+                        <?= ($sb == $key || ($is_first && empty($sb))) ? " selected " : null; ?>>
+                        <?= $row['title'] ?>
+                    </option>
+                    <?php $is_first = false; ?>
+                <?php } ?>
+            </select>
+        </div>
+    <?php endif; ?>
+
+    <div class="product-view">
+        <a href='#' class="view-select <?= $_COOKIE['catalogue-type'] === 'large' ? "active" : ""; ?>"
+           data-type="large"><i class="fas fa-th-large fa-lg"></i></a>
+        <a href='#' class="view-select <?= ($_COOKIE['catalogue-type'] === 'list' || !$_COOKIE['catalogue-type']) ? "active" : ""; ?>"
+           data-type="list"><i class="fas fa-th-list  fa-lg"></i></a>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        jQuery(document).on('change', '#catalogue-prefix-<?= $nc_block_id; ?> select', function () {
+            window.location = jQuery(this).find(':selected').val();
+        });
+        jQuery(document).on('click touch', '#catalogue-prefix-<?= $nc_block_id; ?> .product-view .view-select', function (event) {
+            event.preventDefault();
+            var $type = jQuery(this).data('type');
+            jQuery(this).parent('.product-view').find('.view-select').removeClass("active");
+            jQuery(this).addClass('active');
+            var date = new Date(new Date().getTime() + 60 * 24 * 365);
+            document.cookie = "catalogue-type=" + $type + "; path=/; expires=" + date.toUTCString();
+            jQuery(this).closest(".tpl-block-list-objects").find(".goods-item").removeClass("type-list type-large").addClass('type-' + $type);
+            return false;
+        });
+    });
+</script>

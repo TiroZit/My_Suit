@@ -1,0 +1,41 @@
+<?php
+if (!nc_module_check_by_keyword("netshop")) {
+    die (NETCAT_MODULE_NETSHOP_MODULEUNCHECKED);
+}
+$cc_settings = nc_get_visual_settings($cc_env['Sub_Class_ID']);
+$nc_core = nc_core::get_object();
+$netshop = nc_netshop::get_instance();
+$nc_input = $nc_core->input;
+$nc_user = $AUTH_USER_ID ? $nc_core->user->get_by_id($AUTH_USER_ID) : null;
+$netshop_cart_items = $netshop->cart->get_items();
+
+// подключаем файл класса агрегатора и создаем объект агрегатора
+require_once $nc_class_agregator_path;
+$agregator_settings = new nc_class_aggregator_setting();
+
+// создаем виртуальные поля, которые понадобятся в шаблонах вывода
+$agregator_settings->register_fields('Name');
+
+foreach ($netshop->get_goods_components_ids() as $id) {
+    $agregator_settings->add_class($id)->register_fields('Name')->field_as_message_name('Name');
+}
+
+global $btn_in_compare_text;
+global $btn_not_in_compare_text;
+$btn_in_compare_text = 'в сравнении';
+$btn_not_in_compare_text = 'сравнить';
+
+$size = $cc_settings['object_ratio'];
+if ($cc_settings['object_ratio'] === 'custom') {
+    $size = $cc_settings['custom_ratio'];
+}
+list($w, $h) = explode(":", str_replace(",", ".", $size));
+if ((float)$w > 0) {
+    $padding_top = str_replace(",", ".", ($h / $w) * 100) . "%";
+} else {
+    $padding_top = '100%';
+}
+$goods_item_styles = array();
+$goods_item_styles[] = "--tpl-object-item--image-padding-top: " . $padding_top;
+$goods_item_styles[] = "--tpl-object-item--image-fit: ".$cc_settings['image_format'];
+$goods_item_styles = " style='" . implode(";", $goods_item_styles) . "'";

@@ -1,0 +1,60 @@
+
+<div class="radio cart-radio">
+    <div class="cart-input-text cart-payment-text">Выберите способ оплаты</div>
+    <?
+    // объекты, необходимые для дальнейших расчётов для способов доставки и оплаты:
+
+    $params = array(
+        'f_City' => $f_City,
+        'f_Address' => $f_Address,
+        'f_Zip' => $f_Zip,
+        'delivery_variant_id'=>$delivery_variant_id,
+        'delivery_point_id'=>$delivery_point_id
+    );
+
+    $order = nc_netshop_order::from_post_data((array)$params, $netshop);
+    $context = $netshop->get_condition_context();
+    $context->set_order($order);
+
+    $all_payment_methods = $netshop->payment->get_enabled_methods();
+    $available_payment_methods = $all_payment_methods->matching($context);
+    $methods_to_show = $show_unavailable_payment_methods
+        ? $all_payment_methods
+        : $available_payment_methods;
+
+    $num_methods_to_show = count($methods_to_show);
+    $is_first = true;
+    foreach ($methods_to_show as $method) {
+        $is_available = $method->evaluate_conditions($context);
+        $method_id = $method->get_id();
+        ?>
+        <label class="radio-item cart-radio-item">
+            <input class="radio-input cart-radio-input" type="radio" <?=($is_first ? 'checked' : NULL)?> value="<?=$method_id?>" name="f_PaymentMethod">
+            <span class="radio-fake cart-radio-fake"></span>
+            <span class="radio-label cart-radio-label">
+                                        <div class="cart-radio-type"><?= $method->get('name'); ?></div>
+                                        <div class="cart-radio-caption">
+                                            <?= $method->get('description'); ?>
+                                            <?
+
+                                            // --- Наценка за способ оплаты ---
+                                            if ($method->evaluate_conditions($context)) {
+                                                $extra_cost = $method->get_extra_cost($order);
+                                                if ($extra_cost) {
+                                                    echo "<span>",
+                                                        // "Дополнительный сбор: "
+                                                    NETCAT_MODULE_NETSHOP_CHECKOUT_PAYMENT_EXTRA_CHARGE,
+                                                    "</span> ",
+                                                    "<span>", $netshop->format_price($extra_cost), "</span>";
+                                                }
+                                            }
+
+                                            ?>
+                                        </div>
+                                    </span>
+        </label>
+        <?
+        $is_first = false;
+    }
+    ?>
+</div>

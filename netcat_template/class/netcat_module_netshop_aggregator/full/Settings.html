@@ -1,0 +1,124 @@
+<?php
+if (!nc_module_check_by_keyword("netshop")) {
+    die (NETCAT_MODULE_NETSHOP_MODULEUNCHECKED);
+}
+
+$nc_core = nc_core::get_object();
+$netshop = nc_netshop::get_instance();
+$nc_input = $nc_core->input;
+$nc_user = $AUTH_USER_ID ? $nc_core->user->get_by_id($AUTH_USER_ID) : null;
+
+// подключаем файл класса агрегатора и создаем объект агрегатора
+require_once $nc_class_agregator_path;
+$agregator_settings = new nc_class_aggregator_setting();
+
+// создаем виртуальные поля, которые понадобятся в шаблонах вывода
+$agregator_settings->register_fields('Name');
+
+$netshop = nc_netshop::get_instance($catalogue);
+foreach ($netshop->get_goods_components_ids() as $id) {
+    $agregator_settings->add_class($id)->register_fields('Name')->field_as_message_name('Name');
+}
+
+global $btn_in_compare_text;
+global $btn_not_in_compare_text;
+$btn_in_compare_text = 'в сравнении';
+$btn_not_in_compare_text = 'сравнить';
+
+
+// Поля, которые отличают варианты друг от друга
+$variant_fields = array(
+    'Property_Color' => array(
+        'caption' => 'Цвет',
+        'placeholder' => 'Выберите цвет',
+    ),
+    'Property_Material' => array(
+        'caption' => 'Материал',
+        'placeholder' => 'Выберите материал',
+    ),
+);
+
+if (!function_exists('nc_netshop_goods_scripts')) {
+    function nc_netshop_goods_scripts() {
+        global $btn_in_compare_text, $netshop;
+        global $btn_not_in_compare_text;
+        global $current_catalogue;
+        ob_start(); ?>
+
+        <script>
+            function nc_netshop_quick_order($this) {
+                var form = jQuery($this).closest('form');
+                jQuery.post(form.attr('action'), form.serialize() + "&json=1", function (response) {
+                    location.href = '<?= nc_folder_path($current_catalogue['Netshop_Cart_Sub_ID']); ?>';
+                }, 'json');
+                return false;
+            }
+
+            function nc_netshop_cart($this) {
+                var btn = jQuery($this), form = jQuery($this).closest('form');
+                jQuery.post(form.attr('action'), form.serialize() + "&json=1", function (response) {
+                    nc_event_dispatch('ncNetshopCartUpdate', {
+                        cart: response,
+                        form: form,
+                        modal: true
+                    });
+                    btn.html('В корзине');
+                }, 'json');
+                return false;
+            }
+
+            function nc_netshop_goodslist(type, action, itemid, classid, btn) {
+                var url = "<?= nc_module_path('netshop'); ?>actions/goodslist.php";
+                jQuery.get(url, {type: type, action: action, item_id: itemid, class_id: classid});
+                if (type === 'favorite') {
+                    if (action === 'add') {
+                        nc_event_dispatch('ncNetshopGoodsFavoriteAdded', {
+                            modal: true
+                        });
+                        jQuery(btn).addClass('active');
+                    } else {
+                        nc_event_dispatch('ncNetshopGoodsFavoriteRemoved', {
+                            modal: true
+                        });
+                        jQuery(btn).removeClass('active');
+                    }
+                }
+                if (type === 'compare') {
+                    if (action === 'add') {
+                        nc_event_dispatch('ncNetshopGoodsCompareAdd', {
+                            modal: true
+                        });
+                        jQuery(btn).addClass('active');
+                    } else {
+                        nc_event_dispatch('ncNetshopGoodsCompareRemove', {
+                            modal: true
+                        });
+                        jQuery(btn).removeClass('active');
+                    }
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                jQuery(document).on('click', '.quantity-button--less', function (event) {
+                    event.preventDefault();
+                    var $input = jQuery(this).next();
+                    var val = +$input.val(), min = +$input.attr('min'), step = +$input.attr('step');
+                    if (val - step >= min) {
+                        $input.val(val - step).change();
+                    }
+                });
+                jQuery(document).on('click', '.quantity-button--more', function (event) {
+                    event.preventDefault();
+                    var $input = jQuery(this).prev();
+                    var val = +$input.val(), max = +$input.attr('max'), step = +$input.attr('step');
+                    if (isNaN(max) || (val + step <= max)) {
+                        $input.val(val + step).change();
+                    }
+                });
+            });
+        </script>
+
+        <? return ob_get_clean();
+    }
+}
+

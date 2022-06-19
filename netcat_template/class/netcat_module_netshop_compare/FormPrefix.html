@@ -1,0 +1,67 @@
+<?php if ($goods_count <= 0): ?>
+    <div class="tpl-text-default-paragraph">В списке сравнения товаров нет. Добавьте парочку.</div>
+<?php elseif ($goods_count === 1): ?>
+    <div class="tpl-text-default-paragraph">В списке сравнения только один товар. Добавьте еще хотя бы один.</div>
+<?php else: ?>
+    <?= $f_AdminCommon; ?>
+    <div class="table-responsive">
+        <div class="table-compare"<?= $goods_item_styles; ?>>
+            <div class="table-row">
+                <?php foreach ($goods as $product): ?>
+                    <?php
+                    $product_parent_id = $product['Parent_Message_ID'] ?: $product['Message_ID'];
+                    $product_in_stock = $product['StockUnits'] > 0;
+
+                    if ($nc_core->get_settings('IgnoreStockUnitsValue', 'netshop')) {
+                        $product_in_stock = true;
+                    }
+                    ?>
+                    <div class="table-col product-item">
+                        <div class="product-image">
+                            <?php if ((string)$product['Image']): ?>
+                                <div class="image">
+                                    <?= $product['Image']->resize(240, 240, nc_ImageTransform::RESIZE_TO_BEST_FIT)->as_img(array('alt' => $product['FullName'])) ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <form method="post">
+                            <input type="hidden" name="class_id" value="<?= $product['Class_ID']; ?>">
+                            <input type="hidden" name="item_id" value="<?= $product_parent_id; ?>">
+                            <button type="submit" name="do" value="remove" class="tpl-button button-remove">&times;</button>
+                        </form>
+                        <a href="<?= $product['URL']; ?>" class="product-name tpl-text-default-paragraph"><?= $product['FullName']; ?></a>
+                        <div class="product-price tpl-text-header6"><?= $product['ItemPriceF']; ?></div>
+                        <form action="<?= $nc_netshop->get_add_to_cart_url() ?>" method="post" class="product-cart">
+                            <input type="hidden" name="cart_mode" value="add"/>
+                            <input type="hidden" name="items[]" value="<?= $product['Class_ID'] . ':' . $product_parent_id; ?>"/>
+                            <input type="hidden" name="item_id" value="<?= $product_parent_id; ?>"/>
+                            <input type="hidden" name="class_id" value="<?= $product['Class_ID']; ?>"/>
+                            <input type="hidden" name="qty" value="1"/>
+                            <?php if ($product_in_stock): ?>
+                                <button class="tpl-button-primary" onclick="nc_netshop_cart(this);return false;">В корзину</button>
+                            <?php else: ?>
+                                <button class="tpl-button-primary tpl-button-disabled" onclick="return false;">В корзину</button>
+                            <?php endif; ?>
+                        </form>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <?php foreach ($fields as $field) { ?>
+                <?php if (strpos($field['Field_Name'], 'Property_') !== 0) { continue; } ?>
+                <div class="table-data">
+                    <div class="field_description tpl-text-alt-paragraph"><?= $field['Description']; ?></div>
+                    <div class="table-row">
+                        <?php foreach ($goods as $product): ?>
+                            <?php $field_name = $field['Field_Name']; ?>
+                            <?php if ($field['TypeOfData_ID'] == NC_FIELDTYPE_BOOLEAN): ?>
+                                <div class="table-col product-field"><?= ($product[$field_name] ? "Да" : "Нет"); ?></div>
+                            <?php else: ?>
+                                <div class="table-col product-field"><?= $product[$field_name]; ?></div>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+<?php endif; ?>

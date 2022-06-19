@@ -1,0 +1,10 @@
+/* <block79> */
+@media (max-width: 599.99px) {
+.tpl-block-79 { margin-top: 10px }
+.tpl-block-79 * { --tpl-mixin-margin-left: 0px; --tpl-mixin-margin-right: 0px; }
+}
+@media (min-width: 600px) {
+.tpl-block-79 { margin-top: 30px }
+.tpl-block-79 * { --tpl-mixin-margin-left: 0px; --tpl-mixin-margin-right: 0px; }
+}
+/* </block79> */

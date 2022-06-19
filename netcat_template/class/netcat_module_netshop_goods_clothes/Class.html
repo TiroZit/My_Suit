@@ -1,0 +1,157 @@
+<!-- FormPrefix --><?= $f_AdminCommon; ?>
+<?php if ($curPos < $recNum): ?>
+    <meta name='subdivision' data-page-type="goods index" data-subdivision-id="<?= $sub; ?>"
+          data-subdivision-name="<?= $current_sub['Subdivision_Name']; ?>"/>
+<?php endif; ?>
+
+<div class="catalogue-prefix" id="catalogue-prefix-<?= $nc_block_id; ?>">
+    <?php if ($sorting_methods): ?>
+        <div class="product-sorting">
+            <label class="title">сортировать</label>
+            <select name="productSort">
+                <?php $sb = $nc_core->input->fetch_get('sortBy') ?>
+                <?php $is_first = true; ?>
+                <?php foreach ($sorting_methods as $key => $row) { ?>
+                    <option value="<?= current_link('sortBy', $key) ?>"
+                        <?= ($sb == $key || ($is_first && empty($sb))) ? " selected " : null; ?>>
+                        <?= $row['title'] ?>
+                    </option>
+                    <?php $is_first = false; ?>
+                <?php } ?>
+            </select>
+        </div>
+    <?php endif; ?>
+
+    <div class="product-view">
+        <a href='#' class="view-select <?= $_COOKIE['catalogue-type'] === 'large' ? "active" : ""; ?>"
+           data-type="large"><i class="fas fa-th-large fa-lg"></i></a>
+        <a href='#' class="view-select <?= ($_COOKIE['catalogue-type'] === 'list' || !$_COOKIE['catalogue-type']) ? "active" : ""; ?>"
+           data-type="list"><i class="fas fa-th-list  fa-lg"></i></a>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        jQuery(document).on('change', '#catalogue-prefix-<?= $nc_block_id; ?> select', function () {
+            window.location = jQuery(this).find(':selected').val();
+        });
+        jQuery(document).on('click touch', '#catalogue-prefix-<?= $nc_block_id; ?> .product-view .view-select', function (event) {
+            event.preventDefault();
+            var $type = jQuery(this).data('type');
+            jQuery(this).parent('.product-view').find('.view-select').removeClass("active");
+            jQuery(this).addClass('active');
+            var date = new Date(new Date().getTime() + 60 * 24 * 365);
+            document.cookie = "catalogue-type=" + $type + "; path=/; expires=" + date.toUTCString();
+            jQuery(this).closest(".tpl-block-list-objects").find(".goods-item").removeClass("type-list type-large").addClass('type-' + $type);
+            return false;
+        });
+    });
+</script>
+<!-- /FormPrefix -->
+
+<!-- RecordTemplate --><?php
+$item = new nc_netshop_item($res[$f_RowNum]);
+$item_parent_id = $item['Parent_Message_ID'] ?: $item['Message_ID'];
+$item_list_key = $item['Class_ID'] . ':' . $item_parent_id;
+$item_in_stock = (!$nc_core->get_settings('IgnoreStockUnitsValue', 'netshop') ? ($item['StockUnits'] > 0) : true);
+$in_cart = $netshop_cart_items[$item_list_key]['Qty'] > 0;
+$is_in_compare_list = !$template_partial_loading && $netshop->goodslist_compare->check($item_parent_id, $item['Class_ID']);
+$is_in_fav_list = !$template_partial_loading && $netshop->goodslist_favorite->check($item_parent_id, $item['Class_ID']);
+
+$compare_url = !$is_in_compare_list ?
+    $netshop->goodslist_compare->get_add_action_url($item['Message_ID'], $item['Class_ID']) :
+    $netshop->goodslist_compare->get_remove_action_url($item['Message_ID'], $item['Class_ID']);
+
+$favorite_url = !$is_in_fav_list ?
+    $netshop->goodslist_favorite->get_add_action_url($item['Message_ID'], $item['Class_ID']) :
+    $netshop->goodslist_favorite->get_remove_action_url($item['Message_ID'], $item['Class_ID']);
+
+
+// запрет кэширования страницы сервером, если цена или скидки зависят от пользователя
+if ($template_partial_loading && $item->price_depends_on_user_data()) {
+    header('X-Accel-Expires: 0');
+}
+?>
+
+<div class="nc-infoblock-object goods-item type-<?= $_COOKIE['catalogue-type'] ?: "list"; ?><?= $inside_admin ? ' inside-admin' : '' ?>"
+     data-component-id="<?= $item['Class_ID']; ?>" data-message-id="<?= $item_parent_id; ?>"<?= $goods_item_styles; ?>>
+    <?= $f_AdminButtons; ?>
+    <a href="<?= $item['URL']; ?>" class="item-image">
+        <?php if($item['Image']) { ?>
+            <div class="image">
+                <?= $item['Image']->as_img(array('alt' => $item['FullName'])); ?>
+            </div>
+        <?php } ?>
+    </a>
+    <a href="<?= $item['URL']; ?>" class="item-info">
+        <div>
+            <div class="tpl-text-header4"><?= $item['Name']; ?></div>
+            <div class="tpl-text-default-paragraph"><?= $item['Type']; ?></div>
+        </div>
+        <div class="item-price tpl-text-header6">
+            <?php if ($item['ItemPriceRange']) { ?>
+                <span><?= $item['ItemPriceRange']; ?></span>
+            <?php } else { ?>
+                <span><?= $item['ItemPriceF']; ?></span>
+            <?php } ?>
+        </div>
+    </a>
+
+    <form action="<?= $netshop->get_add_to_cart_url() ?>" method="post" class="item-actions">
+        <input type="hidden" name="redirect_url" value="<?= $_SERVER["REQUEST_URI"] ?>"/>
+        <input type="hidden" name="cart_mode" value="add"/>
+        <input type="hidden" name="items[]" value="<?= $item['Class_ID'] . ':' . $item_parent_id; ?>"/>
+        <input type="hidden" name="item_id" value="<?= $item_parent_id; ?>"/>
+        <input type="hidden" name="class_id" value="<?= $item['Class_ID']; ?>"/>
+
+        <div class="actions-link">
+            <!-- quick buy button -->
+            <?php if ($item_in_stock && $item['Checked']): ?>
+                <a href="" class="tpl-text-alt-small quickbuy"
+                   onclick="nc_netshop_quick_order(this);return false;">
+                   <i class="fas fa-shopping-basket"></i> купить сейчас
+                </a>
+            <?php endif; ?>
+            <!-- compare button -->
+            <a href="<?= $compare_url; ?>"
+               class="tpl-text-alt-small <?= $is_in_compare_list ? 'active' : ''; ?> compare"
+               onclick="nc_netshop_goodslist('compare', '<?= $is_in_compare_list ? "remove" : "add"; ?>', <?= $item_parent_id; ?>, <?= $item['Class_ID']; ?>, this ); return false;">
+                <i class="far fa-copy"></i>
+                <?= $is_in_compare_list ? $btn_in_compare_text : $btn_not_in_compare_text; ?>
+            </a>
+        </div>
+
+        <div class="actions-cart">
+            <?php if ($item_in_stock && $item['Checked']) { ?>
+                <div class="quantity">
+                    <button type="button" class="quantity-button quantity-button--less"></button>
+                    <input type="number" class="quantity-input" name="qty" value="1" min="1" step="1">
+                    <button type="button" class="quantity-button quantity-button--more"></button>
+                </div>
+            <?php } ?>
+            <div class="cart-button">
+                <?php if ($item['Checked']): ?>
+                    <button type="submit" <?= !$item_in_stock ? "disabled" : ""; ?>
+                            class="tpl-button-primary addBasket" onclick="nc_netshop_cart(this); return false;">
+                        <?= $in_cart ? "В корзине" : ($item_in_stock ? "В корзину" : "Нет в наличии"); ?>
+                    </button>
+                <?php else: ?>
+                    <a href="<?= $fullLink ?>" class="tpl-button-primary addBasket">Выбрать</a>
+                <?php endif; ?>
+
+                <a href="<?= $favorite_url; ?>" class="addFavorite"
+                   title="<?= $is_in_fav_list ? "Товар в избранном" : "Добавить в избранное"; ?>"
+                   onclick="nc_netshop_goodslist('favorite', '<?= $is_in_fav_list ? "remove" : "add"; ?>', <?= $item_parent_id; ?>, <?= $item['Class_ID']; ?>, this ); return false;">
+                    <i class="<?= $is_in_fav_list ? "fas" : "far"; ?> fa-star"></i>
+                </a>
+            </div>
+        </div>
+    </form>
+    <?php if ($inside_admin && $variant_fields): ?>
+        <?= nc_netshop_item_variant_admin_table($item); ?>
+    <?php endif; ?>
+</div><!-- /RecordTemplate -->
+
+<!-- FormSuffix --><?php if ($totRows > $recNum): ?>
+  <?= nc_browse_messages($cc_env, 10); ?>
+<?php endif; ?>
+<?= nc_netshop_goods_scripts(); ?><!-- /FormSuffix -->

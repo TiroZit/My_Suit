@@ -1,0 +1,25 @@
+<?
+$nc_core->db->query("DELETE FROM Banner_CampaignZone WHERE Campaign_ID={$message}");
+$nc_core->db->query("DELETE FROM Banner_CampaignBanner WHERE Campaign_ID={$message}");
+
+$campaign_zone_values = array();
+$campaign_banner_values = array();
+
+for ($i = 0; $i < count($zone); $i++) {
+	$campaign_zone_values[] = "('{$message}', '{$zone[$i]}')";
+}
+
+if (count($campaign_zone_values) > 0) {
+    $nc_core->db->query("INSERT INTO Banner_CampaignZone (Campaign_ID, Zone_ID) VALUES " . implode(", ", $campaign_zone_values));
+}
+
+for ($i = 0; $i < count($banner); $i++) {
+	$campaign_banner_values[] = "('{$message}', '{$banner[$i]}')";
+}
+
+if (count($campaign_banner_values) > 0) {
+    $nc_core->db->query("INSERT INTO Banner_CampaignBanner (Campaign_ID, Banner_ID) VALUES " . implode(", ", $campaign_banner_values));
+}
+
+echo "Информация о рекламной кампании изменена.<br><a href='{$HTTP_ROOT_PATH}?catalogue={$catalogue}&sub={$sub}'>Вернуться</a>";
+?>

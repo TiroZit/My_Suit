@@ -1,0 +1,53 @@
+/* <block64> */
+@media (max-width: 479.99px) {
+.tpl-block-64 .tpl-block-64-list { display: flex; flex-direction: row; flex-wrap: wrap; }
+.tpl-block-64 .tpl-block-64-list > * {
+    width: 100.0000%;
+    margin: 10.0px 0 0;
+    align-self: flex-start;
+}
+.tpl-block-64 .tpl-block-64-list > *:nth-child(1n) { margin-right: 0 }
+.tpl-block-64 .tpl-block-64-list > *:nth-child(1n+1) { margin-left: 0 }
+.tpl-block-64 .tpl-block-64-list > *:nth-child(-n+1) { margin-top: 0; }
+}
+@media (min-width: 480px) and (max-width: 599.99px) {
+.tpl-block-64 .tpl-block-64-list { display: flex; flex-direction: row; flex-wrap: wrap; }
+.tpl-block-64 .tpl-block-64-list > * {
+    width: 50.0000%;
+    margin: 10.0px 0 0;
+    align-self: flex-start;
+}
+.tpl-block-64 .tpl-block-64-list > *:nth-child(2n) { margin-right: 0 }
+.tpl-block-64 .tpl-block-64-list > *:nth-child(2n+1) { margin-left: 0 }
+.tpl-block-64 .tpl-block-64-list > *:nth-child(-n+2) { margin-top: 0; }
+}
+@media (min-width: 600px) and (max-width: 899.99px) {
+.tpl-block-64 .tpl-block-64-list { display: flex; flex-direction: row; flex-wrap: wrap; }
+.tpl-block-64 .tpl-block-64-list > * {
+    width: 33.3333%;
+    margin: 10.0px 0 0;
+    align-self: flex-start;
+}
+.tpl-block-64 .tpl-block-64-list > *:nth-child(3n) { margin-right: 0 }
+.tpl-block-64 .tpl-block-64-list > *:nth-child(3n+1) { margin-left: 0 }
+.tpl-block-64 .tpl-block-64-list > *:nth-child(-n+3) { margin-top: 0; }
+}
+@media (min-width: 900px) {
+.tpl-block-64 .tpl-block-64-list { display: flex; flex-direction: row; flex-wrap: wrap; }
+.tpl-block-64 .tpl-block-64-list > * {
+    width: 25.0000%;
+    margin: 10.0px 0 0;
+    align-self: flex-start;
+}
+.tpl-block-64 .tpl-block-64-list > *:nth-child(4n) { margin-right: 0 }
+.tpl-block-64 .tpl-block-64-list > *:nth-child(4n+1) { margin-left: 0 }
+.tpl-block-64 .tpl-block-64-list > *:nth-child(-n+4) { margin-top: 0; }
+}
+@media (max-width: 1279.99px) {
+.tpl-block-64 { margin-left: -20px !important; margin-right: -20px !important; --tpl-mixin-margin-left: -20px; --tpl-mixin-margin-right: -20px }
+.tpl-block-64 * { --tpl-mixin-margin-left: 0px; --tpl-mixin-margin-right: 0px; }
+}
+
+.tpl-block-64 .tpl-block-64-list > *:not(.tpl-mixin-padding-pass-down) { padding: 0 10px 0 10px; }
+.tpl-block-64 .tpl-block-64-list > *.tpl-mixin-padding-pass-down > .tpl-mixin-padding-target { padding: 0 10px 0 10px; }
+/* </block64> */

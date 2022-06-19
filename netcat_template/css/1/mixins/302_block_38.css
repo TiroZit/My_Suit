@@ -1,0 +1,11 @@
+/* <block38> */
+.tpl-container-38 .tpl-container-38-list {
+display: flex;
+flex-direction: row;
+flex-wrap: nowrap;
+align-items: center;
+justify-content: space-between;
+}
+.tpl-container-38 > .tpl-block-list:not(.tpl-mixin-padding-pass-down) { padding: 22px 0 0 0; }
+.tpl-container-38 > .tpl-block-list.tpl-mixin-padding-pass-down > .tpl-mixin-padding-target { padding: 22px 0 0 0; }
+/* </block38> */

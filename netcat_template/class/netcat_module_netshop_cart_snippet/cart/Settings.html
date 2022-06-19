@@ -1,0 +1,35 @@
+<?php
+
+$nc_netshop = nc_netshop::get_instance();
+$nc_cart = $nc_netshop->cart;
+$nc_cart_items_count = $nc_cart->get_item_count($cc_settings['countAll'] === 'on');
+
+if ($nc_cart_items_count > 0) {
+    $hint = $nc_cart_items_count;
+    $hint .= ' ' . $nc_core->lang->get_numerical_inclination($nc_cart_items_count, array('товар', 'товара', 'товаров'));
+} else {
+    $hint = 'ничего нет';
+}
+
+$cc_settings = nc_get_visual_settings($cc_env['Sub_Class_ID']);
+
+$icon = nc_get_svg_for_embedding($nc_core->DOCUMENT_ROOT . $nc_core->HTTP_TEMPLATE_PATH . 'icon/font_awesome/shopping-basket.svg');
+
+$icon_class = array();
+$icon_class[] = 'tpl-icon';
+$icon_class[] = "tpl-text-$cc_settings[iconSize]";
+$icon_class[] = $cc_settings['iconDecor'] !== 'none' ? "icon-decor-$cc_settings[iconDecor]" : '';
+$icon_class = implode(' ', $icon_class);
+
+$styles = array();
+
+if ($cc_settings['iconColor'] !== 'inherit') {
+    $styles[] = "--tpl-object-item--icon-color: var(--tpl-color-$cc_settings[iconColor])";
+}
+
+if ($cc_settings['iconDecor'] !== 'none' && $cc_settings['iconDecorColor'] !== 'inherit') {
+    $styles[] = "--tpl-object-item--icon-decor-color: var(--tpl-color-$cc_settings[iconDecorColor])";
+}
+
+$styles[] = '--tpl-object-item--icon-space-text: ' . str_replace(',', '.', ($cc_settings['textSpace'] / 100)) . 'em';
+$styles = " style='" . implode('; ', $styles) . "'";

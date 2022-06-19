@@ -1,0 +1,95 @@
+<!-- FormPrefix --><?= $f_AdminCommon; ?>
+<?php if ($admin_mode) { ?>
+    <div class="nc-popup-admin-helper">
+        Модальное окно "Корзина"
+    </div>
+<?php } ?>
+<div class="popup-cart cart nc-popup" id="nc-popup-cart">
+    <div class="popup">
+        <div class="popup-content-wrap">
+            <div class="popup-content">
+                <div class="popup-content-inner js-popup-inner">
+                    <a class="popup-content-close js-popup-close" href="#"> </a>
+                    <div class="popup-content-text">
+                        <div class="popup-content-icon"><i class="fa fa-shopping-basket"></i> </div>
+
+                        <div class="popup-content-header tpl-text-header4">Товар добавлен в корзину</div>
+                        <div class="popup-content-caption tpl-text-default">Всего в корзине <span class="nc-cart-items-count"></span>
+                            <span class="nc-cart-items-count-text"></span></div>
+                        <div class="popup-content-notify tpl-text-alt"></div>
+                        <div class="popup-content-buttons">
+                            <button class="tpl-button-primary tpl-button-primary-big js-popup-close"> Продолжить
+                                покупки
+                            </button>
+                            <button class="tpl-button-secondary tpl-button-secondary-big "
+                                    onclick="window.location='<?= nc_folder_path($current_catalogue['Netshop_Cart_Sub_ID']); ?>'">Посмотреть корзину
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /FormPrefix -->
+
+<!-- RecordTemplate --><?= $f_AdminButtons; ?><!-- /RecordTemplate -->
+
+<!-- FormSuffix --><script>
+    if (typeof pluralForm != 'function') {
+        /**
+         * Склонение русских слов
+         * @param {Number} itemQuantity  Количество товаров
+         * @param {String} one           «товар»
+         * @param {String} two           «товара»
+         * @param {String} many          «товаров»
+         * @returns {String}
+         */
+        function pluralForm(itemQuantity, one, two, many) {
+            itemQuantity = Math.abs(itemQuantity) % 100;
+            var underHundred = itemQuantity % 10,
+                result = many;
+
+            if (underHundred > 1 && underHundred < 5) { result = two; }
+            if (underHundred == 1) { result = one; }
+            if (itemQuantity > 10 && itemQuantity < 20) { result = many; }
+
+            return result;
+        }
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+        jQuery(document).on('ncNetshopCartUpdate', function (event) {
+            var data = event.originalEvent.detail;
+            var popupId = 'nc-popup-cart';
+            var $popup = jQuery('#' + popupId);
+            if (!$popup) {
+                return;
+            }
+            $popup.find(".popup-content-header,.popup-content-notify,.popup-content-caption").hide();
+            if (data.modal) {
+                var current_item = data.form.find("[name='items[]']").val();
+                $notify = $popup.find(".popup-content-notify").show();
+                $notify.html("");
+                if (data.cart.QuantityNotifications && data.cart.QuantityNotifications[current_item]) {
+                    // jQuery.each(data.cart.QuantityNotifications, function (key, value) {
+                        $notify.append(data.cart.QuantityNotifications[current_item].Message);
+                    // });
+                } else {
+                    $popup.find(".popup-content-header").show();
+                    $popup.find(".popup-content-caption").show();
+                    // // Обновим кол-во товаров в корзине
+                    var itemsCount = data.cart.TotalItemCount;
+                    $cartItemsCount = $popup.find('.nc-cart-items-count');
+                    $cartItemsCount.text(itemsCount);
+                    $cartItemsCountText = $popup.find('.nc-cart-items-count-text');
+                    $cartItemsCountText.text(pluralForm(itemsCount, 'товар', 'товара', 'товаров'));
+                    $cartItemsCount.show();
+                }
+                // Вызовем модальное окно
+                nc_popup_open(popupId);
+            }
+        });
+    });
+</script>
+<!-- /FormSuffix -->

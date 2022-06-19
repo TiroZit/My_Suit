@@ -1,0 +1,32 @@
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        jQuery(document).on('ncNetshopGoodsFavoriteAdded', function (event) {
+            var data = event.originalEvent.detail;
+            var popupId = 'nc-popup-favorite';
+            var $popup = jQuery('#' + popupId);
+            if (!$popup) {
+                return;
+            }
+            if (data.modal) {
+                var $popupHeader = $popup.find('.popup-content-header');
+                $popupHeader.text('Товар добавлен в избранное');
+                // Вызовем модальное окно
+                nc_popup_open(popupId);
+            }
+        });
+        jQuery(document).on('ncNetshopGoodsFavoriteRemoved', function (event) {
+            var data = event.originalEvent.detail;
+            var popupId = 'nc-popup-favorite';
+            var $popup = jQuery('#' + popupId);
+            if (!$popup) {
+                return;
+            }
+            if (data.modal) {
+                var $popupHeader = $popup.find('.popup-content-header');
+                $popupHeader.text('Товар удален из избранного');
+                // Вызовем модальное окно
+                nc_popup_open(popupId);
+            }
+        });
+    });
+</script>

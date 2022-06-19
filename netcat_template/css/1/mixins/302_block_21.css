@@ -1,0 +1,51 @@
+/* <block21> */
+@media (max-width: 599.99px) {
+.tpl-block-21 .tpl-block-21-list { display: flex; flex-direction: row; flex-wrap: wrap; }
+.tpl-block-21 .tpl-block-21-list > * {
+    width: calc(100.0000% - 0.0000px);
+    margin: 20.0px 10.0px 0;
+    align-self: flex-start;
+}
+.tpl-block-21 .tpl-block-21-list > *:nth-child(1n) { margin-right: 0 }
+.tpl-block-21 .tpl-block-21-list > *:nth-child(1n+1) { margin-left: 0 }
+.tpl-block-21 .tpl-block-21-list > *:nth-child(-n+1) { margin-top: 0; }
+}
+@media (min-width: 600px) and (max-width: 949.99px) {
+.tpl-block-21 .tpl-block-21-list { display: flex; flex-direction: row; flex-wrap: wrap; }
+.tpl-block-21 .tpl-block-21-list > * {
+    width: calc(50.0000% - 10.0000px);
+    margin: 20.0px 10.0px 0;
+    align-self: flex-start;
+}
+.tpl-block-21 .tpl-block-21-list > *:nth-child(2n) { margin-right: 0 }
+.tpl-block-21 .tpl-block-21-list > *:nth-child(2n+1) { margin-left: 0 }
+.tpl-block-21 .tpl-block-21-list > *:nth-child(-n+2) { margin-top: 0; }
+}
+@media (min-width: 950px) and (max-width: 1199.99px) {
+.tpl-block-21 .tpl-block-21-list { display: flex; flex-direction: row; flex-wrap: wrap; }
+.tpl-block-21 .tpl-block-21-list > * {
+    width: calc(33.3333% - 13.3333px);
+    margin: 20.0px 10.0px 0;
+    align-self: flex-start;
+}
+.tpl-block-21 .tpl-block-21-list > *:nth-child(3n) { margin-right: 0 }
+.tpl-block-21 .tpl-block-21-list > *:nth-child(3n+1) { margin-left: 0 }
+.tpl-block-21 .tpl-block-21-list > *:nth-child(-n+3) { margin-top: 0; }
+}
+@media (min-width: 1200px) {
+.tpl-block-21 .tpl-block-21-list { display: flex; flex-direction: row; flex-wrap: wrap; }
+.tpl-block-21 .tpl-block-21-list > * {
+    width: calc(25.0000% - 15.0000px);
+    margin: 20.0px 10.0px 0;
+    align-self: flex-start;
+}
+.tpl-block-21 .tpl-block-21-list > *:nth-child(4n) { margin-right: 0 }
+.tpl-block-21 .tpl-block-21-list > *:nth-child(4n+1) { margin-left: 0 }
+.tpl-block-21 .tpl-block-21-list > *:nth-child(-n+4) { margin-top: 0; }
+}
+
+.tpl-block-21 .tpl-block-21-list > * { margin-top: 5px }
+.tpl-block-21 .tpl-block-21-list > * * { --tpl-mixin-margin-left: 0px; --tpl-mixin-margin-right: 0px; }
+.tpl-block-21 .tpl-block-21-list > *:not(.tpl-mixin-padding-pass-down) { padding: 5px 0 5px 0; }
+.tpl-block-21 .tpl-block-21-list > *.tpl-mixin-padding-pass-down > .tpl-mixin-padding-target { padding: 5px 0 5px 0; }
+/* </block21> */

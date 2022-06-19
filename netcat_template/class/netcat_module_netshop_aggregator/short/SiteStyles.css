@@ -1,0 +1,8 @@
+.goods-item { display: flex; position: relative; flex-direction: column; }
+.goods-item a { text-decoration: none; color: var(--tpl-color-foreground-main); }
+.goods-item .goods-info { display: flex; flex-direction: column; align-items: stretch; }
+.goods-item .goods-image { position: relative; width: 100%; }
+.goods-item .goods-image::before { display: block; content: ""; width: 100%; padding-top: var(--tpl-object-item--image-padding-top); }
+.goods-item .goods-image .image { position: absolute; top: 0; left: 0; right: 0; bottom: 0; overflow: hidden; }
+.goods-item .goods-image .image img { max-width: 100%; width: 100%; height: 100%; object-fit: var(--tpl-object-item--image-fit); }
+.goods-item .goods-image * { width: 100%; height: 100%; }
