@@ -1328,16 +1328,16 @@
           if (searchButtonClose) document.querySelector(`.header__search`).classList.remove("search-open");
           e.preventDefault();
         }
+        if (targetElement.closest(".cart-menu__close") || targetElement.closest(".cart-menu__btn-close") || targetElement.closest("body") && !targetElement.closest(".cart-menu")) {
+          bodyUnlock();
+          document.querySelector("html").classList.remove("cart-menu-open");
+        }
         if (targetElement.closest(".menu-icons__item_cart")) {
           bodyLock();
           document.querySelector("html").classList.add("cart-menu-open");
         }
-        if (targetElement.closest(".cart-menu__close") || targetElement.closest(".cart-menu__btn-close")) {
-          bodyUnlock();
-          document.querySelector("html").classList.remove("cart-menu-open");
-        }
       }
-      window["FLS"] = true;
+      window["FLS"] = false;
       menuInit();
       spollers();
       tabs();
