@@ -1,9 +1,0 @@
-/* <block26> */
-@media (max-width: 949.99px) {
-.tpl-block-26 > .tpl-block-list:not(.tpl-mixin-padding-pass-down) { padding: 10px 10px 10px 10px; }
-.tpl-block-26 > .tpl-block-list.tpl-mixin-padding-pass-down > .tpl-mixin-padding-target { padding: 10px 10px 10px 10px; }}
-@media (min-width: 950px) {
-.tpl-block-26 > .tpl-block-list:not(.tpl-mixin-padding-pass-down) { padding: 15px 30px 15px 30px; }
-.tpl-block-26 > .tpl-block-list.tpl-mixin-padding-pass-down > .tpl-mixin-padding-target { padding: 15px 30px 15px 30px; }}
-.tpl-block-26 { background: var(--tpl-color-background-accent); }
-/* </block26> */

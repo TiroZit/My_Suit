@@ -1,7 +1,0 @@
-/* <block36> */
-.tpl-container-36 {
-max-width: calc(100% - var(--tpl-mixin-margin-left, 0px) - var(--tpl-mixin-margin-right, 0px)) !important;
-width: calc(100% - var(--tpl-mixin-margin-left, 0px) - var(--tpl-mixin-margin-right, 0px)) !important;
-margin-left: var(--tpl-mixin-margin-left, 0px) !important
-}
-/* </block36> */

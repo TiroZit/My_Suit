@@ -1,7 +1,0 @@
-/* <block61> */
-.tpl-block-61 button, .tpl-block-61 input[type='button'], .tpl-block-61 input[type='submit'], .tpl-block-61 input[type='reset'], .tpl-block-61 .tpl-button, .tpl-block-61 .tpl-button-primary, .tpl-block-61 button.tpl-block-button { padding-top:5px;padding-bottom:5px;padding-left:10px;padding-right:10px;border-width:0px;border-style:solid;text-decoration:none; }
-.tpl-block-61 button[type='submit'], .tpl-block-61 input[type='submit'], .tpl-block-61 .tpl-button-primary, .tpl-block-61 button.tpl-block-button { border-width:0px;border-style:solid;text-decoration:none; }
-.tpl-block-61 button:hover, .tpl-block-61 input[type='button']:hover, .tpl-block-61 input[type='submit']:hover, .tpl-block-61 input[type='reset']:hover, .tpl-block-61 .tpl-button:hover, .tpl-block-61 .tpl-button-primary:hover, .tpl-block-61 button.tpl-block-button:hover { text-decoration:none; }
-.tpl-block-61 button[type='submit']:hover, .tpl-block-61 input[type='submit']:hover, .tpl-block-61 .tpl-button-primary:hover, .tpl-block-61 button.tpl-block-button:hover { text-decoration:none; }
-.tpl-block-61 { text-align: center; }
-/* </block61> */
