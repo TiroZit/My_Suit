@@ -29,7 +29,7 @@ block content
         aside.aside-catalog(data-spollers='767.98')
           button.aside-catalog__button(data-spoller)
             |Каталог
-            svg.i-arrow-dropdown(style='fill: currentColor;' aria-hidden)
+            svg.i-arrow-dropdown(style='fill: currentColor;' aria-hidden="true")
               use(xlink:href='img/icons/icons.svg#svg-arrow-dropdown')
           ul.aside-catalog__list 
             li.aside-catalog__item 
@@ -194,7 +194,7 @@ block content
           .catalog__footer
             .catalog__pagging.pagging 
               button.pagging__arrow.pagging__arrow_left(disabled aria-label='Предыдущая страница')
-                svg.i-arrow-left(style='fill: currentColor;' aria-hidden)
+                svg.i-arrow-left(style='fill: currentColor;' aria-hidden="true")
                   use(xlink:href='img/icons/icons.svg#svg-arrow-left')
               ul.pagging__list 
                 li.pagging__item 
@@ -210,7 +210,7 @@ block content
                 li.pagging__item 
                   a.pagging__link(href="#") 12
               button.pagging__arrow.pagging__arrow_right(aria-label='Следующая страница')
-                svg.i-arrow-right(style='fill: currentColor;' aria-hidden)
+                svg.i-arrow-right(style='fill: currentColor;' aria-hidden="true")
                   use(xlink:href='img/icons/icons.svg#svg-arrow-right')
             a.catalog__more.btn.btn_white(href="#") Показать еще
     include pug/_footer

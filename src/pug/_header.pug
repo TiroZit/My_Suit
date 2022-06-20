@@ -5,7 +5,7 @@ header.header
         li.menu__item 
           button.menu__link.menu__button(data-parent='1' data-spoller)
             |Каталог
-            svg.i-arrow-dropdown(style='fill: currentColor;' aria-hidden)
+            svg.i-arrow-dropdown(style='fill: currentColor;' aria-hidden="true")
               use(xlink:href='img/icons/icons.svg#svg-arrow-dropdown')
           .menu__submenu.submenu(data-submenu='1')
             .submenu__container
@@ -69,7 +69,7 @@ header.header
         svg.i-heart(style='stroke: currentColor;' aria-label="Избранное")
           use(xlink:href='img/icons/icons.svg#svg-heart')
       a.menu-icons__item(href='#' data-popup="#registration")
-        svg.i-profile(style='' aria-label="Личный кабинет")
+        svg.i-profile(aria-label="Личный кабинет")
           use(xlink:href='img/icons/icons.svg#svg-profile')
       button.menu-icons__item.menu-icons__item_cart
         svg.i-cart(style='stroke: currentColor;' aria-label="Открыть корзину")
@@ -84,7 +84,7 @@ header.header
             use(xlink:href='img/icons/icons.svg#svg-search')
         input.search__input(type="search" placeholder="Введите запрос")
         button.search__close(type="button" aria-label='Закрыть поиск')
-          svg.i-close-search(aria-hidden)
+          svg.i-close-search(aria-hidden="true")
             use(xlink:href='img/icons/icons.svg#svg-close')
   .cart-menu
     .cart-menu__title Корзина
@@ -95,8 +95,8 @@ header.header
           .cart-menu__product-title Шёлковый костюм в красном цвете
           .cart-menu__product-price 13900 RUB
         button.cart-menu__remove(aria-label='удалить товар')
-          +icon('close').i-close(aria-hidden)
+          +icon('close').i-close(aria-hidden="true")
     a.cart-menu__link-to-cart.btn.btn_black(href="cart.html") Перейти в корзину
     button.cart-menu__btn-close.btn.btn_white Продолжить покупки
     button.cart-menu__close(aria-label='закрыть корзину')
-      +icon('close').i-close(aria-hidden)
+      +icon('close').i-close(aria-hidden="true")
