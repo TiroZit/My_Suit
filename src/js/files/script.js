@@ -14,7 +14,6 @@ function documentActions(e) {
     targetElement.classList.contains('search__close') ||
     targetElement.classList.contains('i-close-search')
   const searchForm = document.querySelector(`.header__search`)
-  console.log(targetElement)
   if (targetElement.closest('[data-parent]') || subMenuButtonClose) {
     const subMenuId = targetElement.dataset.parent
       ? targetElement.dataset.parent
