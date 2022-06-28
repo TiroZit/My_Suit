@@ -26,7 +26,7 @@ block content
         }
       ])
       .page__container.page__container_catalog
-        aside.aside-catalog(data-spollers='767.98')
+        nav.aside-catalog(data-spollers='767.98')
           button.aside-catalog__button(data-spoller)
             |Каталог
             svg.i-arrow-dropdown(style='fill: currentColor;' aria-hidden="true")
@@ -70,12 +70,12 @@ block content
           .catalog__inner
             h1.catalog__title Новинки
             .catalog__select 
-              select.select(name='')
+              select.select(name='sortBySize')
                 option.select__option(value='' selected) Сортировать по размеру
-                option.select__option(value='1') 42
-                option.select__option(value='2') 44
-                option.select__option(value='3') 46
-                option.select__option(value='4') 48
+                option.select__option(value='42') 42
+                option.select__option(value='44') 44
+                option.select__option(value='46') 46
+                option.select__option(value='48') 48
           .catalog__body 
             article.product-card.catalog__product-card
               .product-card__actions
