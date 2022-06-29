@@ -60,8 +60,8 @@ block content
                 button.info-product__btn-favourites(aria-label='Добавить в избранное')
                   +icon('favourites').i-favourites(style='stroke: currentColor;' aria-hidden="true")
               .info-product__block-prices 
-                span.info-product__price 13900 RUB
-                s.info-product__price-old 15900 RUB
+                span.info-product__price.info-product__price_current 13900 RUB
+                s.info-product__price.info-product__price_old 15900 RUB
               .info-product__block-sizes
                 .info-product__size-inner 
                   .info-product__title-size Размер
@@ -76,7 +76,7 @@ block content
               .info-product__block-colors 
                 .info-product__title-color Цвет
                 ul.info-product__color-list 
-                  li.info-product__color-item 
+                  li.info-product__color-item.info-product__color-item_active
                     a.info-product__link-color(href="#" style="background-color: #F4DEDE;")
                   li.info-product__color-item 
                     a.info-product__link-color(href="#" style="background-color: #AD3A9B;")
