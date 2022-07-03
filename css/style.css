@@ -2648,6 +2648,8 @@ input[type=number] {
   gap: 1rem;
 }
 .info-product__btn-size {
+  display: block;
+  text-align: center;
   padding: 0.625rem 0;
   line-height: 1.3846153846;
   transition: color 0.3s, border 0.3s;
