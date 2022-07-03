@@ -3447,6 +3447,7 @@ input[type=number] {
 }
 .cart__title-empty {
   line-height: 1.36;
+  margin-bottom: 3.25rem;
 }
 @supports (font-size: clamp( 1.875rem , 1.387195122rem  +  2.4390243902vw , 3.125rem )) {
   .cart__title-empty {
