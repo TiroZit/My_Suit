@@ -51,6 +51,7 @@
   &__title-empty {
     @include adaptiveValue("font-size", 50, 30);
     line-height: math.div(68, 50);
+    margin-bottom: rem(52);
   }
 
   // .cart__btn-empty
