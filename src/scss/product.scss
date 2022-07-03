@@ -178,6 +178,8 @@
   }
 
   &__btn-size {
+    display: block;
+    text-align: center;
     padding: rem(10) 0;
     line-height: math.div(18, 13);
     @include adaptiveValue("width", 65, 100);
