@@ -3442,6 +3442,26 @@ input[type=number] {
 .cart__product:not(:last-child) {
   border-bottom: 1px solid var(--color-white-chinese);
 }
+.cart__wrapper-empty {
+  text-align: center;
+}
+.cart__title-empty {
+  line-height: 1.36;
+}
+@supports (font-size: clamp( 1.875rem , 1.387195122rem  +  2.4390243902vw , 3.125rem )) {
+  .cart__title-empty {
+    font-size: clamp( 1.875rem , 1.387195122rem  +  2.4390243902vw , 3.125rem );
+  }
+}
+@supports not (font-size: clamp( 1.875rem , 1.387195122rem  +  2.4390243902vw , 3.125rem )) {
+  .cart__title-empty {
+    font-size: calc(1.875rem + 1.25 * (100vw - 20rem) / 51.25);
+  }
+}
+.cart__btn-empty {
+  padding: 0.84375rem 2.40625rem 0.84375rem 2.40625rem;
+}
+
 .cart-product {
   position: relative;
   display: flex;
