@@ -43,13 +43,20 @@
   &__total {}
 
   // .cart__wrapper-empty
-  &__wrapper-empty {}
+  &__wrapper-empty {
+    text-align: center;
+  }
 
   // .cart__title-empty
-  &__title-empty {}
+  &__title-empty {
+    @include adaptiveValue("font-size", 50, 30);
+    line-height: math.div(68, 50);
+  }
 
   // .cart__btn-empty
-  &__btn-empty {}
+  &__btn-empty {
+    padding: rem(13.5) rem(38.5) rem(13.5) rem(38.5);
+  }
 }
 
 .cart-product {
