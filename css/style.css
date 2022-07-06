@@ -1799,11 +1799,11 @@ input[type=number] {
   }
 }
 .current-models__slide .product-card__img {
-  max-height: 23.75rem;
+  height: 23.75rem;
 }
 @media (max-width: 29.99875em) {
   .current-models__slide .product-card__img {
-    max-height: 13.028125rem;
+    height: 13.028125rem;
   }
 }
 @media (min-width: 48em) {
@@ -2727,6 +2727,10 @@ input[type=number] {
 .spollers-product__title svg {
   width: 0.625rem;
   height: 0.625rem;
+}
+.spollers-product__content {
+  line-height: 1.2;
+  padding-bottom: 0.9375rem;
 }
 
 @supports (margin-top: clamp( 2.5rem , 2.012195122rem  +  2.4390243902vw , 3.75rem )) {

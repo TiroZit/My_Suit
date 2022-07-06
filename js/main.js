@@ -1337,6 +1337,14 @@
           document.querySelector("html").classList.add("cart-menu-open");
         }
       }
+      (() => {
+        document.location.pathname;
+      })();
+      document.querySelectorAll(".cart-tip");
+      document.querySelector(".summary");
+      document.querySelector(".total_discount");
+      document.getElementById("form-order");
+      document.querySelector("select[name=f_DeliveryDate]");
       window["FLS"] = false;
       menuInit();
       spollers();
