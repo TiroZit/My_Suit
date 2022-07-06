@@ -42,10 +42,10 @@
     }
 
     & .product-card__img {
-      max-height: rem(380);
+      height: rem(380);
 
       @include media-breakpoint-down(mobile) {
-        max-height: rem(208.45);
+        height: rem(208.45);
       }
     }
   }
