@@ -263,4 +263,9 @@
       height: rem(10);
     }
   }
+
+  &__content {
+    line-height: 1.2;
+    padding-bottom: rem(15);
+  }
 }
