@@ -98,8 +98,6 @@ body {
 }
 
 .page {
-  margin-top: rem(20);
-
   &__title {
     font-weight: 400;
     @include adaptiveValue("font-size", 20, 18);
