@@ -9,6 +9,12 @@
     display: flex;
     gap: rem(15);
 
+    @include media-breakpoint-down(mobile) {
+      gap: rem(5);
+      top: rem(8);
+      right: rem(8);
+    }
+
     svg {
       width: percent(20, 45);
       height: percent(20, 45);
