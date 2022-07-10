@@ -1336,15 +1336,34 @@
           bodyLock();
           document.querySelector("html").classList.add("cart-menu-open");
         }
+        if (targetElement.closest(".info-product__btn_cart")) addItemInCart(event);
       }
       (() => {
         document.location.pathname;
       })();
-      document.querySelectorAll(".cart-tip");
-      document.querySelector(".summary");
+      document.querySelectorAll("#cartCount");
+      document.querySelector(".cart-total__price");
       document.querySelector(".total_discount");
-      document.getElementById("form-order");
-      document.querySelector("select[name=f_DeliveryDate]");
+      function getItemCard(cardID) {
+        if (!cardID) return null;
+        return document.querySelector(`form[data-parent-id="${cardID}"]`);
+      }
+      async function addItemInCart(e) {
+        const target = e.target;
+        const itemCard = getItemCard(target.dataset.parentId);
+        const itemCardId = itemCard.querySelector(`[name="items[]"]`).value;
+        const response = await fetch("/netcat/modules/netshop/actions/cart.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: $(itemCard).serialize() + "&json=1"
+        });
+        const data = await response.json();
+        const itemCardTemplate = `\n    <form class="cart-menu__product"  method="post" action="<?= $netshop->get_add_to_cart_url() ?>" data-parent-id="${data.Items[itemCardId].Message_ID}">\n      <input type="hidden" name="qty" value="${data.Items[itemCardId].Qty}">\n      <input type="hidden" name="items[]" value="${data.Items[itemCardId]}">\n      <input type="hidden" name="json" value="1">\n      <input type="hidden" name="class_id" value="${data.Items[itemCardId].Class_ID}">\n      <img class="cart-menu__img" src="${data.Items[itemCardId].Image}" alt="${data.Items[itemCardId].FullName}" loading="lazy" width="63" height="68">\n      <div class="cart-menu__product-info">\n        <div class="cart-menu__product-title">${data.Items[itemCardId].Name}</div>\n        <div class="cart-menu__product-price">${data.TotalItemPriceF} RUB</div>\n      </div>\n      <button class="cart-menu__remove" type="button" data-parent-id="${data.Items[itemCardId].Message_ID}" onclick="removeItemFromCart(event)" aria-label="удалить товар">\n        <svg class="i-close" aria-hidden="true">\n          <use xlink:href="/netcat_template/template/my_suit/img/icons/icons.svg#svg-close"></use>\n        </svg>\n      </button>\n    </form>\n  `;
+        const itemCardList = document.querySelector(".cart-menu__products");
+        itemCardList.insertAdjacentHTML("beforeend", itemCardTemplate);
+      }
       window["FLS"] = false;
       menuInit();
       spollers();
