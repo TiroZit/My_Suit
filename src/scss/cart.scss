@@ -9,7 +9,7 @@
   // .cart__container
   &__container {
     @include adaptiveValue("margin-top", 70, 30);
-    @include adaptiveValue("margin-bottom", 90, 60);
+    @include adaptiveValue("margin-bottom", 60, 30);
   }
 
   // .cart__title
@@ -44,6 +44,11 @@
 
   // .cart__wrapper-empty
   &__wrapper-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    @include adaptiveValue("min-height", 542, 427);
     text-align: center;
   }
 
