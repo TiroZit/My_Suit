@@ -67,40 +67,33 @@ function documentActions(e) {
     bodyLock()
     document.querySelector('html').classList.add('cart-menu-open')
   }
+  if (targetElement.closest('.info-product__btn_cart')) {
+    addItemInCart(event)
+  }
 }
 
-// Объект – состояние
 const state = {
   isCart: (() => document.location.pathname === '/cart/')(),
   strCart: null,
 }
 
-/**
- * Варианты кол-ва товаров
- * 7 дней, 14 дней, 28 дней
- */
-const qtyValues = [7, 14, 28]
-
 // Темплейт пустой корзины
 const emptyCartMock = `
-    <h1 class="h1">Корзина пуста</h1>
-    <p>Невозможно оформить заказ, поскольку корзина пуста. Перейдите в <a href="/katalog/">каталог</a></p>
+    <div class="cart__wrapper-empty">
+        <div class="cart__title-empty">У вас в корзине нет товаров</div>
+        <a class="cart__btn-empty btn btn_black" href="/catalog/all">
+            Перейти в каталог
+        </a>
+    </div>
 `
 
-/**
- * Элементы страницы
- * 1) Селекторы кол-ва товаров в корзине
- * 2) Корзина. Итого
- * 3) Корзина. Сумма скидок
- * 4) Форма заказа
- */
-const cartSelectors = document.querySelectorAll('.cart-tip')
-const summarySelector = document.querySelector('.summary')
+const cartSelectors = document.querySelectorAll('#cartCount')
+const summarySelector = document.querySelector('.cart-total__price')
 const totalDiscountSelector = document.querySelector('.total_discount')
-const formOrder = document.getElementById('form-order')
-const deliveryDaysSelector = document.querySelector(
-  'select[name=f_DeliveryDate]'
-)
+
+const normalPrice = str => {
+  return String(str).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ')
+}
 
 // Обновление корзины на сервере
 async function updateCart(form) {
@@ -112,14 +105,14 @@ async function updateCart(form) {
     body: $(form).serialize() + '&json=1',
   })
 
-  const { TotalCount } = await response.json()
+  const { TotalItemCount } = await response.json()
 
-  updateCartQty(TotalCount)
+  updateCartQty(TotalItemCount)
 
   if (state.isCart) {
     const cartState = await getCartState('none', 'none')
     const itemCardList = Array.from(
-      document.querySelectorAll('form.catalog__el')
+      document.querySelectorAll('form.cart__product')
     )
 
     if (itemCardList.length <= 0 || Object.keys(cartState).length <= 0) return
@@ -135,64 +128,31 @@ async function updateCart(form) {
       if (idx > -1) {
         const { totalPrice, totalDiscountPrice } = cartState.items[idx]
 
-        const originalPriceSelector = item.querySelector('.original-price')
-        const totalPriceSelector = item.querySelector('.total-price')
+        const originalPriceSelector = item.querySelector('.cart-product__price')
+        const totalPriceSelector = item.querySelector('.cart-product__price')
 
-        originalPriceSelector.querySelector('span').innerText = totalPrice
-        totalPriceSelector.querySelector('span').innerText = totalDiscountPrice
-
-        if (!totalDiscountPrice) {
-          originalPriceSelector.classList.remove('crossed-out')
-          totalPriceSelector.style.display = 'none'
-        } else {
-          originalPriceSelector.classList.add('crossed-out')
-          totalPriceSelector.style.display = 'block'
-        }
+        originalPriceSelector.querySelector('span').innerText =
+          normalPrice(totalPrice)
       }
     }
 
-    summarySelector.querySelector('span').innerText =
-      cartState.totalDiscount || cartState.totalCost
-    totalDiscountSelector.querySelector('span').innerText = cartState.discount
+    summarySelector.querySelector('span').innerText = normalPrice(
+      cartState.totalCost
+    )
+    //totalDiscountSelector.querySelector('span').innerText = cartState.discount
 
-    if (!cartState.discount) totalDiscountSelector.classList.add('d-none')
-    else totalDiscountSelector.classList.remove('d-none')
+    //if (!cartState.discount) totalDiscountSelector.classList.add('d-none')
+    //else totalDiscountSelector.classList.remove('d-none')
 
     state.strCart = cartState.strCart ?? null
-
-    if (formOrder && state.strCart) {
-      formOrder.querySelector('input[name="f_Items"]').value = state.strCart
-      formOrder.querySelector('input[name="f_TotalCount"]').value =
-        cartState.totalCount
-      formOrder.querySelector('input[name="f_TotalCost"]').value =
-        cartState.totalCost
-      formOrder.querySelector('input[name="f_TotalDiscountCost"]').value =
-        cartState.totalDiscount
-      formOrder.querySelector('input[name="f_Promocode"]').value =
-        cartState.promocode
-    }
   }
 
-  return TotalCount
+  return TotalItemCount
 }
 
 // Получить информацию о корзине
-// TODO: Проверить использование с аргументами, выпилили когда то
 async function getCartState(classId, messageId) {
-  const response = await fetch('/zaprosy/getCartState/?isNaked=1', {
-    method: 'POST',
-    mode: 'cors',
-    cache: 'no-cache',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ classId, messageId }),
-  })
-
-  return await response.json()
-}
-
-// Запрос на получение данных о товаре при смене варианта товара
-async function getProductDataById(classId, messageId) {
-  const response = await fetch('/zaprosy/getProductDataById/?isNaked=1', {
+  const response = await fetch('/requests/getCartState.php', {
     method: 'POST',
     mode: 'cors',
     cache: 'no-cache',
@@ -204,15 +164,9 @@ async function getProductDataById(classId, messageId) {
 }
 
 // Обновить кол-во товаров на странице
-function updateCartQty(totalCount) {
-  const isEmptyCart = !Boolean(totalCount)
-
-  Array.from(cartSelectors).forEach(item => {
-    const qty = item.querySelector('.header__cart-count')
-    qty.innerText = totalCount
-
-    if (isEmptyCart) item.classList.add('is--empty-cart')
-    else item.classList.remove('is--empty-cart')
+function updateCartQty(TotalItemCount) {
+  cartSelectors.forEach(element => {
+    element.innerHTML = TotalItemCount
   })
 }
 
@@ -221,49 +175,6 @@ function getItemCard(cardID) {
   if (!cardID) return null
 
   return document.querySelector(`form[data-parent-id="${cardID}"]`)
-}
-
-// Обработчик смены варианта товара (через select)
-async function changeVariantItemHandle(event) {
-  const { id: selectedItemId, element } = event.params.data
-  const { messageId: formattedItemId, parentId } = element.dataset
-
-  const itemCard = getItemCard(parentId)
-
-  if (!itemCard) {
-    console.error('Item card does not exist')
-    return
-  }
-
-  const classId = itemCard.querySelector('input[name="classId"]').value
-  const productData = await getProductDataById(classId, selectedItemId)
-
-  if (!productData) {
-    console.error('Product data is undefined')
-    return
-  }
-
-  const priceSelector = itemCard.querySelector('.price')
-  const weightSelector = itemCard.querySelector('.weight')
-  const kCalSelector = itemCard.querySelector('.kcal')
-  const btnAddToCart = itemCard.querySelector('.btn-add-to-cart')
-
-  const itemsSelector = itemCard.querySelector('input[name="items[]"]')
-  const qtySelector = itemCard.querySelector('input[name="qty"]')
-  const countSelector = itemCard.querySelector('[data-type="count"]')
-
-  // Обновление данных в карточке товара
-  priceSelector.innerHTML = productData.defaultPrice + ' ₽'
-  weightSelector.innerHTML = productData.weight
-  kCalSelector.innerHTML = productData.kCal
-  countSelector.innerHTML = `${productData.qty || 0} дней`
-
-  if (productData.qty) btnAddToCart.classList.add('is-hidden')
-  else btnAddToCart.classList.remove('is-hidden')
-
-  // Обновление данных формы
-  itemsSelector.value = formattedItemId
-  qtySelector.value = productData.qty || 0
 }
 
 // Смена кол-ва ед. товара
@@ -277,62 +188,64 @@ async function changeCount(e) {
   if (itemCard.dataset.disabled) return
 
   let currQtyValue = Number(qty.value)
-  let prevQtyValue = Number(qty.value)
-
-  const qtyIndex = qtyValues.findIndex(value => value === currQtyValue)
 
   switch (btnActType) {
     case 'inc': {
-      currQtyValue =
-        qtyIndex < 0
-          ? qtyValues[0]
-          : qtyIndex === qtyValues.length - 1
-          ? qtyValues[qtyIndex]
-          : qtyValues[qtyIndex + 1]
-
-      if (currQtyValue >= 0)
-        itemCard.querySelector('.btn-add-to-cart').classList.add('is-hidden')
-
-      if (currQtyValue >= qtyValues[1])
-        itemCard.querySelector('.count__minus').classList.remove('is-disabled')
-
-      if (currQtyValue === qtyValues[qtyValues.length - 1])
-        itemCard.querySelector('.count__plus').classList.add('is-disabled')
+      currQtyValue += 1
 
       break
     }
     case 'dec': {
-      currQtyValue =
-        qtyIndex > 0
-          ? qtyValues[qtyIndex - 1]
-          : qtyIndex === 0
-          ? 0
-          : qtyValues[0]
-
-      if (state.isCart && currQtyValue <= qtyValues[0]) {
-        currQtyValue = qtyValues[0]
-        itemCard.querySelector('.count__minus').classList.add('is-disabled')
-      }
-
-      if (currQtyValue <= 0)
-        itemCard.querySelector('.btn-add-to-cart').classList.remove('is-hidden')
-
-      itemCard.querySelector('.count__plus').classList.remove('is-disabled')
+      currQtyValue > 1 ? (currQtyValue -= 1) : null
 
       break
     }
   }
 
-  if (prevQtyValue === currQtyValue) return
-
   qty.value = currQtyValue
-  countSelector.innerText = `${currQtyValue} дней`
+  countSelector.innerText = currQtyValue
 
   itemCard.dataset.disabled = true
 
   await updateCart(itemCard)
 
   delete itemCard.dataset.disabled
+}
+
+// Добавить товар в корзину
+async function addItemInCart(e) {
+  const target = e.target
+  const itemCard = getItemCard(target.dataset.parentId)
+  const itemCardId = itemCard.querySelector(`[name="items[]"]`).value
+
+  const response = await fetch('/netcat/modules/netshop/actions/cart.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: $(itemCard).serialize() + '&json=1',
+  })
+  const data = await response.json()
+
+  const itemCardTemplate = `
+    <form class="cart-menu__product"  method="post" action="<?= $netshop->get_add_to_cart_url() ?>" data-parent-id="${data.Items[itemCardId].Message_ID}">
+      <input type="hidden" name="qty" value="${data.Items[itemCardId].Qty}">
+      <input type="hidden" name="items[]" value="${data.Items[itemCardId]}">
+      <input type="hidden" name="json" value="1">
+      <input type="hidden" name="class_id" value="${data.Items[itemCardId].Class_ID}">
+      <img class="cart-menu__img" src="${data.Items[itemCardId].Image}" alt="${data.Items[itemCardId].FullName}" loading="lazy" width="63" height="68">
+      <div class="cart-menu__product-info">
+        <div class="cart-menu__product-title">${data.Items[itemCardId].Name}</div>
+        <div class="cart-menu__product-price">${data.TotalItemPriceF} RUB</div>
+      </div>
+      <button class="cart-menu__remove" type="button" data-parent-id="${data.Items[itemCardId].Message_ID}" onclick="removeItemFromCart(event)" aria-label="удалить товар">
+        <svg class="i-close" aria-hidden="true">
+          <use xlink:href="/netcat_template/template/my_suit/img/icons/icons.svg#svg-close"></use>
+        </svg>
+      </button>
+    </form>
+  `
+  const itemCardList = document.querySelector('.cart-menu__products')
+
+  itemCardList.insertAdjacentHTML('beforeend', itemCardTemplate)
 }
 
 // Удалить товар из корзины
@@ -345,10 +258,10 @@ async function removeItemFromCart(e) {
 
   itemCard.dataset.disabled = true
 
-  const totalCount = await updateCart(itemCard)
+  const totalItemCount = await updateCart(itemCard)
 
   itemCard.remove()
 
-  if (!totalCount)
-    document.querySelector('.page-catalog .container').innerHTML = emptyCartMock
+  if (!totalItemCount)
+    document.querySelector('.cart__container').innerHTML = emptyCartMock
 }
