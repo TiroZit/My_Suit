@@ -29,55 +29,55 @@ block content
         .cart__container
           h1.cart__title.page__title Ваша корзина
           .cart__wrapper 
-          //-   .cart__products
-          //-     .cart__product.cart-product
-          //-       .cart-product__content 
-          //-         +image('img/goods/1.jpg', 'alt').cart-product__img.lazy(width='122' height='132')
-          //-         .cart-product__info 
-          //-           a.cart-product__title(href="product.html") Шёлковый костюм в красном цвете
-          //-           .cart-product__actions 
-          //-             .cart-product__size 40
-          //-             .cart-product__color(style='background-color: #F4DEDE;')
-          //-       .cart-product__block-quantity
-          //-         .cart-product__title-quantity Количество
-          //-         .cart-product__btns-quantity 
-          //-           button.cart-product__btn-quantity.cart-product__btn-quantity_minus(aria-label='уменьшает количество') -
-          //-           span.cart-product__count 1
-          //-           button.cart-product__btn-quantity.cart-product__btn-quantity_plus(aria-label='увеличивает количество') +
-          //-       .cart-product__block-cost 
-          //-         .cart-product__title-cost Стоимость
-          //-         .cart-product__price 13900 RUB
-          //-       button.cart-product__remove
-          //-         |Удалить
-          //-         +icon('close').i-close(aria-hidden="true")
-          //-     .cart__product.cart-product
-          //-       .cart-product__content 
-          //-         +image('img/goods/1.jpg', 'alt').cart-product__img.lazy(width='122' height='132')
-          //-         .cart-product__info 
-          //-           a.cart-product__title(href="product.html") Шёлковый костюм в красном цвете Шёлковый костюм в красном цвете
-          //-           .cart-product__actions 
-          //-             .cart-product__size 40
-          //-             .cart-product__color(style='background-color: #F4DEDE;')
-          //-       .cart-product__block-quantity
-          //-         .cart-product__title-quantity Количество
-          //-         .cart-product__btns-quantity 
-          //-           button.cart-product__btn-quantity.cart-product__btn-quantity_minus(aria-label='уменьшает количество') -
-          //-           span.cart-product__count 1
-          //-           button.cart-product__btn-quantity.cart-product__btn-quantity_plus(aria-label='увеличивает количество') +
-          //-       .cart-product__block-cost 
-          //-         .cart-product__title-cost Стоимость
-          //-         .cart-product__price 13900 RUB
-          //-       button.cart-product__remove
-          //-         |Удалить
-          //-         +icon('close').i-close(aria-hidden="true")
-          //-   .cart__total.cart-total
-          //-     .cart-total__cost 
-          //-       .cart-total__title Итого
-          //-       .cart-total__price.cart-product__price 27900 RUB
-          //-     span.cart-total__title-quantity Количество: 
-          //-     span.cart-total__count 2
-          //-     a.cart-total__btn.btn.btn_black(href="order-registration.html") Оформить заказ
-          .cart__wrapper-empty()
+            .cart__products
+              .cart__product.cart-product
+                .cart-product__content 
+                  +image('img/goods/1.jpg', 'alt').cart-product__img.lazy(width='122' height='132')
+                  .cart-product__info 
+                    a.cart-product__title(href="product.html") Шёлковый костюм в красном цвете
+                    .cart-product__actions 
+                      .cart-product__size 40
+                      .cart-product__color(style='background-color: #F4DEDE;')
+                .cart-product__block-quantity
+                  .cart-product__title-quantity Количество
+                  .cart-product__btns-quantity 
+                    button.cart-product__btn-quantity.cart-product__btn-quantity_minus(aria-label='уменьшает количество') -
+                    span.cart-product__count 1
+                    button.cart-product__btn-quantity.cart-product__btn-quantity_plus(aria-label='увеличивает количество') +
+                .cart-product__block-cost 
+                  .cart-product__title-cost Стоимость
+                  .cart-product__price 13900 RUB
+                button.cart-product__remove
+                  |Удалить
+                  +icon('close').i-close(aria-hidden="true")
+              .cart__product.cart-product
+                .cart-product__content 
+                  +image('img/goods/1.jpg', 'alt').cart-product__img.lazy(width='122' height='132')
+                  .cart-product__info 
+                    a.cart-product__title(href="product.html") Шёлковый костюм в красном цвете Шёлковый костюм в красном цвете
+                    .cart-product__actions 
+                      .cart-product__size 40
+                      .cart-product__color(style='background-color: #F4DEDE;')
+                .cart-product__block-quantity
+                  .cart-product__title-quantity Количество
+                  .cart-product__btns-quantity 
+                    button.cart-product__btn-quantity.cart-product__btn-quantity_minus(aria-label='уменьшает количество') -
+                    span.cart-product__count 1
+                    button.cart-product__btn-quantity.cart-product__btn-quantity_plus(aria-label='увеличивает количество') +
+                .cart-product__block-cost 
+                  .cart-product__title-cost Стоимость
+                  .cart-product__price 13900 RUB
+                button.cart-product__remove
+                  |Удалить
+                  +icon('close').i-close(aria-hidden="true")
+            .cart__total.cart-total
+              .cart-total__cost 
+                .cart-total__title Итого
+                .cart-total__price.cart-product__price 27900 RUB
+              span.cart-total__title-quantity Количество: 
+              span.cart-total__count 2
+              a.cart-total__btn.btn.btn_black(href="order-registration.html") Оформить заказ
+          .cart__wrapper-empty(hidden='true')
             .cart__title-empty У вас в корзине нет товаров
             a.cart__btn-empty.btn.btn_black(href="catalog.html") Перейти в каталог
     include pug/_footer
