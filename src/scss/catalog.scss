@@ -45,16 +45,10 @@
     position: relative;
     z-index: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(rem(254), 1fr));
-    grid-template-rows: repeat(auto-fit, minmax(rem(341), 1fr));
+    grid-template-columns: repeat(auto-fill, rem(294));
 
     @include media-breakpoint-down(tablet-xl) {
-      grid-template-columns: repeat(auto-fit, minmax(rem(200), 1fr));
-      grid-template-rows: repeat(auto-fit, minmax(rem(291), 1fr));
-    }
-
-    @include media-breakpoint-down(tablet) {
-      grid-template-columns: repeat(auto-fit, minmax(rem(167), 1fr));
+      grid-template-columns: repeat(auto-fit, rem(254));
     }
 
     @include media-breakpoint-down(mobile) {
@@ -76,7 +70,15 @@
     }
 
     .product-card__img {
-      @include adaptiveValue("height", 380, 216);
+      height: rem(380);
+
+      @include media-breakpoint-down(tablet-xl) {
+        height: rem(300);
+      }
+
+      @include media-breakpoint-down(mobile) {
+        height: rem(216);
+      }
     }
   }
 
