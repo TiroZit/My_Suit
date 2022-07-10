@@ -14,17 +14,17 @@ include pug/_breadcrumbs
 block content
   .wrapper
     include pug/_header
+    +breadcrumbs([
+      {
+        name: "Главная",
+        path: "home.html"
+      },
+      {
+        name: "Корзина",
+        path: "cart.html"
+      }
+    ])
     main.page.page_order-registration
-      +breadcrumbs([
-        {
-          name: "Главная",
-          path: "home.html"
-        },
-        {
-          name: "Корзина",
-          path: "cart.html"
-        }
-      ])
       section.order-registration.order
         .order-registration__container
           h1.order__title.page__title Оформить заказ

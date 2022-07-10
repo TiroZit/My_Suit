@@ -14,17 +14,17 @@ include pug/_breadcrumbs
 block content
   .wrapper
     include pug/_header
+    +breadcrumbs([
+      {
+        name: "Главная",
+        path: "/"
+      },
+      {
+        name: "Доставка",
+        path: "delivery"
+      },
+    ])
     main.page.page_delivery
-      +breadcrumbs([
-        {
-          name: "Главная",
-          path: "/"
-        },
-        {
-          name: "Доставка",
-          path: "delivery"
-        },
-      ])
       section.delivery 
         .delivery__container
           h1.delivery__title.page__title Доставка и возврат

@@ -14,17 +14,17 @@ include pug/_breadcrumbs
 block content
   .wrapper
     include pug/_header
+    +breadcrumbs([
+      {
+        name: "Главная",
+        path: "home.html"
+      },
+      {
+        name: "Каталог",
+        path: "catalog.html"
+      }
+    ])
     main.page.page_catalog
-      +breadcrumbs([
-        {
-          name: "Главная",
-          path: "home.html"
-        },
-        {
-          name: "Каталог",
-          path: "catalog.html"
-        }
-      ])
       .page__container.page__container_catalog
         nav.aside-catalog(data-spollers='767.98')
           button.aside-catalog__button(data-spoller)

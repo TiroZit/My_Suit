@@ -14,17 +14,17 @@ include pug/_breadcrumbs
 block content
   .wrapper
     include pug/_header
+    +breadcrumbs([
+      {
+        name: "Главная",
+        path: "home.html"
+      },
+      {
+        name: "Личный кабинет",
+        path: "lk.html"
+      }
+    ])
     main.page.page_personal-account
-      +breadcrumbs([
-        {
-          name: "Главная",
-          path: "home.html"
-        },
-        {
-          name: "Личный кабинет",
-          path: "lk.html"
-        }
-      ])
       section.personal-account
         .personal-account__container
           h1.personal-account__title.page__title Личный кабинет

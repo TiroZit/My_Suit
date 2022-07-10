@@ -14,17 +14,17 @@ include pug/_breadcrumbs
 block content
   .wrapper
     include pug/_header
+    +breadcrumbs([
+      {
+        name: "Главная",
+        path: "home.html"
+      },
+      {
+        name: "Результаты поиска",
+        path: "result-search.html"
+      }
+    ])
     main.page.page_result-search
-      +breadcrumbs([
-        {
-          name: "Главная",
-          path: "home.html"
-        },
-        {
-          name: "Результаты поиска",
-          path: "result-search.html"
-        }
-      ])
       section.result-search
         .result-search__container 
           h1.result-search__title.page__title Результаты поиска

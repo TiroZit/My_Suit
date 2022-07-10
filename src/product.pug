@@ -14,21 +14,21 @@ include pug/_breadcrumbs
 block content
   .wrapper
     include pug/_header
+    +breadcrumbs([
+      {
+        name: "Главная",
+        path: "home.html"
+      },
+      {
+        name: "Каталог",
+        path: "catalog.html"
+      },
+      {
+        name: "Наименование товара",
+        path: "product.html"
+      }
+    ])
     main.page.page_product
-      +breadcrumbs([
-        {
-          name: "Главная",
-          path: "home.html"
-        },
-        {
-          name: "Каталог",
-          path: "catalog.html"
-        },
-        {
-          name: "Наименование товара",
-          path: "product.html"
-        }
-      ])
       .product
         .product__container
           .product__main.main-product 
