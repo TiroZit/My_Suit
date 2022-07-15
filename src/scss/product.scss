@@ -177,19 +177,21 @@
     gap: rem(16);
   }
 
+  &__size-item {
+    &_active {
+      & .info-product__btn-size {
+        color: var(--color-purple);
+        border: 1px solid var(--color-purple);
+      }
+    }
+  }
+
   &__btn-size {
-    display: block;
-    text-align: center;
     padding: rem(10) 0;
     line-height: math.div(18, 13);
     @include adaptiveValue("width", 65, 100);
     transition: color .3s,
       border .3s;
-
-    &_active {
-      color: var(--color-purple);
-      border: 1px solid var(--color-purple);
-    }
 
     @media (any-hover: hover) {
       &:hover {
