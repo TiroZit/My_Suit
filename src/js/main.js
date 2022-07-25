@@ -12,7 +12,7 @@
 */
 
 // Включить/выключить FLS (Full Logging System) (в работе)
-window['FLS'] = false
+window['FLS'] = true
 
 // Подключение стилей
 import '../scss/style.scss'
@@ -136,6 +136,7 @@ import './files/forms/validate.js'
 Документация плагина: https://swiperjs.com/swiper-api
 Сниппет(HTML): swiper
 */
+
 import './files/sliders.js'
 
 // Модули работы с прокруткой страницы

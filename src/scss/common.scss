@@ -230,6 +230,9 @@ input[type=number] {
   font-size: rem(11);
   text-align: right;
 }
+.just-validate-error-label~popup-auth__input{
+  border: 1px solid var(--color-red);
+}
 
 .search {
 

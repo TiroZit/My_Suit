@@ -38,6 +38,7 @@
 
   // .personal-account__tab-btn
   &__tab-btn {
+    display: block;
     color: var(--color-dark-gray);
 
     &._tab-active {
@@ -149,6 +150,12 @@
       @include adaptiveValue("margin-right", 30, 10);
     }
 
+    &_exit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     // .personal-account__btn_edit
     &_edit {}
 
@@ -241,6 +248,7 @@
   // .list-order__btn-more
   &__btn-more {
     flex: 0 0 rem(183);
+    text-align: center;
     padding: rem(13.5) 0;
 
     @include media-breakpoint-down(tablet) {
