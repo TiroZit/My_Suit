@@ -84,13 +84,13 @@ if (document.getElementById('form-login')) {
     ])
 }
 
-if (document.getElementById('form-order')) {
-  const validationOrder = new JustValidate('#form-order', {
+if (document.getElementById('nc_netshop_add_order_form')) {
+  const validationOrder = new JustValidate('#nc_netshop_add_order_form', {
     errorFieldCssClass: 'is-invalid',
   })
 
   validationOrder
-    .addField('#input-email', [
+    .addField('input[name="f_Email"]', [
       {
         rule: 'required',
         errorMessage: 'Обязательное поле!',
@@ -100,49 +100,43 @@ if (document.getElementById('form-order')) {
         errorMessage: 'Неверный Email!',
       },
     ])
-    .addField('#input-first-name', [
+    .addField('input[name="f_Name"]', [
       {
         rule: 'required',
         errorMessage: 'Обязательное поле!',
       },
     ])
-    .addField('#input-last-name', [
+    .addField('input[name="f_LastName"]', [
       {
         rule: 'required',
         errorMessage: 'Обязательное поле!',
       },
     ])
-    .addField('#input-phone', [
+    .addField('input[name="f_Phone"]', [
       {
         rule: 'required',
         errorMessage: 'Обязательное поле!',
       },
     ])
-    .addField('#input-street', [
+    .addField('input[name="f_Street"]', [
       {
         rule: 'required',
         errorMessage: 'Обязательное поле!',
       },
     ])
-    .addField('#input-home-number', [
+    .addField('input[name="f_Home"]', [
       {
         rule: 'required',
         errorMessage: 'Обязательное поле!',
       },
     ])
-    .addField('#input-apartment-number', [
+    .addField('select[name="f_Country"]', [
       {
         rule: 'required',
         errorMessage: 'Обязательное поле!',
       },
     ])
-    .addField('#select-country', [
-      {
-        rule: 'required',
-        errorMessage: 'Обязательное поле!',
-      },
-    ])
-    .addField('#select-city', [
+    .addField('select[name="f_City"]', [
       {
         rule: 'required',
         errorMessage: 'Обязательное поле!',
