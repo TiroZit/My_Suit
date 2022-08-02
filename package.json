@@ -85,6 +85,7 @@
     "simplebar": "latest",
     "smooth-scroll": "latest",
     "swiper": "^8.3.1",
+    "swup": "^2.0.17",
     "tippy.js": "latest",
     "vanilla-lazyload": "latest",
     "wicg-inert": "^3.1.1"

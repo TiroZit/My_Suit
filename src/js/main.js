@@ -76,6 +76,13 @@ import './libs/popup.js'
 */
 // import './libs/parallax-mouse.js'
 
+/*
+Модуль swup переход по страницам без перезагрузки
+Документация: https://swup.js.org/getting-started/example
+*/
+import Swup from 'swup'
+const swup = new Swup()
+
 // РАБОТА С ФОРМАМИ
 
 import * as flsForms from './files/forms/forms.js'
