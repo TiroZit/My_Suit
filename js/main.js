@@ -1,7 +1,7 @@
 (function() {
   var __webpack_modules__ = {
     537: function() {},
-    723: function(__unused_webpack___webpack_module__, __unused_webpack___webpack_exports__, __webpack_require__) {
+    785: function(__unused_webpack___webpack_module__, __unused_webpack___webpack_exports__, __webpack_require__) {
       "use strict";
       var injectStylesIntoStyleTag = __webpack_require__(379);
       var injectStylesIntoStyleTag_default = __webpack_require__.n(injectStylesIntoStyleTag);
@@ -1004,6 +1004,10 @@
         }
       }
       modules_flsModules.select = new SelectConstructor({});
+      __webpack_require__(475);
+      const inputsPhone = document.querySelectorAll("input[type='tel']");
+      let im = new Inputmask("+7 (999) 999-99-99");
+      null === im || void 0 === im ? void 0 : im.mask(inputsPhone);
       var just_validate_es = __webpack_require__(11);
       if (document.getElementById("form-subscribe")) {
         const validationSubscribe = new just_validate_es.Z("#form-subscribe", {
@@ -1059,43 +1063,40 @@
           errorMessage: "Обязательное поле!"
         } ]);
       }
-      if (document.getElementById("form-order")) {
-        const validationOrder = new just_validate_es.Z("#form-order", {
+      if (document.getElementById("nc_netshop_add_order_form")) {
+        const validationOrder = new just_validate_es.Z("#nc_netshop_add_order_form", {
           errorFieldCssClass: "is-invalid"
         });
-        validationOrder.addField("#input-email", [ {
+        validationOrder.addField('input[name="f_Email"]', [ {
           rule: "required",
           errorMessage: "Обязательное поле!"
         }, {
           rule: "email",
           errorMessage: "Неверный Email!"
-        } ]).addField("#input-first-name", [ {
+        } ]).addField('input[name="f_Name"]', [ {
           rule: "required",
           errorMessage: "Обязательное поле!"
-        } ]).addField("#input-last-name", [ {
+        } ]).addField('input[name="f_LastName"]', [ {
           rule: "required",
           errorMessage: "Обязательное поле!"
-        } ]).addField("#input-phone", [ {
+        } ]).addField('input[name="f_Phone"]', [ {
           rule: "required",
           errorMessage: "Обязательное поле!"
-        } ]).addField("#input-street", [ {
+        } ]).addField('input[name="f_Street"]', [ {
           rule: "required",
           errorMessage: "Обязательное поле!"
-        } ]).addField("#input-home-number", [ {
+        } ]).addField('input[name="f_Home"]', [ {
           rule: "required",
           errorMessage: "Обязательное поле!"
-        } ]).addField("#input-apartment-number", [ {
+        } ]).addField('select[name="f_Country"]', [ {
           rule: "required",
           errorMessage: "Обязательное поле!"
-        } ]).addField("#select-country", [ {
-          rule: "required",
-          errorMessage: "Обязательное поле!"
-        } ]).addField("#select-city", [ {
+        } ]).addField('select[name="f_City"]', [ {
           rule: "required",
           errorMessage: "Обязательное поле!"
         } ]);
       }
-      var swiper_esm = __webpack_require__(930);
+      var swiper_esm = __webpack_require__(809);
       function bildSliders() {
         let sliders = document.querySelectorAll('[class*="__swiper"]:not(.swiper-wrapper)');
         if (sliders) sliders.forEach((slider => {
@@ -1106,6 +1107,34 @@
       }
       function initSliders() {
         bildSliders();
+        const thumbsSwiper = new swiper_esm.ZP(".thumbs-images", {
+          modules: [ swiper_esm.oM, swiper_esm.o3, swiper_esm.bi ],
+          direction: "vertical",
+          slidesPerView: "auto",
+          spaceBetween: 12,
+          speed: 500,
+          loop: false,
+          preloadImages: false,
+          lazy: {
+            loadPrevNext: true
+          },
+          breakpoints: {}
+        });
+        new swiper_esm.ZP(".images-product__slider", {
+          modules: [ swiper_esm.oM, swiper_esm.o3, swiper_esm.bi ],
+          grabCursor: true,
+          slidesPerView: 1,
+          speed: 500,
+          thumbs: {
+            swiper: thumbsSwiper
+          },
+          loop: false,
+          preloadImages: false,
+          lazy: {
+            loadPrevNext: true
+          },
+          breakpoints: {}
+        });
         if (document.querySelector(".current-models__slider")) new swiper_esm.ZP(".current-models__slider", {
           modules: [ swiper_esm.W_, swiper_esm.LW, swiper_esm.oM, swiper_esm.s5 ],
           a11y: {
@@ -1144,36 +1173,6 @@
             }
           }
         });
-        if (document.querySelector(".thumbs-images")) {
-          const thumbsSwiper = new swiper_esm.ZP(".thumbs-images", {
-            modules: [ swiper_esm.oM, swiper_esm.o3 ],
-            direction: "vertical",
-            slidesPerView: "auto",
-            spaceBetween: 12,
-            speed: 500,
-            loop: false,
-            preloadImages: false,
-            lazy: {
-              loadPrevNext: true
-            },
-            breakpoints: {}
-          });
-          new swiper_esm.ZP(".images-product__slider", {
-            modules: [ swiper_esm.oM, swiper_esm.o3 ],
-            grabCursor: true,
-            slidesPerView: 1,
-            speed: 500,
-            thumbs: {
-              swiper: thumbsSwiper
-            },
-            loop: false,
-            preloadImages: false,
-            lazy: {
-              loadPrevNext: true
-            },
-            breakpoints: {}
-          });
-        }
       }
       window.addEventListener("load", (function(e) {
         initSliders();
@@ -1336,35 +1335,8 @@
           bodyLock();
           document.querySelector("html").classList.add("cart-menu-open");
         }
-        if (targetElement.closest(".info-product__btn_cart")) addItemInCart(event);
       }
-      (() => {
-        document.location.pathname;
-      })();
-      document.querySelectorAll("#cartCount");
-      document.querySelector(".cart-total__price");
-      document.querySelector(".total_discount");
-      function getItemCard(cardID) {
-        if (!cardID) return null;
-        return document.querySelector(`form[data-parent-id="${cardID}"]`);
-      }
-      async function addItemInCart(e) {
-        const target = e.target;
-        const itemCard = getItemCard(target.dataset.parentId);
-        const itemCardId = itemCard.querySelector(`[name="items[]"]`).value;
-        const response = await fetch("/netcat/modules/netshop/actions/cart.php", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          body: $(itemCard).serialize() + "&json=1"
-        });
-        const data = await response.json();
-        const itemCardTemplate = `\n    <form class="cart-menu__product"  method="post" action="<?= $netshop->get_add_to_cart_url() ?>" data-parent-id="${data.Items[itemCardId].Message_ID}">\n      <input type="hidden" name="qty" value="${data.Items[itemCardId].Qty}">\n      <input type="hidden" name="items[]" value="${data.Items[itemCardId]}">\n      <input type="hidden" name="json" value="1">\n      <input type="hidden" name="class_id" value="${data.Items[itemCardId].Class_ID}">\n      <img class="cart-menu__img" src="${data.Items[itemCardId].Image}" alt="${data.Items[itemCardId].FullName}" loading="lazy" width="63" height="68">\n      <div class="cart-menu__product-info">\n        <div class="cart-menu__product-title">${data.Items[itemCardId].Name}</div>\n        <div class="cart-menu__product-price">${data.TotalItemPriceF} RUB</div>\n      </div>\n      <button class="cart-menu__remove" type="button" data-parent-id="${data.Items[itemCardId].Message_ID}" onclick="removeItemFromCart(event)" aria-label="удалить товар">\n        <svg class="i-close" aria-hidden="true">\n          <use xlink:href="/netcat_template/template/my_suit/img/icons/icons.svg#svg-close"></use>\n        </svg>\n      </button>\n    </form>\n  `;
-        const itemCardList = document.querySelector(".cart-menu__products");
-        itemCardList.insertAdjacentHTML("beforeend", itemCardTemplate);
-      }
-      window["FLS"] = false;
+      window["FLS"] = true;
       menuInit();
       spollers();
       tabs();
@@ -1471,7 +1443,7 @@
     __webpack_require__.nc = void 0;
   }();
   var __webpack_exports__ = __webpack_require__.O(void 0, [ 216 ], (function() {
-    return __webpack_require__(723);
+    return __webpack_require__(785);
   }));
   __webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 })();
