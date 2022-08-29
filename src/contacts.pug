@@ -1,0 +1,69 @@
+extends ../assets/pug/_base
+block vars
+  - var lang = 'ru'
+  - var title = 'My Suit | Контакты'
+  - var description = ''
+  - var keywords = ''
+  //- Open Graph:
+  - var type = 'website'
+  - var imageOG = ''
+  //- Preload fonts
+  - var fonts = ['Manrope-Medium', 'Manrope-Regular', 'Manrope-Light' ]
+
+include pug/_breadcrumbs
+block content
+  .wrapper
+    include pug/_header
+    +breadcrumbs([
+      {
+        name: "Главная",
+        path: "/"
+      },
+      {
+        name: "Контакты",
+        path: "contacts"
+      },
+    ])
+    main.page.page_contacts
+      section.contacts 
+        .contacts__container 
+          h1.contacts__title.page__title Контакты
+          address.contacts__items 
+            .contacts__item 
+              h2.contacts__item-title
+                svg.i-chat(aria-hidden)
+                  use(xlink:href='img/icons/icons.svg#svg-chat')
+                |Чат
+              p.contacts__item-text Доступны каждый день с 10:00 до 21:00 по московскому времени.
+              .contacts__socials
+                a.contacts__item-link(href="#" target='_blank')
+                  svg.i-whatsapp(aria-hidden)
+                    use(xlink:href='img/icons/icons.svg#svg-whatsapp')
+                a.contacts__item-link(href="#" target='_blank')
+                  svg.i-tg(aria-hidden)
+                    use(xlink:href='img/icons/icons.svg#svg-tg')
+                a.contacts__item-link(href="#" target='_blank')
+                  svg.i-vk(aria-hidden)
+                    use(xlink:href='img/icons/icons.svg#svg-vk')
+            .contacts__item 
+              h2.contacts__item-title
+                svg.i-phone(aria-hidden)
+                  use(xlink:href='img/icons/icons.svg#svg-phone')
+                | Телефон
+              p.contacts__item-text +7 (499) 995 12 13, доступны каждый день с 10:00 до 21:00 по московскому времени.
+              a.contacts__item-link.contacts__item-link_border(href="#" target='_blank') Позвонить
+            .contacts__item 
+              h2.contacts__item-title
+                svg.i-mail(aria-hidden)
+                  use(xlink:href='img/icons/icons.svg#svg-mail')
+                | Email
+              p.contacts__item-text shop@amourrr.com
+              a.contacts__item-link.contacts__item-link_border(href="#" target='_blank') Написать
+            .contacts__item 
+              h2.contacts__item-title
+                svg.i-mail(aria-hidden)
+                  use(xlink:href='img/icons/icons.svg#svg-mail')
+                | Директор Amour
+              p.contacts__item-text Если у вас есть претензии и пожелания, пожалуйста, направьте лично Алене Есиповой
+              a.contacts__item-link.contacts__item-link_border(href="#" target='_blank') Написать
+    include pug/_footer

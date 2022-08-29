@@ -1,0 +1,56 @@
+.contacts{
+  &__container{
+    @include adaptiveValue("margin-top", 60, 40);
+    @include adaptiveValue("margin-bottom", 60, 40);
+
+  }
+  &__items{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: rem(20);
+    margin-top: rem(30);
+  }
+  &__item{
+    flex: 0 1 rem(250);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    &-title{
+      display: flex;
+      align-items: center;
+      font-size: rem(18);
+      margin-bottom: rem(15);
+      & svg{
+        width: rem(24);
+        height: rem(24);
+        margin-right: rem(10);
+      }
+    }
+    &-text{
+      font-size: 14px;
+      line-height: math.div(18, 14);
+      margin-bottom: rem(20);
+    }
+    &-link{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: rem(16);
+      &_border{
+        border: 1px solid var(--color-gray);
+        padding: rem(10) 0;
+        width: 100%;
+        border-radius: 3px;
+      }
+      & svg{
+        width: rem(32);
+        height: rem(32);
+        margin-right: rem(15);
+      }
+    }
+  }
+  &__socails{
+    display: flex;
+  }
+}
