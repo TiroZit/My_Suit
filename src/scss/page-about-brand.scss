@@ -1,0 +1,30 @@
+.about-brand-page{
+  &__container{
+    @include adaptiveValue("margin-top", 60, 40);
+    @include adaptiveValue("margin-bottom", 60, 40);
+  }
+  &__content{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: rem(40);
+    margin-top: rem(40);
+    @include media-breakpoint-down(tablet){
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+  &__text{
+    flex: 0 1 350px;
+    @include adaptiveValue("font-size", 20, 16);
+    line-height: math.div(28, 18);
+  }
+  &__img-ibg{
+    flex: 0 1 percent(537, 1110);
+    padding-bottom: percent(630, 1110);
+    @include media-breakpoint-down(tablet){
+      flex: 0 1 rem(437);
+      padding-bottom: rem(430);
+    }
+  }
+}

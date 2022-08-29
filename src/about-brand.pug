@@ -1,0 +1,35 @@
+extends ../assets/pug/_base
+block vars
+  - var lang = 'ru'
+  - var title = 'My Suit | О бренде'
+  - var description = ''
+  - var keywords = ''
+  //- Open Graph:
+  - var type = 'website'
+  - var imageOG = ''
+  //- Preload fonts
+  - var fonts = ['Manrope-Medium', 'Manrope-Regular', 'Manrope-Light' ]
+
+include pug/_breadcrumbs
+block content
+  .wrapper
+    include pug/_header
+    +breadcrumbs([
+      {
+        name: "Главная",
+        path: "/"
+      },
+      {
+        name: "О бренде",
+        path: "contacts"
+      },
+    ])
+    main.page.page_about-brand
+      section.about-brand-page 
+        .about-brand-page__container 
+          h1.about-brand-page__title.page__title О бренде
+          .about-brand-page__content 
+            p.about-brand-page__text Коллекции Amour вдохновлены чувством любви и страсти. Кожа, деним, спорт, монохромные цвета и провокационные детали - мы собрали только наши любимые модные тренды и создали модели, которые легко комбинировать между собой. В нарядах Amour вы будете в центре внимания
+            .about-brand-page__img-ibg
+              +image('img/goods/1.jpg', 'alt').lazy
+    include pug/_footer
