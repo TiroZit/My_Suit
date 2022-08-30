@@ -1421,6 +1421,7 @@ input[type=number] {
 .socials__item svg {
   width: 0.9375rem;
   height: 0.9375rem;
+  color: var(--color-white);
 }
 
 .footer {
