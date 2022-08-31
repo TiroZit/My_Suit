@@ -2905,6 +2905,7 @@ input[type=number] {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  min-height: 54vh;
 }
 
 .error-404__container {
